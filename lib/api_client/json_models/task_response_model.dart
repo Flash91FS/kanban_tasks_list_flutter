@@ -1,10 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:kanban_tasks_list_flutter/api_client/json_models/due_date_response_model.dart';
 
-part 'tasks_list_response_model.g.dart';
+part 'task_response_model.g.dart';
 
 @JsonSerializable()
-class TasksListResponseModel {
+class TaskResponseModel {
 
   final String id;
   final String content;
@@ -42,7 +42,7 @@ class TasksListResponseModel {
   final String url;
 
 
-  TasksListResponseModel({
+  TaskResponseModel({
 
     required String this.id,
     required String this.content,
@@ -64,8 +64,8 @@ class TasksListResponseModel {
 
   });
 
-  factory TasksListResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$TasksListResponseModelFromJson(json);
+  factory TaskResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$TaskResponseModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$TasksListResponseModelToJson(this);
+  Map<String, dynamic> toJson() => _$TaskResponseModelToJson(this);
 }

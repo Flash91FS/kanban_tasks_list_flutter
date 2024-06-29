@@ -1,14 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'tasks_list_response_model.dart';
+part of 'task_response_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-TasksListResponseModel _$TasksListResponseModelFromJson(
-        Map<String, dynamic> json) =>
-    TasksListResponseModel(
+TaskResponseModel _$TaskResponseModelFromJson(Map<String, dynamic> json) =>
+    TaskResponseModel(
       id: json['id'] as String,
       content: json['content'] as String,
       description: json['description'] as String,
@@ -31,8 +30,7 @@ TasksListResponseModel _$TasksListResponseModelFromJson(
       url: json['url'] as String,
     );
 
-Map<String, dynamic> _$TasksListResponseModelToJson(
-        TasksListResponseModel instance) =>
+Map<String, dynamic> _$TaskResponseModelToJson(TaskResponseModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'content': instance.content,
