@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_tasks_list_flutter/api_client/api_client.dart';
 import 'package:kanban_tasks_list_flutter/home_page.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks_cubit.dart';
-import 'package:kanban_tasks_list_flutter/repository/i_tasks_list_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/tasks_list_repository.dart';
+import 'package:kanban_tasks_list_flutter/repository/i_tasks_repository.dart';
+import 'package:kanban_tasks_list_flutter/repository/tasks_repository.dart';
 
 class App extends StatelessWidget {
   final ApiClient apiClient;
@@ -16,15 +16,15 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
         providers: [
-          RepositoryProvider<ITasksListRepository>(
-              create: (context) => (TasksListRepository(apiClient: apiClient))),
+          RepositoryProvider<ITasksRepository>(
+              create: (context) => (TasksRepository(apiClient: apiClient))),
         ],
         child: MultiBlocProvider(
           providers: [
             BlocProvider(
                 create: (context) => TasksCubit(
-                    tasksListRepository:
-                        RepositoryProvider.of<ITasksListRepository>(
+                    TasksRepository:
+                        RepositoryProvider.of<ITasksRepository>(
                             context)))
           ],
           child: AppView(pageTitle: pageTitle),

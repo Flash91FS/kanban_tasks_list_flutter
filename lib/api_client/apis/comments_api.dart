@@ -9,7 +9,7 @@ class CommentsApi {
 
   final ApiClient apiClient;
 
-  Future<List<CommentResponseModel>> apiGetCommentsForTask(int taskId) async {
+  Future<List<CommentResponseModel>> apiGetCommentsForTask(String taskId) async {
     final path = '/comments?task_id=$taskId';
 
     try {

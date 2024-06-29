@@ -4,13 +4,13 @@ import 'package:kanban_tasks_list_flutter/core/models/result.dart';
 import 'package:kanban_tasks_list_flutter/api_client/apis/apis.dart';
 import 'package:kanban_tasks_list_flutter/domain/models/due_date.dart';
 import 'package:kanban_tasks_list_flutter/domain/models/task.dart';
-import 'i_tasks_list_repository.dart';
+import 'i_tasks_repository.dart';
 
-class TasksListRepository with ApiErrorHandler implements ITasksListRepository {
+class TasksRepository with ApiErrorHandler implements ITasksRepository {
 
   final TasksListApi _tasksApi;
 
-  TasksListRepository({
+  TasksRepository({
     required ApiClient apiClient,
   }) : _tasksApi = TasksListApi(apiClient);
 
