@@ -19,7 +19,7 @@ ProjectResponseModel _$ProjectResponseModelFromJson(
       isInboxProject: json['is_inbox_project'] as bool,
       isTeamInbox: json['is_team_inbox'] as bool,
       viewStyle: json['view_style'] as String,
-      parentId: json['parent_id'] as String,
+      parentId: json['parent_id'] as String?,
       url: json['url'] as String,
     );
 

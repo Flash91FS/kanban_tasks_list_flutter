@@ -19,7 +19,7 @@ mixin _$Comment {
   String get id => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   DateTime get postedAt => throw _privateConstructorUsedError;
-  String get projectId => throw _privateConstructorUsedError;
+  String? get projectId => throw _privateConstructorUsedError;
   String? get taskId => throw _privateConstructorUsedError;
   Map<String, String>? get attachment => throw _privateConstructorUsedError;
 
@@ -36,7 +36,7 @@ abstract class $CommentCopyWith<$Res> {
       {String id,
       String content,
       DateTime postedAt,
-      String projectId,
+      String? projectId,
       String? taskId,
       Map<String, String>? attachment});
 }
@@ -57,7 +57,7 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
     Object? id = null,
     Object? content = null,
     Object? postedAt = null,
-    Object? projectId = null,
+    Object? projectId = freezed,
     Object? taskId = freezed,
     Object? attachment = freezed,
   }) {
@@ -74,10 +74,10 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
           ? _value.postedAt
           : postedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      projectId: null == projectId
+      projectId: freezed == projectId
           ? _value.projectId
           : projectId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       taskId: freezed == taskId
           ? _value.taskId
           : taskId // ignore: cast_nullable_to_non_nullable
@@ -101,7 +101,7 @@ abstract class _$$CommentImplCopyWith<$Res> implements $CommentCopyWith<$Res> {
       {String id,
       String content,
       DateTime postedAt,
-      String projectId,
+      String? projectId,
       String? taskId,
       Map<String, String>? attachment});
 }
@@ -120,7 +120,7 @@ class __$$CommentImplCopyWithImpl<$Res>
     Object? id = null,
     Object? content = null,
     Object? postedAt = null,
-    Object? projectId = null,
+    Object? projectId = freezed,
     Object? taskId = freezed,
     Object? attachment = freezed,
   }) {
@@ -137,10 +137,10 @@ class __$$CommentImplCopyWithImpl<$Res>
           ? _value.postedAt
           : postedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      projectId: null == projectId
+      projectId: freezed == projectId
           ? _value.projectId
           : projectId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       taskId: freezed == taskId
           ? _value.taskId
           : taskId // ignore: cast_nullable_to_non_nullable
@@ -172,7 +172,7 @@ class _$CommentImpl implements _Comment {
   @override
   final DateTime postedAt;
   @override
-  final String projectId;
+  final String? projectId;
   @override
   final String? taskId;
   final Map<String, String>? _attachment;
@@ -222,7 +222,7 @@ abstract class _Comment implements Comment {
       {required final String id,
       required final String content,
       required final DateTime postedAt,
-      required final String projectId,
+      required final String? projectId,
       required final String? taskId,
       required final Map<String, String>? attachment}) = _$CommentImpl;
 
@@ -233,7 +233,7 @@ abstract class _Comment implements Comment {
   @override
   DateTime get postedAt;
   @override
-  String get projectId;
+  String? get projectId;
   @override
   String? get taskId;
   @override

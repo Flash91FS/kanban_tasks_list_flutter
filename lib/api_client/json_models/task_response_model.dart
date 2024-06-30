@@ -5,7 +5,6 @@ part 'task_response_model.g.dart';
 
 @JsonSerializable()
 class TaskResponseModel {
-
   final String id;
   final String content;
   final String description;
@@ -41,27 +40,24 @@ class TaskResponseModel {
 
   final String url;
 
-
   TaskResponseModel({
-
-    required String this.id,
-    required String this.content,
-    required String this.description,
-    required int this.commentCount,
-    required bool this.isCompleted,
-    required int this.order,
-    required int this.priority,
-    required String this.projectId,
-    required List<String> this.labels,
-    DueDateResponseModel? this.due,
-    String? this.sectionId,
-    String? this.parentId,
-    required String this.creatorId,
-    required DateTime this.createdAt,
-    String? this.assigneeId,
-    String? this.assignerId,
+    required this.id,
+    required this.content,
+    required this.description,
+    required this.commentCount,
+    required this.isCompleted,
+    required this.order,
+    required this.priority,
+    required this.projectId,
+    required this.labels,
+    this.due,
+    this.sectionId,
+    this.parentId,
+    required this.creatorId,
+    required this.createdAt,
+    this.assigneeId,
+    this.assignerId,
     required String this.url,
-
   });
 
   factory TaskResponseModel.fromJson(Map<String, dynamic> json) =>

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'tasks_state.dart';
+part of 'sections_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,24 +15,24 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$TasksState {
+mixin _$SectionsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Task> allItems) loaded,
+    required TResult Function(List<Section> allItems) loaded,
     required TResult Function() loading,
     required TResult Function() failedToLoad,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Task> allItems)? loaded,
+    TResult? Function(List<Section> allItems)? loaded,
     TResult? Function()? loading,
     TResult? Function()? failedToLoad,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Task> allItems)? loaded,
+    TResult Function(List<Section> allItems)? loaded,
     TResult Function()? loading,
     TResult Function()? failedToLoad,
     required TResult orElse(),
@@ -63,16 +63,16 @@ mixin _$TasksState {
 }
 
 /// @nodoc
-abstract class $TasksStateCopyWith<$Res> {
-  factory $TasksStateCopyWith(
-          TasksState value, $Res Function(TasksState) then) =
-      _$TasksStateCopyWithImpl<$Res, TasksState>;
+abstract class $SectionsStateCopyWith<$Res> {
+  factory $SectionsStateCopyWith(
+          SectionsState value, $Res Function(SectionsState) then) =
+      _$SectionsStateCopyWithImpl<$Res, SectionsState>;
 }
 
 /// @nodoc
-class _$TasksStateCopyWithImpl<$Res, $Val extends TasksState>
-    implements $TasksStateCopyWith<$Res> {
-  _$TasksStateCopyWithImpl(this._value, this._then);
+class _$SectionsStateCopyWithImpl<$Res, $Val extends SectionsState>
+    implements $SectionsStateCopyWith<$Res> {
+  _$SectionsStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -86,12 +86,12 @@ abstract class _$$DataImplCopyWith<$Res> {
           _$DataImpl value, $Res Function(_$DataImpl) then) =
       __$$DataImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Task> allItems});
+  $Res call({List<Section> allItems});
 }
 
 /// @nodoc
 class __$$DataImplCopyWithImpl<$Res>
-    extends _$TasksStateCopyWithImpl<$Res, _$DataImpl>
+    extends _$SectionsStateCopyWithImpl<$Res, _$DataImpl>
     implements _$$DataImplCopyWith<$Res> {
   __$$DataImplCopyWithImpl(_$DataImpl _value, $Res Function(_$DataImpl) _then)
       : super(_value, _then);
@@ -105,7 +105,7 @@ class __$$DataImplCopyWithImpl<$Res>
       allItems: null == allItems
           ? _value._allItems
           : allItems // ignore: cast_nullable_to_non_nullable
-              as List<Task>,
+              as List<Section>,
     ));
   }
 }
@@ -113,11 +113,12 @@ class __$$DataImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$DataImpl implements Data {
-  const _$DataImpl({required final List<Task> allItems}) : _allItems = allItems;
+  const _$DataImpl({required final List<Section> allItems})
+      : _allItems = allItems;
 
-  final List<Task> _allItems;
+  final List<Section> _allItems;
   @override
-  List<Task> get allItems {
+  List<Section> get allItems {
     if (_allItems is EqualUnmodifiableListView) return _allItems;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_allItems);
@@ -125,7 +126,7 @@ class _$DataImpl implements Data {
 
   @override
   String toString() {
-    return 'TasksState.loaded(allItems: $allItems)';
+    return 'SectionsState.loaded(allItems: $allItems)';
   }
 
   @override
@@ -149,7 +150,7 @@ class _$DataImpl implements Data {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Task> allItems) loaded,
+    required TResult Function(List<Section> allItems) loaded,
     required TResult Function() loading,
     required TResult Function() failedToLoad,
   }) {
@@ -159,7 +160,7 @@ class _$DataImpl implements Data {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Task> allItems)? loaded,
+    TResult? Function(List<Section> allItems)? loaded,
     TResult? Function()? loading,
     TResult? Function()? failedToLoad,
   }) {
@@ -169,7 +170,7 @@ class _$DataImpl implements Data {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Task> allItems)? loaded,
+    TResult Function(List<Section> allItems)? loaded,
     TResult Function()? loading,
     TResult Function()? failedToLoad,
     required TResult orElse(),
@@ -215,10 +216,10 @@ class _$DataImpl implements Data {
   }
 }
 
-abstract class Data implements TasksState {
-  const factory Data({required final List<Task> allItems}) = _$DataImpl;
+abstract class Data implements SectionsState {
+  const factory Data({required final List<Section> allItems}) = _$DataImpl;
 
-  List<Task> get allItems;
+  List<Section> get allItems;
   @JsonKey(ignore: true)
   _$$DataImplCopyWith<_$DataImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -233,7 +234,7 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$TasksStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$SectionsStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
@@ -247,7 +248,7 @@ class _$LoadingImpl implements Loading {
 
   @override
   String toString() {
-    return 'TasksState.loading()';
+    return 'SectionsState.loading()';
   }
 
   @override
@@ -262,7 +263,7 @@ class _$LoadingImpl implements Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Task> allItems) loaded,
+    required TResult Function(List<Section> allItems) loaded,
     required TResult Function() loading,
     required TResult Function() failedToLoad,
   }) {
@@ -272,7 +273,7 @@ class _$LoadingImpl implements Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Task> allItems)? loaded,
+    TResult? Function(List<Section> allItems)? loaded,
     TResult? Function()? loading,
     TResult? Function()? failedToLoad,
   }) {
@@ -282,7 +283,7 @@ class _$LoadingImpl implements Loading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Task> allItems)? loaded,
+    TResult Function(List<Section> allItems)? loaded,
     TResult Function()? loading,
     TResult Function()? failedToLoad,
     required TResult orElse(),
@@ -328,7 +329,7 @@ class _$LoadingImpl implements Loading {
   }
 }
 
-abstract class Loading implements TasksState {
+abstract class Loading implements SectionsState {
   const factory Loading() = _$LoadingImpl;
 }
 
@@ -341,7 +342,7 @@ abstract class _$$FailedToLoadImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$FailedToLoadImplCopyWithImpl<$Res>
-    extends _$TasksStateCopyWithImpl<$Res, _$FailedToLoadImpl>
+    extends _$SectionsStateCopyWithImpl<$Res, _$FailedToLoadImpl>
     implements _$$FailedToLoadImplCopyWith<$Res> {
   __$$FailedToLoadImplCopyWithImpl(
       _$FailedToLoadImpl _value, $Res Function(_$FailedToLoadImpl) _then)
@@ -355,7 +356,7 @@ class _$FailedToLoadImpl implements FailedToLoad {
 
   @override
   String toString() {
-    return 'TasksState.failedToLoad()';
+    return 'SectionsState.failedToLoad()';
   }
 
   @override
@@ -370,7 +371,7 @@ class _$FailedToLoadImpl implements FailedToLoad {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Task> allItems) loaded,
+    required TResult Function(List<Section> allItems) loaded,
     required TResult Function() loading,
     required TResult Function() failedToLoad,
   }) {
@@ -380,7 +381,7 @@ class _$FailedToLoadImpl implements FailedToLoad {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Task> allItems)? loaded,
+    TResult? Function(List<Section> allItems)? loaded,
     TResult? Function()? loading,
     TResult? Function()? failedToLoad,
   }) {
@@ -390,7 +391,7 @@ class _$FailedToLoadImpl implements FailedToLoad {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Task> allItems)? loaded,
+    TResult Function(List<Section> allItems)? loaded,
     TResult Function()? loading,
     TResult Function()? failedToLoad,
     required TResult orElse(),
@@ -436,6 +437,6 @@ class _$FailedToLoadImpl implements FailedToLoad {
   }
 }
 
-abstract class FailedToLoad implements TasksState {
+abstract class FailedToLoad implements SectionsState {
   const factory FailedToLoad() = _$FailedToLoadImpl;
 }

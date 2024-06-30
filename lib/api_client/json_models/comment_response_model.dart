@@ -9,19 +9,19 @@ class CommentResponseModel {
   @JsonKey(name: 'posted_at')
   final DateTime postedAt;
   @JsonKey(name: 'project_id')
-  final String projectId;
+  final String? projectId;
   @JsonKey(name: 'task_id')
   final String? taskId;
 
   final Map<String, String>? attachment;
 
   CommentResponseModel({
-    required String this.id,
-    required String this.content,
-    required DateTime this.postedAt,
-    required String this.projectId,
-    required String? this.taskId,
-    required Map<String, String>? this.attachment,
+    required this.id,
+    required this.content,
+    required this.postedAt,
+    this.projectId,
+    this.taskId,
+    this.attachment,
   });
 
   factory CommentResponseModel.fromJson(Map<String, dynamic> json) =>

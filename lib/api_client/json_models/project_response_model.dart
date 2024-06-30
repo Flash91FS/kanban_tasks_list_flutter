@@ -21,23 +21,23 @@ class ProjectResponseModel {
   @JsonKey(name: 'view_style')
   final String viewStyle;
   @JsonKey(name: 'parent_id')
-  final String parentId;
+  final String? parentId;
 
   final String url;
 
   ProjectResponseModel({
-    required String this.id,
-    required String this.name,
-    required int this.commentCount,
-    required int this.order,
-    required String this.color,
-    required bool this.isShared,
-    required bool this.isFavorite,
-    required bool this.isInboxProject,
-    required bool this.isTeamInbox,
-    required String this.viewStyle,
-    required String this.parentId,
-    required String this.url,
+    required this.id,
+    required this.name,
+    required this.commentCount,
+    required this.order,
+    required this.color,
+    required this.isShared,
+    required this.isFavorite,
+    required this.isInboxProject,
+    required this.isTeamInbox,
+    required this.viewStyle,
+    this.parentId,
+    required this.url,
   });
 
   factory ProjectResponseModel.fromJson(Map<String, dynamic> json) =>

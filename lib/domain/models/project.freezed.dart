@@ -26,7 +26,7 @@ mixin _$Project {
   bool get isInboxProject => throw _privateConstructorUsedError;
   bool get isTeamInbox => throw _privateConstructorUsedError;
   String get viewStyle => throw _privateConstructorUsedError;
-  String get parentId => throw _privateConstructorUsedError;
+  String? get parentId => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -49,7 +49,7 @@ abstract class $ProjectCopyWith<$Res> {
       bool isInboxProject,
       bool isTeamInbox,
       String viewStyle,
-      String parentId,
+      String? parentId,
       String url});
 }
 
@@ -76,7 +76,7 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
     Object? isInboxProject = null,
     Object? isTeamInbox = null,
     Object? viewStyle = null,
-    Object? parentId = null,
+    Object? parentId = freezed,
     Object? url = null,
   }) {
     return _then(_value.copyWith(
@@ -120,10 +120,10 @@ class _$ProjectCopyWithImpl<$Res, $Val extends Project>
           ? _value.viewStyle
           : viewStyle // ignore: cast_nullable_to_non_nullable
               as String,
-      parentId: null == parentId
+      parentId: freezed == parentId
           ? _value.parentId
           : parentId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
@@ -150,7 +150,7 @@ abstract class _$$ProjectImplCopyWith<$Res> implements $ProjectCopyWith<$Res> {
       bool isInboxProject,
       bool isTeamInbox,
       String viewStyle,
-      String parentId,
+      String? parentId,
       String url});
 }
 
@@ -175,7 +175,7 @@ class __$$ProjectImplCopyWithImpl<$Res>
     Object? isInboxProject = null,
     Object? isTeamInbox = null,
     Object? viewStyle = null,
-    Object? parentId = null,
+    Object? parentId = freezed,
     Object? url = null,
   }) {
     return _then(_$ProjectImpl(
@@ -219,10 +219,10 @@ class __$$ProjectImplCopyWithImpl<$Res>
           ? _value.viewStyle
           : viewStyle // ignore: cast_nullable_to_non_nullable
               as String,
-      parentId: null == parentId
+      parentId: freezed == parentId
           ? _value.parentId
           : parentId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
@@ -269,7 +269,7 @@ class _$ProjectImpl implements _Project {
   @override
   final String viewStyle;
   @override
-  final String parentId;
+  final String? parentId;
   @override
   final String url;
 
@@ -339,7 +339,7 @@ abstract class _Project implements Project {
       required final bool isInboxProject,
       required final bool isTeamInbox,
       required final String viewStyle,
-      required final String parentId,
+      required final String? parentId,
       required final String url}) = _$ProjectImpl;
 
   @override
@@ -363,7 +363,7 @@ abstract class _Project implements Project {
   @override
   String get viewStyle;
   @override
-  String get parentId;
+  String? get parentId;
   @override
   String get url;
   @override

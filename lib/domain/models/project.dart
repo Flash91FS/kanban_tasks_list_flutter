@@ -15,7 +15,7 @@ class Project with _$Project {
     required bool isInboxProject,
     required bool isTeamInbox,
     required String viewStyle,
-    required String parentId,
+    required String? parentId,
     required String url,
   }) = _Project;
 }

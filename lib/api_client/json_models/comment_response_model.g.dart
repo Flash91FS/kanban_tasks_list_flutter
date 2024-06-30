@@ -12,7 +12,7 @@ CommentResponseModel _$CommentResponseModelFromJson(
       id: json['id'] as String,
       content: json['content'] as String,
       postedAt: DateTime.parse(json['posted_at'] as String),
-      projectId: json['project_id'] as String,
+      projectId: json['project_id'] as String?,
       taskId: json['task_id'] as String?,
       attachment: (json['attachment'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, e as String),

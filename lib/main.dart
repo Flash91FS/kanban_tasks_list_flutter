@@ -7,6 +7,11 @@ import 'package:kanban_tasks_list_flutter/environment_settings.dart';
 void main() async {
   await dotenv.load(fileName: 'dev.env');
   final envSettings = EnvironmentSettings(dotenv.env);
-  final apiClient = KanbanApiClient.withHttpDefaults(envSettings.baseApiUrl, envSettings.apiToken);
-  runApp(App(apiClient: apiClient, pageTitle: 'Kanban App'));
+  final apiClient = KanbanApiClient.withHttpDefaults(
+      envSettings.baseApiUrl, envSettings.apiToken);
+  runApp(App(
+    apiClient: apiClient,
+    pageTitle: 'Kanban App',
+    environmentSettings: envSettings,
+  ));
 }

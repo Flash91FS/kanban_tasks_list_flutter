@@ -8,7 +8,7 @@ class Comment with _$Comment {
     required String id,
     required String content,
     required DateTime postedAt,
-    required String projectId,
+    required String? projectId,
     required String? taskId,
     required Map<String, String>? attachment,
   }) = _Comment;
