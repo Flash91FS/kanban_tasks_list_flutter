@@ -1,0 +1,2 @@
+const MENU_WIDTH = 230.0;
+const CONCIERGE_SECURITY_CODE = '8274';
