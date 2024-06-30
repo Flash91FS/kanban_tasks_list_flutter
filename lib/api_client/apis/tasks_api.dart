@@ -4,8 +4,8 @@ import 'package:kanban_tasks_list_flutter/api_client/json_models/json_models.dar
 import 'package:kanban_tasks_list_flutter/api_client/json_parsers/json_parsers.dart';
 
 
-class TasksListApi {
-  TasksListApi(this.apiClient);
+class TasksApi {
+  TasksApi(this.apiClient);
 
   final ApiClient apiClient;
 
@@ -18,6 +18,20 @@ class TasksListApi {
     } on ApiException catch (e) {
       if (e.code == 404) {
         return [];
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> apiDeleteTask({required String taskId}) async {
+    final path = '/tasks/$taskId';
+
+    try {
+      return await apiClient.invokeDelete(path: path);
+    } on ApiException catch (e) {
+      if (e.code == 404) {
+        return;
       } else {
         rethrow;
       }

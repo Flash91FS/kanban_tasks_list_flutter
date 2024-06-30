@@ -9,3 +9,4 @@ const kanbanBoardConfig = AppFlowyBoardConfig(
 );
 
 const kanbanCardSubtextColor = Color(0xffA1A4A9);  //todo change color of kanban-Card-Subtext here
+const deleteIconColor = Colors.red;

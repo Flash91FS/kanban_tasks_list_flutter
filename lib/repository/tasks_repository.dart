@@ -8,11 +8,11 @@ import 'i_tasks_repository.dart';
 
 class TasksRepository with ApiErrorHandler implements ITasksRepository {
 
-  final TasksListApi _tasksApi;
+  final TasksApi _tasksApi;
 
   TasksRepository({
     required ApiClient apiClient,
-  }) : _tasksApi = TasksListApi(apiClient);
+  }) : _tasksApi = TasksApi(apiClient);
 
   @override
   Future<Result<List<Task>>> getTasksList() {
@@ -48,6 +48,15 @@ class TasksRepository with ApiErrorHandler implements ITasksRepository {
                 ),
               )
               .toList());
+    });
+  }
+
+  @override
+  Future<Result<String>> deleteTask({required String taskId}) {
+    return captureApiErrorsAsResultFailure(() async {
+      await _tasksApi.apiDeleteTask(taskId: taskId);
+      return const Result.success(
+          data: 'Task Deleted Successfully');
     });
   }
 }

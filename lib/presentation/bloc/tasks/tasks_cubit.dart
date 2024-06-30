@@ -63,4 +63,31 @@ class TasksCubit extends Cubit<TasksState> {
       ));
     }
   }
+
+  Future<void> deleteTask({required String taskId}) async {
+    try {
+      Result<String> result = await tasksRepository.deleteTask(taskId: taskId);
+
+      result.when(success: (String message) {
+        logData(TAG_TASKS_CUBIT, 'deleteTask() - Result-Success: $message');
+
+        int indexOfTask =
+            state.tasks!.indexWhere((element) => element.id == taskId);
+        final newTaskList = List<Task>.from(state.tasks!)
+          ..removeAt(indexOfTask);
+
+        newTaskList.forEach((task) {
+          logData(TAG_TASKS_CUBIT,
+              'deleteTask() - task : ${task.id} -  ${task.projectId} - ${task.content} - ${task.description}');
+        });
+        emit(state.copyWith(
+            status: PageStateStatus.updated, tasks: newTaskList));
+
+      }, failure: (_) {
+        logData(TAG_TASKS_CUBIT, 'failure: Failed To Delete');
+      });
+    } catch (e) {
+      logData(TAG_TASKS_CUBIT, 'deleteTask(): Exception = ${e.toString()}');
+    }
+  }
 }
