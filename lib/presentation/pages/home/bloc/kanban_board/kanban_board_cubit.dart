@@ -17,8 +17,8 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
     required this.environmentCubit,
   }) : super(const KanbanBoardState(groups: [])) {
     _tasksSubscription =
-        tasksCubit.stream.listen(_handleBalanceBillStateChange);
-    _handleBalanceBillStateChange(tasksCubit.state);
+        tasksCubit.stream.listen(_handleTasksStateChange);
+    _handleTasksStateChange(tasksCubit.state);
   }
 
   final TasksCubit tasksCubit;
@@ -31,7 +31,7 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
     return super.close();
   }
 
-  _handleBalanceBillStateChange(TasksState tasksState) {
+  _handleTasksStateChange(TasksState tasksState) {
     logData(TAG_KANBAN_BOARD_CUBIT, '_handleBalanceBillStateChange(): ');
     logData(TAG_KANBAN_BOARD_CUBIT, '_handleBalanceBillStateChange(): tasksState.status = ${tasksState.status}');
     if (tasksState.status == PageStateStatus.loaded ||
@@ -130,7 +130,7 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
       // if(toGroup.items.length>toIndex) {
       AppFlowyGroupItem item = toGroup.items.elementAt(toIndex);
       logData(TAG_KANBAN_BOARD_CUBIT,
-          'onMoveGroupItemToGroup(): From toGroup: ${toGroup.id}');
+          'onMoveGroupItemToGroup():  toGroup: ${toGroup.id}');
       logData(TAG_KANBAN_BOARD_CUBIT, 'onMoveGroupItemToGroup(): Item: ${item.id}');
       // }else{
       //   logData(TAG_KANBAN_BOARD_CUBIT, 'onMoveGroupItemToGroup(): toGroup items length: ${toGroup.items.length}');
@@ -140,9 +140,10 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
 
       final task = tasksCubit.state.tasks!.firstWhere((task) => task.id == item.id);
       logData(TAG_KANBAN_BOARD_CUBIT,
-          'onMoveGroupItemToGroup(): task : ${task.id} -  ${task.sectionId} - ${task.content} - ${task.description}');
+          'onMoveGroupItemToGroup(): task : task.id: ${task.id} -  prev-sectionId: ${task.sectionId} - ${task.content} - ${task.description}');
 
       //TODO call api to move task to group with id "toGroupId"
+      tasksCubit.moveTaskToSection(taskId: task.id, toSectionId: toGroup.id);
     }
   }
 }

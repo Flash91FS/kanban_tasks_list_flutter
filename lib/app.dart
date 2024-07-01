@@ -59,7 +59,7 @@ class App extends StatelessWidget {
                 tasksRepository:
                     RepositoryProvider.of<ITasksRepository>(context),
                 environmentCubit: BlocProvider.of<EnvironmentCubit>(context),
-              ),
+              )..loadSyncState(),
             ),
             BlocProvider(
               create: (context) => KanbanBoardCubit(

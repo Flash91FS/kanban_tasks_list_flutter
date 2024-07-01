@@ -6,6 +6,7 @@ import 'package:kanban_tasks_list_flutter/presentation/bloc/environment/environm
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_state.dart';
 import 'package:kanban_tasks_list_flutter/repository/i_tasks_repository.dart';
 import 'package:kanban_tasks_list_flutter/utils.dart';
+import 'package:uuid/uuid.dart';
 
 class TasksCubit extends Cubit<TasksState> {
   final ITasksRepository tasksRepository;
@@ -34,26 +35,26 @@ class TasksCubit extends Cubit<TasksState> {
               'Project-Tasks - current : ${current.id} -  ${current.projectId} - ${current.content} - ${current.description}');
         });
 
-        emit(TasksState(
+        emit(state.copyWith(
           status: PageStateStatus.loaded,
           tasks: currentProjectTasks,
         ));
       }, failure: (_) {
         logData(TAG_TASKS_CUBIT, 'failure:');
-        emit(const TasksState(
+        emit(state.copyWith(
           status: PageStateStatus.failedToLoad,
           errorMessage: 'Failed to load Tasks.',
         ));
       });
     } on Error {
       logData(TAG_TASKS_CUBIT, 'Error:');
-      emit(const TasksState(
+      emit(state.copyWith(
         status: PageStateStatus.failedToLoad,
         errorMessage: 'Failed to load Tasks.',
       ));
     } on Exception {
       logData(TAG_TASKS_CUBIT, 'Exception:');
-      emit(const TasksState(
+      emit(state.copyWith(
         status: PageStateStatus.failedToLoad,
         errorMessage: 'Failed to load Tasks.',
       ));
@@ -88,20 +89,20 @@ class TasksCubit extends Cubit<TasksState> {
             status: PageStateStatus.updated, tasks: newTaskList));
       }, failure: (_) {
         logData(TAG_TASKS_CUBIT, 'failure:');
-        emit(const TasksState(
+        emit(state.copyWith(
           status: PageStateStatus.failedToLoad,
           errorMessage: 'Failed to load Tasks.',
         ));
       });
     } on Error {
       logData(TAG_TASKS_CUBIT, 'Error:');
-      emit(const TasksState(
+      emit(state.copyWith(
         status: PageStateStatus.failedToLoad,
         errorMessage: 'Failed to load Tasks.',
       ));
     } on Exception {
       logData(TAG_TASKS_CUBIT, 'Exception:');
-      emit(const TasksState(
+      emit(state.copyWith(
         status: PageStateStatus.failedToLoad,
         errorMessage: 'Failed to load Tasks.',
       ));
@@ -125,7 +126,7 @@ class TasksCubit extends Cubit<TasksState> {
 
         final newTaskList = List<Task>.from(state.tasks!);
         int indexOfTask =
-        newTaskList.indexWhere((element) => element.id == taskId);
+            newTaskList.indexWhere((element) => element.id == taskId);
         newTaskList.replaceRange(indexOfTask, indexOfTask + 1, [item]);
 
         newTaskList.forEach((task) {
@@ -136,20 +137,20 @@ class TasksCubit extends Cubit<TasksState> {
             status: PageStateStatus.updated, tasks: newTaskList));
       }, failure: (_) {
         logData(TAG_TASKS_CUBIT, 'failure:');
-        emit(const TasksState(
+        emit(state.copyWith(
           status: PageStateStatus.failedToLoad,
           errorMessage: 'Failed to load Tasks.',
         ));
       });
     } on Error {
       logData(TAG_TASKS_CUBIT, 'Error:');
-      emit(const TasksState(
+      emit(state.copyWith(
         status: PageStateStatus.failedToLoad,
         errorMessage: 'Failed to load Tasks.',
       ));
     } on Exception {
       logData(TAG_TASKS_CUBIT, 'Exception:');
-      emit(const TasksState(
+      emit(state.copyWith(
         status: PageStateStatus.failedToLoad,
         errorMessage: 'Failed to load Tasks.',
       ));
@@ -179,6 +180,69 @@ class TasksCubit extends Cubit<TasksState> {
       });
     } catch (e) {
       logData(TAG_TASKS_CUBIT, 'deleteTask(): Exception = ${e.toString()}');
+    }
+  }
+
+  Future<void> loadSyncState() async {
+    logData(TAG_PROJECTS_CUBIT, 'loadSyncState():');
+    try {
+      Result<String> result = await tasksRepository.loadSyncState();
+      logData(TAG_PROJECTS_CUBIT, 'result = $result');
+      result.when(success: (String data) {
+        logData(TAG_PROJECTS_CUBIT, 'data = $data');
+        emit(state.copyWith(
+          syncToken: data,
+        ));
+      }, failure: (Exception e) {
+        logData(TAG_PROJECTS_CUBIT, 'failure: ${e.toString()}');
+      });
+    } on Error {
+      logData(TAG_PROJECTS_CUBIT, 'Error:');
+    } on Exception {
+      logData(TAG_PROJECTS_CUBIT, 'Exception: ');
+    }
+  }
+
+  Future<void> moveTaskToSection({
+    required String taskId,
+    required String toSectionId,
+  }) async {
+    logData(TAG_PROJECTS_CUBIT, 'moveTaskToSection():');
+    if (state.syncToken != null) {
+      try {
+        Result<String> result = await tasksRepository.moveTaskToSection(
+            syncToken: state.syncToken!,
+            uuid: const Uuid().v4(),
+            taskId: taskId,
+            toSectionId: toSectionId);
+        logData(TAG_PROJECTS_CUBIT, 'result = $result');
+        result.when(success: (String data) {
+          logData(TAG_PROJECTS_CUBIT, 'data = $data');
+
+          final newTaskList = List<Task>.from(state.tasks!);
+          int indexOfTask =
+              newTaskList.indexWhere((element) => element.id == taskId);
+
+          final taskToMove = newTaskList[indexOfTask];
+          logData(TAG_PROJECTS_CUBIT,
+              'OLD taskToMove.sectionId = ${taskToMove.sectionId}');
+
+          final mTask =
+              newTaskList[indexOfTask].copyWith(sectionId: toSectionId);
+          newTaskList.replaceRange(indexOfTask, indexOfTask + 1, [mTask]);
+          emit(state.copyWith(
+            syncToken: data,
+            status: PageStateStatus.updated,
+            tasks: newTaskList,
+          ));
+        }, failure: (Exception e) {
+          logData(TAG_PROJECTS_CUBIT, 'failure: ${e.toString()}');
+        });
+      } on Error {
+        logData(TAG_PROJECTS_CUBIT, 'Error:');
+      } on Exception {
+        logData(TAG_PROJECTS_CUBIT, 'Exception: ');
+      }
     }
   }
 }

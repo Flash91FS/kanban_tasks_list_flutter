@@ -19,6 +19,7 @@ mixin _$TasksState {
   List<Task>? get tasks => throw _privateConstructorUsedError;
   List<AppFlowyGroupData>? get groups => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
+  String? get syncToken => throw _privateConstructorUsedError;
   PageStateStatus get status => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -36,6 +37,7 @@ abstract class $TasksStateCopyWith<$Res> {
       {List<Task>? tasks,
       List<AppFlowyGroupData>? groups,
       String? errorMessage,
+      String? syncToken,
       PageStateStatus status});
 }
 
@@ -55,6 +57,7 @@ class _$TasksStateCopyWithImpl<$Res, $Val extends TasksState>
     Object? tasks = freezed,
     Object? groups = freezed,
     Object? errorMessage = freezed,
+    Object? syncToken = freezed,
     Object? status = null,
   }) {
     return _then(_value.copyWith(
@@ -69,6 +72,10 @@ class _$TasksStateCopyWithImpl<$Res, $Val extends TasksState>
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      syncToken: freezed == syncToken
+          ? _value.syncToken
+          : syncToken // ignore: cast_nullable_to_non_nullable
               as String?,
       status: null == status
           ? _value.status
@@ -90,6 +97,7 @@ abstract class _$$TasksStateImplCopyWith<$Res>
       {List<Task>? tasks,
       List<AppFlowyGroupData>? groups,
       String? errorMessage,
+      String? syncToken,
       PageStateStatus status});
 }
 
@@ -107,6 +115,7 @@ class __$$TasksStateImplCopyWithImpl<$Res>
     Object? tasks = freezed,
     Object? groups = freezed,
     Object? errorMessage = freezed,
+    Object? syncToken = freezed,
     Object? status = null,
   }) {
     return _then(_$TasksStateImpl(
@@ -121,6 +130,10 @@ class __$$TasksStateImplCopyWithImpl<$Res>
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      syncToken: freezed == syncToken
+          ? _value.syncToken
+          : syncToken // ignore: cast_nullable_to_non_nullable
               as String?,
       status: null == status
           ? _value.status
@@ -137,6 +150,7 @@ class _$TasksStateImpl implements _TasksState {
       {final List<Task>? tasks,
       final List<AppFlowyGroupData>? groups,
       this.errorMessage,
+      this.syncToken,
       required this.status})
       : _tasks = tasks,
         _groups = groups;
@@ -164,11 +178,13 @@ class _$TasksStateImpl implements _TasksState {
   @override
   final String? errorMessage;
   @override
+  final String? syncToken;
+  @override
   final PageStateStatus status;
 
   @override
   String toString() {
-    return 'TasksState(tasks: $tasks, groups: $groups, errorMessage: $errorMessage, status: $status)';
+    return 'TasksState(tasks: $tasks, groups: $groups, errorMessage: $errorMessage, syncToken: $syncToken, status: $status)';
   }
 
   @override
@@ -180,6 +196,8 @@ class _$TasksStateImpl implements _TasksState {
             const DeepCollectionEquality().equals(other._groups, _groups) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
+            (identical(other.syncToken, syncToken) ||
+                other.syncToken == syncToken) &&
             (identical(other.status, status) || other.status == status));
   }
 
@@ -189,6 +207,7 @@ class _$TasksStateImpl implements _TasksState {
       const DeepCollectionEquality().hash(_tasks),
       const DeepCollectionEquality().hash(_groups),
       errorMessage,
+      syncToken,
       status);
 
   @JsonKey(ignore: true)
@@ -203,6 +222,7 @@ abstract class _TasksState implements TasksState {
       {final List<Task>? tasks,
       final List<AppFlowyGroupData>? groups,
       final String? errorMessage,
+      final String? syncToken,
       required final PageStateStatus status}) = _$TasksStateImpl;
 
   @override
@@ -211,6 +231,8 @@ abstract class _TasksState implements TasksState {
   List<AppFlowyGroupData>? get groups;
   @override
   String? get errorMessage;
+  @override
+  String? get syncToken;
   @override
   PageStateStatus get status;
   @override

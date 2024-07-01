@@ -153,4 +153,33 @@ class TasksRepository with ApiErrorHandler implements ITasksRepository {
       return const Result.success(data: 'Task Deleted Successfully');
     });
   }
+
+  @override
+  Future<Result<String>> loadSyncState() {
+    return captureApiErrorsAsResultFailure(() async {
+      var syncResponse = await _tasksApi.apiPostSyncState();
+      if (syncResponse != null) {
+        return Result.success(data: syncResponse.syncToken);
+      } else {
+        return Result.failure(error: Exception('Could not load project sync state'));
+      }
+    });
+  }
+
+  @override
+  Future<Result<String>> moveTaskToSection({
+    required String syncToken,
+    required String uuid,
+    required String taskId,
+    required String toSectionId,
+  }) {
+    return captureApiErrorsAsResultFailure(() async {
+      var syncResponse = await _tasksApi.apiPostSyncItemMove(syncToken: syncToken, uuid: uuid, taskId: taskId, toSectionId: toSectionId);
+      if (syncResponse != null) {
+        return Result.success(data: syncResponse.syncToken);
+      } else {
+        return Result.failure(error: Exception('Could not load project sync state'));
+      }
+    });
+  }
 }

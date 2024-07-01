@@ -15,8 +15,7 @@ class ProjectsRepository with ApiErrorHandler implements IProjectsRepository {
   @override
   Future<Result<List<Project>>> getProjectsList() {
     return captureApiErrorsAsResultFailure(() async {
-      var projectsListResponse =
-          await _projectsApi.apiGetProjectsList();
+      var projectsListResponse = await _projectsApi.apiGetProjectsList();
       return Result.success(
           data: projectsListResponse
               .map(

@@ -10,7 +10,7 @@ class SectionsApi {
   final ApiClient apiClient;
 
   Future<List<SectionResponseModel>> apiGetSectionsList() async {
-    const path = '/sections';
+    const path = '/rest/v2/sections';
 
     try {
       return await apiClient.invokeGet<List<SectionResponseModel>>(

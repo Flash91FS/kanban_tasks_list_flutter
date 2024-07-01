@@ -11,6 +11,7 @@ class TasksState with _$TasksState {
     List<Task>? tasks,
     List<AppFlowyGroupData>? groups,
     String? errorMessage,
+    String? syncToken,
     required PageStateStatus status,
   }) = _TasksState;
 }
