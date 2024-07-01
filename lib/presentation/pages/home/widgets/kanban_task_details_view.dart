@@ -12,6 +12,7 @@ import 'package:kanban_tasks_list_flutter/utils.dart';
 class KanbanTaskDetailsView extends StatefulWidget {
   final bool isAdd;
   final bool isDetailOnly;
+  final String sectionId;
   final KanbanItemDataModel? data;
   final Function(KanbanItemDataModel) onTapCallBack;
 
@@ -19,6 +20,7 @@ class KanbanTaskDetailsView extends StatefulWidget {
     super.key,
     required this.isAdd,
     this.isDetailOnly = false,
+    required this.sectionId,
     required this.data,
     required this.onTapCallBack,
   });
@@ -138,6 +140,7 @@ class _KanbanTaskDetailsViewState extends State<KanbanTaskDetailsView> {
                         logData(TAG_KANBAN_BOARD, 'Add Task');
 
                         final kanbanItemDataModel = KanbanItemDataModel(
+                          groupId: widget.sectionId,
                           itemId: widget.data?.itemId ?? '',
                           title: titleController.text,
                           description: descriptionController.text,
@@ -165,8 +168,8 @@ class _KanbanTaskDetailsViewState extends State<KanbanTaskDetailsView> {
                     },
                   ),
 
-                if (widget.isDetailOnly && widget.data?.itemId != null)
-                  TimeTrackerWidget(itemId: widget.data!.itemId),
+                if (widget.isDetailOnly && widget.data != null)
+                  TimeTrackerWidget(taskItem: widget.data!),
 
                 SizedBox(
                     height: MediaQuery.paddingOf(context).bottom +

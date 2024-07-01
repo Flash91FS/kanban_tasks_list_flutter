@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_tasks_list_flutter/core/page_state_status.dart';
 import 'package:kanban_tasks_list_flutter/domain/models/kanban_item_data_model.dart';
 import 'package:kanban_tasks_list_flutter/domain/models/task.dart';
+import 'package:kanban_tasks_list_flutter/firebase/firebase_methods.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/environment/environment_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_state.dart';
@@ -16,8 +17,7 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
     required this.tasksCubit,
     required this.environmentCubit,
   }) : super(const KanbanBoardState(groups: [])) {
-    _tasksSubscription =
-        tasksCubit.stream.listen(_handleTasksStateChange);
+    _tasksSubscription = tasksCubit.stream.listen(_handleTasksStateChange);
     _handleTasksStateChange(tasksCubit.state);
   }
 
@@ -33,10 +33,10 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
 
   _handleTasksStateChange(TasksState tasksState) {
     logData(TAG_KANBAN_BOARD_CUBIT, '_handleBalanceBillStateChange(): ');
-    logData(TAG_KANBAN_BOARD_CUBIT, '_handleBalanceBillStateChange(): tasksState.status = ${tasksState.status}');
+    logData(TAG_KANBAN_BOARD_CUBIT,
+        '_handleBalanceBillStateChange(): tasksState.status = ${tasksState.status}');
     if (tasksState.status == PageStateStatus.loaded ||
         tasksState.status == PageStateStatus.updated) {
-
       emit(state.copyWith(groups: createGroups(tasksState.tasks)));
     }
   }
@@ -52,13 +52,16 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
       for (Task item in tasks) {
         if (item.sectionId == environmentCubit.state.sectionIdToDo) {
           groupItemsTodo.add(KanbanItemDataModel(
+            groupId: item.sectionId!,
             itemId: item.id,
             title: item.content,
             description: item.description,
             startDate: item.createdAt,
           ));
-        } else if (item.sectionId == environmentCubit.state.sectionIdInProgress) {
+        } else if (item.sectionId ==
+            environmentCubit.state.sectionIdInProgress) {
           groupItemsInProgress.add(KanbanItemDataModel(
+            groupId: item.sectionId!,
             itemId: item.id,
             title: item.content,
             description: item.description,
@@ -66,6 +69,7 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
           ));
         } else if (item.sectionId == environmentCubit.state.sectionIdDone) {
           groupItemsDone.add(KanbanItemDataModel(
+            groupId: item.sectionId!,
             itemId: item.id,
             title: item.content,
             description: item.description,
@@ -89,7 +93,6 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
       });
     }
 
-
     final group1 = AppFlowyGroupData(
       id: environmentCubit.state.sectionIdToDo,
       name: 'To Do',
@@ -112,17 +115,23 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
   Future<void> onMoveGroupItemToGroup(
       String fromGroupId, int fromIndex, String toGroupId, int toIndex) async {
     if (state.groups != null) {
-
       AppFlowyGroupData toGroup =
           state.groups!.firstWhere((group) => group.id == toGroupId);
       AppFlowyGroupItem item = toGroup.items.elementAt(toIndex);
 
-
-      final task = tasksCubit.state.tasks!.firstWhere((task) => task.id == item.id);
+      final task =
+          tasksCubit.state.tasks!.firstWhere((task) => task.id == item.id);
       logData(TAG_KANBAN_BOARD_CUBIT,
           'onMoveGroupItemToGroup(): task : task.id: ${task.id} -  prev-sectionId: ${task.sectionId} - ${task.content} - ${task.description}');
 
       tasksCubit.moveTaskToSection(taskId: task.id, toSectionId: toGroup.id);
+
+      //Todo make a call to repository/api instead of directly calling FireStore Methods
+      if (fromGroupId == environmentCubit.state.sectionIdInProgress) {
+        String res = await FireStoreMethods()
+            .stopTimeTrackingWithoutDetails(taskId: task.id);
+        logData(TAG_KANBAN_BOARD_CUBIT, 'onMoveGroupItemToGroup(): res : $res');
+      }
     }
   }
 }

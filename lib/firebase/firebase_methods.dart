@@ -31,4 +31,41 @@ class FireStoreMethods {
     }
     return res;
   }
+
+  // stop TimeTracking Without Details
+  Future<String> stopTimeTrackingWithoutDetails(
+      {required String taskId}) async {
+    String res = "Some error occurred";
+    try {
+      final DateTime timeNow = DateTime.now();
+
+      final userSnap = await _firestore.collection('tasks').doc(taskId).get();
+
+      final data = userSnap.data();
+      if (data != null) {
+        final int timeSpentMs = data['timeSpentMs'];
+        final int startTimeMs = data['startTimeMs'];
+        final bool timeTrackingStarted = data['timeTrackingStarted'] as bool;
+
+        if (timeTrackingStarted) {
+          final totalTimeSpentMs =
+              timeSpentMs + (timeNow.millisecondsSinceEpoch - startTimeMs);
+
+          _firestore.collection('tasks').doc(taskId).set({
+            'taskId': taskId,
+            'timeSpentMs': totalTimeSpentMs,
+            'startTimeMs': 0,
+            'endTimeMs': 0,
+            'updatedAt': timeNow,
+            'timeTrackingStarted': false,
+          });
+        }
+      }
+      res = 'success';
+    } catch (err) {
+      res = err.toString();
+      logData('FirebaseMethods', 'stopTimeTrackingWithoutDetails() : Exception : ${err.toString()}');
+    }
+    return res;
+  }
 }

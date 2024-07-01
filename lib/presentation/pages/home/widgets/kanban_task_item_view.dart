@@ -181,7 +181,9 @@ class KanbanTaskItemView extends StatelessWidget {
       KanbanTaskDetailsView(
           isAdd: isAdd,
           isDetailOnly: isDetailOnly,
+          sectionId: groupId,
           data: KanbanItemDataModel(
+              groupId: groupId,
               itemId: item.itemId,
               title: item.title,
               description: item.description),

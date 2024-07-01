@@ -65,9 +65,10 @@ class _KanbanBoardState extends State<KanbanBoard> {
       state.groups!.forEach((group) {
         logData(TAG_KANBAN_BOARD, 'BlocBuilder - group : ${group.id}');
         group.items.forEach((current) {
-          if (current is KanbanItemDataModel)
+          if (current is KanbanItemDataModel) {
             logData(TAG_KANBAN_BOARD,
                 'BlocBuilder - groupItem : ${current.itemId} -  ${current.title} - ${current.description}');
+          }
         });
         // groupItemsInProgress.forEach((current) {
         //   logData(TAG_KANBAN_BOARD_CUBIT,
@@ -113,8 +114,7 @@ class _KanbanBoardState extends State<KanbanBoard> {
               return Column(
                 children: [
                   AppFlowyGroupHeader(
-                    title: Text(
-                        '${group.headerData.groupName} - ${group.headerData.groupId}'),
+                    title: Text(group.headerData.groupName),
                     addIcon: group.id == sectionIdDone
                         ? null
                         : const Icon(Icons.add, size: 20),
@@ -125,6 +125,7 @@ class _KanbanBoardState extends State<KanbanBoard> {
                           KanbanTaskDetailsView(
                               isAdd: true,
                               data: null,
+                              sectionId: group.id,
                               onTapCallBack: (value) {
                                 logData(TAG_KANBAN_BOARD,
                                     'value: projectId: $projectId');
@@ -149,7 +150,7 @@ class _KanbanBoardState extends State<KanbanBoard> {
                     margin: kanbanBoardConfig.groupBodyPadding,
                   ),
                   const Padding(
-                    padding: EdgeInsets.fromLTRB(8,0,8,8),
+                    padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
                     child: Divider(
                       height: 1,
                       thickness: 1,

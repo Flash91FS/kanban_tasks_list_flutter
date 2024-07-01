@@ -37,7 +37,7 @@ class KanbanTaskCubit extends Cubit<KanbanTaskState> {
             timeSpentMs + (endTimeForCalculation - startTimeMs);
 
         String timeDurationToDisplay =
-            prettyDuration(Duration(milliseconds: totalTimeSpentMs));
+            durationToString(Duration(milliseconds: totalTimeSpentMs));
         logData('KanbanTaskCubit',
             'loadData(): timeDurationToDisplay = $timeDurationToDisplay');
 
@@ -99,7 +99,7 @@ class KanbanTaskCubit extends Cubit<KanbanTaskState> {
     );
 
     String timeDurationToDisplay =
-        prettyDuration(Duration(milliseconds: totalTimeSpentMs));
+        durationToString(Duration(milliseconds: totalTimeSpentMs));
     logData('KanbanTaskCubit',
         'stopTimeTracking(): timeDurationToDisplay = $timeDurationToDisplay');
     emit(state.copyWith(
@@ -114,7 +114,7 @@ class KanbanTaskCubit extends Cubit<KanbanTaskState> {
     logData('KanbanTaskCubit', 'startTimeTracking(): res = $res');
   }
 
-  String prettyDuration(Duration duration) {
+  String durationToString(Duration duration) {
     var components = <String>[];
 
     var days = duration.inDays;
