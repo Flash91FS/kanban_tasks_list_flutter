@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:kanban_tasks_list_flutter/utils.dart';
 
 extension ValidationExtension on String {
   ///Title
   String? validTitle({required BuildContext context, bool ignoreEmpty = false}) {
-    logData('ValidationExtension', 'validTitle():');
     if (isEmpty && ignoreEmpty) {
       return null;
     } else if (isEmpty) {
@@ -18,7 +16,6 @@ extension ValidationExtension on String {
 
   ///Description
   String? validDescription({required BuildContext context, bool ignoreEmpty = false}) {
-    logData('ValidationExtension', 'validDescription():');
     if (isEmpty && ignoreEmpty) {
       return null;
     } else if (isEmpty) {

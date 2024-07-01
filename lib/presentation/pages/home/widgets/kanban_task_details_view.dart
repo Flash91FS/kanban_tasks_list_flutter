@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:kanban_tasks_list_flutter/domain/models/kanban_item_data_model.dart';
+import 'package:kanban_tasks_list_flutter/extensions/validation_extension.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/modal_footer_buttons_widget.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/modal_header_text_widgets.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/text_form_field_widget.dart';
-
-import 'package:kanban_tasks_list_flutter/extensions/validation_extension.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/time_tracker_widget.dart';
-import 'package:kanban_tasks_list_flutter/utils.dart';
 
 class KanbanTaskDetailsView extends StatefulWidget {
   final bool isAdd;
@@ -70,7 +67,6 @@ class _KanbanTaskDetailsViewState extends State<KanbanTaskDetailsView> {
 
   @override
   Widget build(BuildContext context) {
-    logData(TAG_KANBAN_BOARD, 'build():');
     return ValueListenableBuilder(
       valueListenable: isEnable,
       builder: (context, isEnableBool, child) {
@@ -88,8 +84,6 @@ class _KanbanTaskDetailsViewState extends State<KanbanTaskDetailsView> {
                       : (widget.isAdd ? 'Add Task' : 'Edit/Update Task'),
                   onBack: () {},
                 ),
-                // Expanded(
-                //   child:
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -137,8 +131,6 @@ class _KanbanTaskDetailsViewState extends State<KanbanTaskDetailsView> {
                     nextTap: () async {
                       formKey.currentState!.validate();
                       if (isEnableBool) {
-                        logData(TAG_KANBAN_BOARD, 'Add Task');
-
                         final kanbanItemDataModel = KanbanItemDataModel(
                           groupId: widget.sectionId,
                           itemId: widget.data?.itemId ?? '',
@@ -153,14 +145,8 @@ class _KanbanTaskDetailsViewState extends State<KanbanTaskDetailsView> {
                           startDate: startDate,
                           endDate: endDate,
                         );
-                        logData(TAG_KANBAN_BOARD,
-                            'kanbanItemDataModel: title: ${kanbanItemDataModel.title}');
-                        logData(TAG_KANBAN_BOARD,
-                            'kanbanItemDataModel: description: ${kanbanItemDataModel.description}');
                         widget.onTapCallBack(kanbanItemDataModel);
                         Navigator.of(context).pop();
-                      } else {
-                        logData(TAG_KANBAN_BOARD, 'Do Nothing');
                       }
                     },
                     cancelTap: () {
@@ -172,13 +158,13 @@ class _KanbanTaskDetailsViewState extends State<KanbanTaskDetailsView> {
                   TimeTrackerWidget(taskItem: widget.data!),
 
                 SizedBox(
-                    height: MediaQuery.paddingOf(context).bottom +
-                        MediaQuery.viewInsetsOf(context).bottom +
-                        10),
+                  height: MediaQuery.paddingOf(context).bottom +
+                      MediaQuery.viewInsetsOf(context).bottom +
+                      10,
+                ),
               ],
             ),
           ),
-          // ),
         );
       },
     );

@@ -1,5 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:kanban_tasks_list_flutter/utils.dart';
 
 import 'analytics.dart';
 import 'firebase_options.dart';
@@ -16,7 +15,6 @@ class FirebaseInitializer {
 
   Future<void> init() async {
     if (!_initialized) {
-      logData('FirebaseInitializer', 'Initializing Firebase');
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
@@ -27,8 +25,6 @@ class FirebaseInitializer {
       ]);
 
       _initialized = true;
-    } else {
-      logData('FirebaseInitializer', 'Firebase already initialized...');
     }
   }
 

@@ -10,6 +10,7 @@ const String TAG_TASKS_CUBIT = "FS - TasksCubit - ";
 const String TAG_COMMENTS_CUBIT = "FS - CommentsCubit - ";
 const String TAG_PROJECTS_CUBIT = "FS - ProjectsCubit - ";
 const String TAG_SECTIONS_CUBIT = "FS - SectionsCubit - ";
+const String TAG_KANBAN_TASK_CUBIT = "FS - KanbanTaskCubit - ";
 
 void logData(String tag, String data) {
   //TODO add restriction to log only for debug version

@@ -12,7 +12,6 @@ class KanbanTaskCubit extends Cubit<KanbanTaskState> {
       : super(const KanbanTaskState(status: PageStateStatus.initial));
 
   Future<void> loadData(String itemId) async {
-    logData('KanbanTaskCubit', 'loadData(): itemId = $itemId');
     try {
       //Todo make a call to repository/api instead of directly calling FireStore Methods
       final userSnap = await FirebaseFirestore.instance
@@ -21,14 +20,12 @@ class KanbanTaskCubit extends Cubit<KanbanTaskState> {
           .get();
       final data = userSnap.data();
       if (data != null) {
-        logData('KanbanTaskCubit', 'loadData(): data = $data');
         final taskId = data['taskId'];
         final timeSpentMs = data['timeSpentMs'];
         final startTimeMs = data['startTimeMs'];
         final endTimeMs = data['endTimeMs'];
         final DateTime updatedAt = (data['updatedAt'] as Timestamp).toDate();
         final timeTrackingStarted = data['timeTrackingStarted'];
-
 
         final endTimeForCalculation = timeTrackingStarted
             ? DateTime.now().millisecondsSinceEpoch
@@ -38,8 +35,6 @@ class KanbanTaskCubit extends Cubit<KanbanTaskState> {
 
         String timeDurationToDisplay =
             durationToString(Duration(milliseconds: totalTimeSpentMs));
-        logData('KanbanTaskCubit',
-            'loadData(): timeDurationToDisplay = $timeDurationToDisplay');
 
         emit(KanbanTaskState(
           status: PageStateStatus.loaded,
@@ -53,7 +48,7 @@ class KanbanTaskCubit extends Cubit<KanbanTaskState> {
         ));
       }
     } catch (ex) {
-      logData('KanbanTaskCubit', 'loadData(): Exception = ${ex.toString()}');
+      logData(TAG_KANBAN_TASK_CUBIT, 'loadData(): Exception = ${ex.toString()}');
     }
   }
 
@@ -62,7 +57,7 @@ class KanbanTaskCubit extends Cubit<KanbanTaskState> {
     final int timeAlreadySpent = state.timeSpentMs;
     final startTimeMs = DateTime.now().millisecondsSinceEpoch;
     //Todo make a call to repository/api instead of directly calling FireStore Methods
-    String res = await FireStoreMethods().postTask(
+    await FireStoreMethods().postTask(
       taskId: taskId,
       timeTrackingStarted: timeTrackingStarted,
       startTimeMs: startTimeMs,
@@ -78,7 +73,6 @@ class KanbanTaskCubit extends Cubit<KanbanTaskState> {
       updatedAt: DateTime.now(),
       timeTrackingStarted: timeTrackingStarted,
     ));
-    logData('KanbanTaskCubit', 'startTimeTracking(): res = $res');
   }
 
   Future<void> stopTimeTracking({required String taskId}) async {
@@ -89,7 +83,7 @@ class KanbanTaskCubit extends Cubit<KanbanTaskState> {
 
     final totalTimeSpentMs = timeAlreadySpent + (endTimeMs - startTimeMs);
     //Todo make a call to repository/api instead of directly calling FireStore Methods
-    String res = await FireStoreMethods().postTask(
+    await FireStoreMethods().postTask(
       taskId: taskId,
       timeTrackingStarted: timeTrackingStarted,
       startTimeMs: 0,
@@ -100,8 +94,7 @@ class KanbanTaskCubit extends Cubit<KanbanTaskState> {
 
     String timeDurationToDisplay =
         durationToString(Duration(milliseconds: totalTimeSpentMs));
-    logData('KanbanTaskCubit',
-        'stopTimeTracking(): timeDurationToDisplay = $timeDurationToDisplay');
+
     emit(state.copyWith(
       status: PageStateStatus.updated,
       timeSpentMs: totalTimeSpentMs,
@@ -110,8 +103,6 @@ class KanbanTaskCubit extends Cubit<KanbanTaskState> {
       timeTrackingStarted: timeTrackingStarted,
       timeDurationToDisplay: timeDurationToDisplay,
     ));
-
-    logData('KanbanTaskCubit', 'startTimeTracking(): res = $res');
   }
 
   String durationToString(Duration duration) {

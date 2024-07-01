@@ -1,7 +1,6 @@
 import 'package:appflowy_board/appflowy_board.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kanban_tasks_list_flutter/domain/models/kanban_item_data_model.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/environment/environment_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/dimensions.dart';
@@ -11,7 +10,6 @@ import 'package:kanban_tasks_list_flutter/presentation/pages/home/config/kanban_
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/kanban_task_details_view.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/kanban_task_item_view.dart';
 import 'package:kanban_tasks_list_flutter/presentation/responsive_dialog.dart';
-import 'package:kanban_tasks_list_flutter/utils.dart';
 
 class KanbanBoard extends StatefulWidget {
   const KanbanBoard({super.key});
@@ -29,16 +27,13 @@ class _KanbanBoardState extends State<KanbanBoard> {
     boardScrollController = AppFlowyBoardScrollController();
     kanbanController = AppFlowyBoardController(
       onMoveGroup: (fromGroupId, fromIndex, toGroupId, toIndex) {
-        logData(TAG_KANBAN_BOARD,
-            'onMoveGroup: Move item from $fromIndex to $toIndex');
+        //add logic for onMoveGroup
       },
       onMoveGroupItem: (groupId, fromIndex, toIndex) {
-        logData(TAG_KANBAN_BOARD,
-            'onMoveGroupItem: Move $groupId:$fromIndex to $groupId:$toIndex');
+        //add logic for onMoveGroupItem
       },
       onMoveGroupItemToGroup: (fromGroupId, fromIndex, toGroupId, toIndex) {
-        logData(TAG_KANBAN_BOARD,
-            'onMoveGroupItemToGroup: Move $fromGroupId:$fromIndex to $toGroupId:$toIndex');
+        //add logic for onMoveGroupItemToGroup
         context
             .read<KanbanBoardCubit>()
             .onMoveGroupItemToGroup(fromGroupId, fromIndex, toGroupId, toIndex);
@@ -61,25 +56,6 @@ class _KanbanBoardState extends State<KanbanBoard> {
 
     return BlocBuilder<KanbanBoardCubit, KanbanBoardState>(
         builder: (context, state) {
-      //Todo - delete the below line used to just log data on console
-      state.groups!.forEach((group) {
-        logData(TAG_KANBAN_BOARD, 'BlocBuilder - group : ${group.id}');
-        group.items.forEach((current) {
-          if (current is KanbanItemDataModel) {
-            logData(TAG_KANBAN_BOARD,
-                'BlocBuilder - groupItem : ${current.itemId} -  ${current.title} - ${current.description}');
-          }
-        });
-        // groupItemsInProgress.forEach((current) {
-        //   logData(TAG_KANBAN_BOARD_CUBIT,
-        //       'GroupItems-InProgress - current : ${current.itemId} -  ${current.title} - ${current.description}');
-        // });
-        // groupItemsDone.forEach((current) {
-        //   logData(TAG_KANBAN_BOARD_CUBIT,
-        //       'GroupItems-Done - current : ${current.itemId} -  ${current.title} - ${current.description}');
-        // });
-      });
-
       kanbanController.clear();
       kanbanController.addGroups(state.groups!);
 
@@ -127,14 +103,6 @@ class _KanbanBoardState extends State<KanbanBoard> {
                               data: null,
                               sectionId: group.id,
                               onTapCallBack: (value) {
-                                logData(TAG_KANBAN_BOARD,
-                                    'value: projectId: $projectId');
-                                logData(TAG_KANBAN_BOARD,
-                                    'value: groupId: ${group.headerData.groupId}');
-                                logData(TAG_KANBAN_BOARD,
-                                    'value: title: ${value.title}');
-                                logData(TAG_KANBAN_BOARD,
-                                    'value: description: ${value.description}');
                                 context.read<TasksCubit>().addNewTask(
                                     projectId: projectId,
                                     sectionId: group.headerData.groupId,

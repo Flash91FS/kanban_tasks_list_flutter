@@ -11,7 +11,6 @@ import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/kanban
 import 'package:kanban_tasks_list_flutter/presentation/popup_dialog.dart';
 import 'package:kanban_tasks_list_flutter/presentation/responsive_dialog.dart';
 import 'package:kanban_tasks_list_flutter/presentation/widgets/row_spacer/row_spacer.dart';
-import 'package:kanban_tasks_list_flutter/utils.dart';
 
 class KanbanTaskItemView extends StatelessWidget {
   final String projectId;
@@ -188,10 +187,6 @@ class KanbanTaskItemView extends StatelessWidget {
               title: item.title,
               description: item.description),
           onTapCallBack: (value) {
-            logData(TAG_KANBAN_BOARD, 'value: itemId: ${value.itemId}');
-            logData(TAG_KANBAN_BOARD, 'value: title: ${value.title}');
-            logData(
-                TAG_KANBAN_BOARD, 'value: description: ${value.description}');
             context.read<TasksCubit>().updateTask(
                 taskId: value.itemId,
                 title: value.title,

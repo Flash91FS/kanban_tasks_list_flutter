@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:kanban_tasks_list_flutter/utils.dart';
 
 class FireStoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -27,7 +26,6 @@ class FireStoreMethods {
       res = 'success';
     } catch (err) {
       res = err.toString();
-      logData('FirebaseMethods', 'postTask() : Exception : ${err.toString()}');
     }
     return res;
   }
@@ -64,7 +62,6 @@ class FireStoreMethods {
       res = 'success';
     } catch (err) {
       res = err.toString();
-      logData('FirebaseMethods', 'stopTimeTrackingWithoutDetails() : Exception : ${err.toString()}');
     }
     return res;
   }
