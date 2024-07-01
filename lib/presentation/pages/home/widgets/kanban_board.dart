@@ -8,7 +8,7 @@ import 'package:kanban_tasks_list_flutter/presentation/dimensions.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_board/kanban_board_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_board/kanban_board_state.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/config/kanban_config.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/kanban_add_update_view.dart';
+import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/kanban_task_details_view.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/kanban_task_item_view.dart';
 import 'package:kanban_tasks_list_flutter/presentation/responsive_dialog.dart';
 import 'package:kanban_tasks_list_flutter/utils.dart';
@@ -122,7 +122,7 @@ class _KanbanBoardState extends State<KanbanBoard> {
                       if (group.id != sectionIdDone) {
                         await ResponsiveDialog.showResponsiveDialog(
                           context,
-                          KanbanAddUpdateView(
+                          KanbanTaskDetailsView(
                               isAdd: true,
                               data: null,
                               onTapCallBack: (value) {

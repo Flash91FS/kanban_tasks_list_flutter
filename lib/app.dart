@@ -7,6 +7,7 @@ import 'package:kanban_tasks_list_flutter/presentation/bloc/projects/projects_cu
 import 'package:kanban_tasks_list_flutter/presentation/bloc/sections/sections_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_board/kanban_board_cubit.dart';
+import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/kanban_task_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/kanban_page.dart';
 import 'package:kanban_tasks_list_flutter/repository/comments_repository.dart';
 import 'package:kanban_tasks_list_flutter/repository/i_comments_repository.dart';
@@ -66,6 +67,9 @@ class App extends StatelessWidget {
                 tasksCubit: BlocProvider.of<TasksCubit>(context),
                 environmentCubit: BlocProvider.of<EnvironmentCubit>(context),
               ),
+            ),
+            BlocProvider(
+              create: (context) => KanbanTaskCubit(),
             ),
             BlocProvider(
               create: (context) => ProjectsCubit(

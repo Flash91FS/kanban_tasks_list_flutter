@@ -6,26 +6,28 @@ import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/modal_
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/text_form_field_widget.dart';
 
 import 'package:kanban_tasks_list_flutter/extensions/validation_extension.dart';
+import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/time_tracker_widget.dart';
 import 'package:kanban_tasks_list_flutter/utils.dart';
 
-
-class KanbanAddUpdateView extends StatefulWidget {
+class KanbanTaskDetailsView extends StatefulWidget {
   final bool isAdd;
+  final bool isDetailOnly;
   final KanbanItemDataModel? data;
   final Function(KanbanItemDataModel) onTapCallBack;
 
-  const KanbanAddUpdateView({
+  const KanbanTaskDetailsView({
     super.key,
     required this.isAdd,
+    this.isDetailOnly = false,
     required this.data,
     required this.onTapCallBack,
   });
 
   @override
-  State<KanbanAddUpdateView> createState() => _KanbanAddUpdateViewState();
+  State<KanbanTaskDetailsView> createState() => _KanbanTaskDetailsViewState();
 }
 
-class _KanbanAddUpdateViewState extends State<KanbanAddUpdateView> {
+class _KanbanTaskDetailsViewState extends State<KanbanTaskDetailsView> {
   final formKey = GlobalKey<FormState>();
   ValueNotifier<bool> isEnable = ValueNotifier(false);
   final TextEditingController titleController = TextEditingController();
@@ -38,9 +40,11 @@ class _KanbanAddUpdateViewState extends State<KanbanAddUpdateView> {
     super.initState();
     initialData();
 
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   formKey.currentState?.validate();
-    // });
+    if (!widget.isDetailOnly && widget.isAdd) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        formKey.currentState!.validate();
+      });
+    }
   }
 
   Future<void> initialData() async {
@@ -49,7 +53,7 @@ class _KanbanAddUpdateViewState extends State<KanbanAddUpdateView> {
       descriptionController.text = widget.data?.description ?? '';
       startDate = widget.data?.startDate;
       endDate = widget.data?.endDate;
-      if (widget.data != null) {
+      if (widget.data != null && !widget.isDetailOnly) {
         isEnable.value = formKey.currentState?.validate() ?? false;
       }
     });
@@ -68,21 +72,18 @@ class _KanbanAddUpdateViewState extends State<KanbanAddUpdateView> {
     return ValueListenableBuilder(
       valueListenable: isEnable,
       builder: (context, isEnableBool, child) {
-        return
-            // FractionallySizedBox(
-            // heightFactor: 0.8,
-            // widthFactor: 1,
-            // child:
-            Padding(
+        return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Form(
             key: formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ///Header and Close Button
                 ModalHeaderTextWidgets(
-                  header: widget.isAdd ? 'Add Task' : 'Update Task',
+                  header: widget.isDetailOnly
+                      ? widget.data?.itemId ?? ''
+                      : (widget.isAdd ? 'Add Task' : 'Edit/Update Task'),
                   onBack: () {},
                 ),
                 // Expanded(
@@ -92,6 +93,7 @@ class _KanbanAddUpdateViewState extends State<KanbanAddUpdateView> {
                   children: [
                     ///Title
                     TextFormFieldWidget(
+                      isEnabled: !widget.isDetailOnly,
                       controller: titleController,
                       hintText: 'Title',
                       mandatory: true,
@@ -109,6 +111,7 @@ class _KanbanAddUpdateViewState extends State<KanbanAddUpdateView> {
 
                     ///Description
                     TextFormFieldWidget(
+                      isEnabled: !widget.isDetailOnly,
                       controller: descriptionController,
                       maxLines: 4,
                       hintText: 'Description',
@@ -116,49 +119,54 @@ class _KanbanAddUpdateViewState extends State<KanbanAddUpdateView> {
                         enable();
                       },
                       validate: (value) {
-                        return value.toString().validDescription(
-                            context: context, ignoreEmpty: true);
+                        return value
+                            .toString()
+                            .validDescription(context: context);
                       },
                     ),
                     const SizedBox(height: 12),
                   ],
                 ),
-                ModalFooterButtonsWidget(
-                  isValidNext: isEnableBool,
-                  cancelBtnName: 'Cancel',
-                  nxtBtnName: widget.isAdd ? 'Add Task' : 'Update Task',
-                  nextTap: () async {
-                    if (isEnableBool) {
+                if (!widget.isDetailOnly)
+                  ModalFooterButtonsWidget(
+                    isValidNext: isEnableBool,
+                    cancelBtnName: 'Cancel',
+                    nxtBtnName: widget.isAdd ? 'Add Task' : 'Update Task',
+                    nextTap: () async {
+                      formKey.currentState!.validate();
+                      if (isEnableBool) {
+                        logData(TAG_KANBAN_BOARD, 'Add Task');
 
-                      logData(TAG_KANBAN_BOARD, 'Add Task');
-
-                      final kanbanItemDataModel = KanbanItemDataModel(
-                        itemId: widget.data?.itemId ?? '',
-                        title: titleController.text,
-                        description: descriptionController.text,
-                        createdDate: widget.isAdd
-                            ? DateTime.now()
-                            : widget.data?.createdDate,
-                        updatedDate: !widget.isAdd
-                            ? DateTime.now()
-                            : widget.data?.updatedDate,
-                        startDate: startDate,
-                        endDate: endDate,
-                      );
-                      logData(TAG_KANBAN_BOARD,
-                          'kanbanItemDataModel: title: ${kanbanItemDataModel.title}');
-                      logData(TAG_KANBAN_BOARD,
-                          'kanbanItemDataModel: description: ${kanbanItemDataModel.description}');
-                      widget.onTapCallBack(kanbanItemDataModel);
+                        final kanbanItemDataModel = KanbanItemDataModel(
+                          itemId: widget.data?.itemId ?? '',
+                          title: titleController.text,
+                          description: descriptionController.text,
+                          createdDate: widget.isAdd
+                              ? DateTime.now()
+                              : widget.data?.createdDate,
+                          updatedDate: !widget.isAdd
+                              ? DateTime.now()
+                              : widget.data?.updatedDate,
+                          startDate: startDate,
+                          endDate: endDate,
+                        );
+                        logData(TAG_KANBAN_BOARD,
+                            'kanbanItemDataModel: title: ${kanbanItemDataModel.title}');
+                        logData(TAG_KANBAN_BOARD,
+                            'kanbanItemDataModel: description: ${kanbanItemDataModel.description}');
+                        widget.onTapCallBack(kanbanItemDataModel);
+                        Navigator.of(context).pop();
+                      } else {
+                        logData(TAG_KANBAN_BOARD, 'Do Nothing');
+                      }
+                    },
+                    cancelTap: () {
                       Navigator.of(context).pop();
-                    } else {
-                      logData(TAG_KANBAN_BOARD, 'Do Nothing');
-                    }
-                  },
-                  cancelTap: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
+                    },
+                  ),
+
+                if (widget.isDetailOnly && widget.data?.itemId != null)
+                  TimeTrackerWidget(itemId: widget.data!.itemId),
 
                 SizedBox(
                     height: MediaQuery.paddingOf(context).bottom +

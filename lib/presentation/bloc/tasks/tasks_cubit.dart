@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_tasks_list_flutter/core/models/result.dart';
 import 'package:kanban_tasks_list_flutter/core/page_state_status.dart';
 import 'package:kanban_tasks_list_flutter/domain/models/task.dart';
+import 'package:kanban_tasks_list_flutter/firebase/firebase_methods.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/environment/environment_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_state.dart';
 import 'package:kanban_tasks_list_flutter/repository/i_tasks_repository.dart';
@@ -75,16 +76,22 @@ class TasksCubit extends Cubit<TasksState> {
         description: description,
       );
       logData(TAG_TASKS_CUBIT, 'results = $result');
-      result.when(success: (Task item) {
+      result.when(success: (Task item) async {
         logData(TAG_TASKS_CUBIT,
             'addNewTask(): - item : ${item.id} -  ${item.projectId} - ${item.content} - ${item.description}');
 
         final newTaskList = List<Task>.from(state.tasks!)..add(item);
 
+        ///Add a new task in FB
+        //Todo make a call to repository/api instead of directly calling FireStore Methods
+        String res = await FireStoreMethods().postTask(taskId: item.id);
+        logData(TAG_TASKS_CUBIT, 'addNewTask() - FireStoreMethods().postTask : res = $res');
+
         newTaskList.forEach((task) {
           logData(TAG_TASKS_CUBIT,
               'addNewTask() - task : ${task.id} -  ${task.projectId} - ${task.content} - ${task.description}');
         });
+
         emit(state.copyWith(
             status: PageStateStatus.updated, tasks: newTaskList));
       }, failure: (_) {

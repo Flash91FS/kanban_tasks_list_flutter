@@ -107,7 +107,7 @@ class TextFormFieldWidget extends StatelessWidget {
         maxLengthEnforcement: MaxLengthEnforcement.enforced,
         style: TextStyle(
           fontSize: fontSize ?? 14,
-          color: color ?? (isEnabled ? Colors.black : borderColor),
+          color: color ?? (isEnabled ? Colors.black : Colors.black),//borderColor
         ),
         decoration: InputDecoration(
           counterText: '',
@@ -123,7 +123,7 @@ class TextFormFieldWidget extends StatelessWidget {
                         hintText ?? '',
                         style: TextStyle(
                           fontSize: 12,
-                          color: isEnabled ? Colors.black : dividerColor,
+                          color: isEnabled ? Colors.black : Colors.black, //dividerColor
                         ),
                       ),
                     if (mandatory)

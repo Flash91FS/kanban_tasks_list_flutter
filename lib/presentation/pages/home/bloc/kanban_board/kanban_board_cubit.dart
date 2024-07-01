@@ -112,37 +112,16 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
   Future<void> onMoveGroupItemToGroup(
       String fromGroupId, int fromIndex, String toGroupId, int toIndex) async {
     if (state.groups != null) {
-      AppFlowyGroupData group =
-          state.groups!.firstWhere((group) => group.id == fromGroupId);
-      if (group.items.length > fromIndex) {
-        AppFlowyGroupItem item = group.items.elementAt(fromIndex);
-        logData(
-            TAG_KANBAN_BOARD_CUBIT, 'onMoveGroupItemToGroup(): From group: ${group.id}');
-        logData(TAG_KANBAN_BOARD_CUBIT, 'onMoveGroupItemToGroup(): Item: ${item.id}');
-      } else {
-        logData(TAG_KANBAN_BOARD_CUBIT,
-            'onMoveGroupItemToGroup(): group items length: ${group.items.length}');
-        logData(TAG_KANBAN_BOARD_CUBIT, 'onMoveGroupItemToGroup(): index: $fromIndex');
-      }
 
       AppFlowyGroupData toGroup =
           state.groups!.firstWhere((group) => group.id == toGroupId);
-      // if(toGroup.items.length>toIndex) {
       AppFlowyGroupItem item = toGroup.items.elementAt(toIndex);
-      logData(TAG_KANBAN_BOARD_CUBIT,
-          'onMoveGroupItemToGroup():  toGroup: ${toGroup.id}');
-      logData(TAG_KANBAN_BOARD_CUBIT, 'onMoveGroupItemToGroup(): Item: ${item.id}');
-      // }else{
-      //   logData(TAG_KANBAN_BOARD_CUBIT, 'onMoveGroupItemToGroup(): toGroup items length: ${toGroup.items.length}');
-      //   logData(TAG_KANBAN_BOARD_CUBIT, 'onMoveGroupItemToGroup(): index: ${toIndex}');
-      // }
 
 
       final task = tasksCubit.state.tasks!.firstWhere((task) => task.id == item.id);
       logData(TAG_KANBAN_BOARD_CUBIT,
           'onMoveGroupItemToGroup(): task : task.id: ${task.id} -  prev-sectionId: ${task.sectionId} - ${task.content} - ${task.description}');
 
-      //TODO call api to move task to group with id "toGroupId"
       tasksCubit.moveTaskToSection(taskId: task.id, toSectionId: toGroup.id);
     }
   }
