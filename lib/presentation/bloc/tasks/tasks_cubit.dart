@@ -1,12 +1,8 @@
-import 'package:appflowy_board/appflowy_board.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_tasks_list_flutter/core/models/result.dart';
 import 'package:kanban_tasks_list_flutter/core/page_state_status.dart';
-import 'package:kanban_tasks_list_flutter/domain/models/kanban_item_data_model.dart';
 import 'package:kanban_tasks_list_flutter/domain/models/task.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/environment/environment_cubit.dart';
-
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_state.dart';
 import 'package:kanban_tasks_list_flutter/repository/i_tasks_repository.dart';
 import 'package:kanban_tasks_list_flutter/utils.dart';
@@ -64,6 +60,102 @@ class TasksCubit extends Cubit<TasksState> {
     }
   }
 
+  Future<void> addNewTask({
+    required String projectId,
+    required String sectionId,
+    required String title,
+    required String description,
+  }) async {
+    try {
+      Result<Task> result = await tasksRepository.addNewTask(
+        projectId: projectId,
+        sectionId: sectionId,
+        title: title,
+        description: description,
+      );
+      logData(TAG_TASKS_CUBIT, 'results = $result');
+      result.when(success: (Task item) {
+        logData(TAG_TASKS_CUBIT,
+            'addNewTask(): - item : ${item.id} -  ${item.projectId} - ${item.content} - ${item.description}');
+
+        final newTaskList = List<Task>.from(state.tasks!)..add(item);
+
+        newTaskList.forEach((task) {
+          logData(TAG_TASKS_CUBIT,
+              'addNewTask() - task : ${task.id} -  ${task.projectId} - ${task.content} - ${task.description}');
+        });
+        emit(state.copyWith(
+            status: PageStateStatus.updated, tasks: newTaskList));
+      }, failure: (_) {
+        logData(TAG_TASKS_CUBIT, 'failure:');
+        emit(const TasksState(
+          status: PageStateStatus.failedToLoad,
+          errorMessage: 'Failed to load Tasks.',
+        ));
+      });
+    } on Error {
+      logData(TAG_TASKS_CUBIT, 'Error:');
+      emit(const TasksState(
+        status: PageStateStatus.failedToLoad,
+        errorMessage: 'Failed to load Tasks.',
+      ));
+    } on Exception {
+      logData(TAG_TASKS_CUBIT, 'Exception:');
+      emit(const TasksState(
+        status: PageStateStatus.failedToLoad,
+        errorMessage: 'Failed to load Tasks.',
+      ));
+    }
+  }
+
+  Future<void> updateTask(
+      {required String taskId,
+      required String title,
+      required String description}) async {
+    try {
+      Result<Task> result = await tasksRepository.updateTask(
+        taskId: taskId,
+        title: title,
+        description: description,
+      );
+      logData(TAG_TASKS_CUBIT, 'results = $result');
+      result.when(success: (Task item) {
+        logData(TAG_TASKS_CUBIT,
+            'addNewTask(): - item : ${item.id} -  ${item.projectId} - ${item.content} - ${item.description}');
+
+        final newTaskList = List<Task>.from(state.tasks!);
+        int indexOfTask =
+        newTaskList.indexWhere((element) => element.id == taskId);
+        newTaskList.replaceRange(indexOfTask, indexOfTask + 1, [item]);
+
+        newTaskList.forEach((task) {
+          logData(TAG_TASKS_CUBIT,
+              'addNewTask() - task : ${task.id} -  ${task.projectId} - ${task.content} - ${task.description}');
+        });
+        emit(state.copyWith(
+            status: PageStateStatus.updated, tasks: newTaskList));
+      }, failure: (_) {
+        logData(TAG_TASKS_CUBIT, 'failure:');
+        emit(const TasksState(
+          status: PageStateStatus.failedToLoad,
+          errorMessage: 'Failed to load Tasks.',
+        ));
+      });
+    } on Error {
+      logData(TAG_TASKS_CUBIT, 'Error:');
+      emit(const TasksState(
+        status: PageStateStatus.failedToLoad,
+        errorMessage: 'Failed to load Tasks.',
+      ));
+    } on Exception {
+      logData(TAG_TASKS_CUBIT, 'Exception:');
+      emit(const TasksState(
+        status: PageStateStatus.failedToLoad,
+        errorMessage: 'Failed to load Tasks.',
+      ));
+    }
+  }
+
   Future<void> deleteTask({required String taskId}) async {
     try {
       Result<String> result = await tasksRepository.deleteTask(taskId: taskId);
@@ -82,7 +174,6 @@ class TasksCubit extends Cubit<TasksState> {
         });
         emit(state.copyWith(
             status: PageStateStatus.updated, tasks: newTaskList));
-
       }, failure: (_) {
         logData(TAG_TASKS_CUBIT, 'failure: Failed To Delete');
       });

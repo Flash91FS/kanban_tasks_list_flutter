@@ -95,7 +95,7 @@ class AppView extends StatelessWidget {
     return MaterialApp(
       title: pageTitle,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue.shade700),
       ),
       home: KanbanPage(title: pageTitle),
     );

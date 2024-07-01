@@ -7,16 +7,21 @@ import 'package:kanban_tasks_list_flutter/extensions/nullable_date_formatting_ex
 import 'package:kanban_tasks_list_flutter/presentation/bloc/environment/environment_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/config/kanban_config.dart';
+import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/kanban_add_update_view.dart';
 import 'package:kanban_tasks_list_flutter/presentation/popup_dialog.dart';
+import 'package:kanban_tasks_list_flutter/presentation/responsive_dialog.dart';
 import 'package:kanban_tasks_list_flutter/presentation/widgets/row_spacer/row_spacer.dart';
+import 'package:kanban_tasks_list_flutter/utils.dart';
 
 class KanbanTaskItemView extends StatelessWidget {
+  final String projectId;
   final String groupId;
   final AppFlowyGroupItem item;
   final AppFlowyBoardController controller;
 
   const KanbanTaskItemView({
     super.key,
+    required this.projectId,
     required this.groupId,
     required this.item,
     required this.controller,
@@ -33,9 +38,8 @@ class KanbanTaskItemView extends StatelessWidget {
     required AppFlowyBoardController controller,
   }) {
     if (item is KanbanItemDataModel) {
-      return DecoratedBox(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
-        child: Padding(
+      return InkWell(
+        child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Row(
             children: [
@@ -85,7 +89,6 @@ class KanbanTaskItemView extends StatelessWidget {
                   ],
                 ),
               ),
-
               if (groupId !=
                   BlocProvider.of<EnvironmentCubit>(context)
                       .state
@@ -97,10 +100,12 @@ class KanbanTaskItemView extends StatelessWidget {
 
                     PopupDialog.confirmationDialog(
                       context,
-                      confirmationButtonText: 'Delete Account',
+                      confirmationButtonText: 'Delete',
                       title: 'Task Deletion',
                       onConfirm: () {
-                        context.read<TasksCubit>().deleteTask(taskId: item.itemId);
+                        context
+                            .read<TasksCubit>()
+                            .deleteTask(taskId: item.itemId);
                         Navigator.of(context).pop();
                       },
                       body: Column(
@@ -132,35 +137,27 @@ class KanbanTaskItemView extends StatelessWidget {
             ],
           ),
         ),
+        onTap: () async {
+          await ResponsiveDialog.showResponsiveDialog(
+            context,
+            KanbanAddUpdateView(
+                isAdd: false,
+                data: KanbanItemDataModel(itemId: item.itemId, title: item.title, description: item.description),
+                onTapCallBack: (value) {
+                  logData(TAG_KANBAN_BOARD, 'value: itemId: ${value.itemId}');
+                  logData(TAG_KANBAN_BOARD, 'value: title: ${value.title}');
+                  logData(TAG_KANBAN_BOARD,
+                      'value: description: ${value.description}');
+                  context.read<TasksCubit>().updateTask(
+                      taskId: value.itemId,
+                      title: value.title,
+                      description: value.description);
+                }),
+            needsMaterialWrapper: true,
+            fullScreen: true,
+          );
+        },
       );
-      //     .onPressedWithHaptic(() {
-      //   BottomSheetUtils.bottomSheet(
-      //       context: context,
-      //       widgetBuilder: (ctx) {
-      //         return BlocProvider(
-      //           create: (context) => KanbanBloc(),
-      //           child: KanbanAddUpdateView(
-      //             isAdd: false,
-      //             data: KanbanDataModel(
-      //                 groupId: groupId,
-      //                 itemId: item.itemId,
-      //                 title: item.title,
-      //                 description: item.description,
-      //                 startDate: item.startDate,
-      //                 endDate: item.endDate),
-      //             onTapCallBack: (value) {
-      //               context.read<KanbanBloc>().add(
-      //                 KanbanUpdateTask(
-      //                   groupId: groupId,
-      //                   itemId: item.itemId,
-      //                   data: value,
-      //                 ),
-      //               );
-      //             },
-      //           ),
-      //         );
-      //       });
-      // });
     }
     throw UnimplementedError();
   }

@@ -2,10 +2,15 @@ import 'package:appflowy_board/appflowy_board.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_tasks_list_flutter/domain/models/kanban_item_data_model.dart';
+import 'package:kanban_tasks_list_flutter/presentation/bloc/environment/environment_cubit.dart';
+import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_cubit.dart';
+import 'package:kanban_tasks_list_flutter/presentation/dimensions.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_board/kanban_board_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_board/kanban_board_state.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/config/kanban_config.dart';
+import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/kanban_add_update_view.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/kanban_task_item_view.dart';
+import 'package:kanban_tasks_list_flutter/presentation/responsive_dialog.dart';
 import 'package:kanban_tasks_list_flutter/utils.dart';
 
 class KanbanBoard extends StatefulWidget {
@@ -50,6 +55,10 @@ class _KanbanBoardState extends State<KanbanBoard> {
 
   @override
   Widget build(BuildContext context) {
+    final envState = BlocProvider.of<EnvironmentCubit>(context).state;
+    final sectionIdDone = envState.sectionIdDone;
+    final projectId = envState.projectId;
+
     return BlocBuilder<KanbanBoardCubit, KanbanBoardState>(
         builder: (context, state) {
       //Todo - delete the below line used to just log data on console
@@ -72,98 +81,88 @@ class _KanbanBoardState extends State<KanbanBoard> {
 
       kanbanController.clear();
       kanbanController.addGroups(state.groups!);
-      return LayoutBuilder(builder: (context, constraints) {
-        return AppFlowyBoard(
-          config: kanbanBoardConfig,
-          controller: kanbanController,
-          boardScrollController: boardScrollController,
-          groupConstraints: BoxConstraints.tightFor(
-            width: 240,
-            height: MediaQuery.sizeOf(context).height / 1.3,
+
+      return Padding(
+        padding: const EdgeInsets.all(14.0),
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: AppFlowyBoard(
+            config: kanbanBoardConfig,
+            controller: kanbanController,
+            boardScrollController: boardScrollController,
+            groupConstraints: BoxConstraints.tightFor(
+              width: (Dimensions.isMobile(context)) ? 240 : 320,
+              height: MediaQuery.sizeOf(context).height / 1.3,
+            ),
+            cardBuilder: (context, group, groupItem) {
+              return AppFlowyGroupCard(
+                decoration: const BoxDecoration(
+                  color: kanbanTaskItemColor,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                key: ValueKey(groupItem.id),
+                child: KanbanTaskItemView(
+                  projectId: projectId,
+                  groupId: group.id,
+                  item: groupItem,
+                  controller: kanbanController,
+                ),
+              );
+            },
+            headerBuilder: (context, group) {
+              return Column(
+                children: [
+                  AppFlowyGroupHeader(
+                    title: Text(
+                        '${group.headerData.groupName} - ${group.headerData.groupId}'),
+                    addIcon: group.id == sectionIdDone
+                        ? null
+                        : const Icon(Icons.add, size: 20),
+                    onAddButtonClick: () async {
+                      if (group.id != sectionIdDone) {
+                        await ResponsiveDialog.showResponsiveDialog(
+                          context,
+                          KanbanAddUpdateView(
+                              isAdd: true,
+                              data: null,
+                              onTapCallBack: (value) {
+                                logData(TAG_KANBAN_BOARD,
+                                    'value: projectId: $projectId');
+                                logData(TAG_KANBAN_BOARD,
+                                    'value: groupId: ${group.headerData.groupId}');
+                                logData(TAG_KANBAN_BOARD,
+                                    'value: title: ${value.title}');
+                                logData(TAG_KANBAN_BOARD,
+                                    'value: description: ${value.description}');
+                                context.read<TasksCubit>().addNewTask(
+                                    projectId: projectId,
+                                    sectionId: group.headerData.groupId,
+                                    title: value.title,
+                                    description: value.description);
+                              }),
+                          needsMaterialWrapper: true,
+                          fullScreen: true,
+                        );
+                      }
+                    },
+                    height: 50,
+                    margin: kanbanBoardConfig.groupBodyPadding,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(8,0,8,8),
+                    child: Divider(
+                      height: 1,
+                      thickness: 1,
+                      color: Colors.blue,
+                    ),
+                  )
+                ],
+              );
+            },
           ),
-          cardBuilder: (context, group, groupItem) {
-            return AppFlowyGroupCard(
-              decoration: const BoxDecoration(color: Colors.blue),
-              key: ValueKey(groupItem.id),
-              child: KanbanTaskItemView(
-                groupId: group.id,
-                item: groupItem,
-                controller: kanbanController,
-              ),
-            );
-          },
-          headerBuilder: (context, group) {
-            return AppFlowyGroupHeader(
-              title: Text(group.headerData.groupName),
-              addIcon:
-                  group.id == 'Done' ? null : const Icon(Icons.add, size: 20),
-              onAddButtonClick: () {
-                // if (!(group.id == KanbanType.done.name)) {
-                //   BottomSheetUtils.bottomSheet(
-                //       context: context,
-                //       widgetBuilder: (context) {
-                //         return BlocProvider(
-                //           create: (context) => KanbanBloc(),
-                //           child: KanbanAddUpdateView(
-                //             isAdd: true,
-                //             data: KanbanDataModel(groupId: group.id),
-                //             onTapCallBack: (value) {
-                //               context.read<KanbanBloc>().add(
-                //                 KanbanAddTask(
-                //                   groupId: group.id,
-                //                   data: value,
-                //                 ),
-                //               );
-                //             },
-                //           ),
-                //         );
-                //       }).then((value) {
-                //     boardController.scrollToBottom(group.id);
-                //   });
-                // }
-              },
-              height: 50,
-              margin: kanbanBoardConfig.groupBodyPadding,
-            );
-          },
-          // footerBuilder: (context, group) {
-          //   return group.id == KanbanType.done.name
-          //       ? const AppFlowyGroupFooter()
-          //       : AppFlowyGroupFooter(
-          //     icon: const Icon(Icons.add, size: 20),
-          //     title: TextWidgets(
-          //       text: translation(context).addTask,
-          //       style: const TextStyle(),
-          //     ),
-          //     height: 50,
-          //     margin: state.config.groupBodyPadding,
-          //     onAddButtonClick: () {
-          //       BottomSheetUtils.bottomSheet(
-          //           context: context,
-          //           widgetBuilder: (ctx) {
-          //             return BlocProvider(
-          //               create: (context) => KanbanBloc(),
-          //               child: KanbanAddUpdateView(
-          //                 isAdd: true,
-          //                 data: KanbanDataModel(groupId: group.id),
-          //                 onTapCallBack: (value) {
-          //                   context.read<KanbanBloc>().add(
-          //                     KanbanAddTask(
-          //                       groupId: group.id,
-          //                       data: value,
-          //                     ),
-          //                   );
-          //                 },
-          //               ),
-          //             );
-          //           }).then((value) {
-          //         boardController.scrollToBottom(group.id);
-          //       });
-          //     },
-          //   );
-          // },
-        );
-      });
+        ),
+      );
+      // });
     });
   }
 }
