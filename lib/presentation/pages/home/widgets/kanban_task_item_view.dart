@@ -48,6 +48,7 @@ class KanbanTaskItemView extends StatelessWidget {
                   children: [
                     Text(
                       item.title,
+                      key: Key('Key-KanbanTaskItemView-Title-${item.title}'),
                       style: const TextStyle(fontSize: 14),
                       textAlign: TextAlign.left,
                     ),
@@ -56,6 +57,7 @@ class KanbanTaskItemView extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 2),
                         child: Text(
                           item.description,
+                          key: Key('Key-KanbanTaskItemView-Description-${item.description}'),
                           style: const TextStyle(
                               fontSize: 12, color: kanbanCardSubtextColor),
                         ),

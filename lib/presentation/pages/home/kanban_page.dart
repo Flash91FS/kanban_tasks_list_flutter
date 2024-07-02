@@ -31,6 +31,7 @@ class _KanbanPageState extends State<KanbanPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        key: const Key('Key-AppBar'),
         title: Text(widget.title),
       ),
       body: SafeArea(
@@ -41,7 +42,9 @@ class _KanbanPageState extends State<KanbanPage> {
                 builder: (context, state) {
                   if (state.status == PageStateStatus.loaded ||
                       state.status == PageStateStatus.updated) {
-                    return const KanbanBoard();
+                    return const KanbanBoard(
+                      key: Key('Key-KanbanBoard'),
+                    );
                   }
                   if (state.status == PageStateStatus.failedToLoad) {
                     return Text(

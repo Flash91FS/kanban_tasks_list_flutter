@@ -94,6 +94,7 @@ class _KanbanTaskDetailsViewState extends State<KanbanTaskDetailsView> {
                     children: [
                       ///Title
                       TextFormFieldWidget(
+                        key: const Key('Key-Title-FormField'),
                         isEnabled: !widget.isDetailOnly,
                         controller: titleController,
                         hintText: 'Title',
@@ -112,6 +113,7 @@ class _KanbanTaskDetailsViewState extends State<KanbanTaskDetailsView> {
 
                       ///Description
                       TextFormFieldWidget(
+                        key: const Key('Key-Description-FormField'),
                         isEnabled: !widget.isDetailOnly,
                         controller: descriptionController,
                         maxLines: 4,
@@ -130,6 +132,7 @@ class _KanbanTaskDetailsViewState extends State<KanbanTaskDetailsView> {
                   ),
                   if (!widget.isDetailOnly)
                     ModalFooterButtonsWidget(
+                      key: const Key('Key-Add-Update-Footer-Button'),
                       cancelBtnName: 'Cancel',
                       nxtBtnName: widget.isAdd ? 'Add Task' : 'Update Task',
                       nextTap: () async {

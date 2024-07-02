@@ -64,6 +64,7 @@ class _KanbanBoardState extends State<KanbanBoard> {
         child: Align(
           alignment: Alignment.topCenter,
           child: AppFlowyBoard(
+            key: const Key('Key-AppFlowyBoard'),
             config: kanbanBoardConfig,
             controller: kanbanController,
             boardScrollController: boardScrollController,
@@ -79,6 +80,7 @@ class _KanbanBoardState extends State<KanbanBoard> {
                 ),
                 key: ValueKey(groupItem.id),
                 child: KanbanTaskItemView(
+                  key: Key('Key-KanbanTaskItemView-${groupItem.id}'),
                   projectId: projectId,
                   groupId: group.id,
                   item: groupItem,
@@ -90,7 +92,9 @@ class _KanbanBoardState extends State<KanbanBoard> {
               return Column(
                 children: [
                   AppFlowyGroupHeader(
-                    title: Text(group.headerData.groupName),
+                    title: Text(
+                      key: Key('Key-GroupName-${group.id}'),
+                        group.headerData.groupName,),
                     addIcon: group.id == sectionIdDone
                         ? null
                         : const Icon(Icons.add, size: 20),
@@ -108,7 +112,8 @@ class _KanbanBoardState extends State<KanbanBoard> {
                                     sectionId: group.headerData.groupId,
                                     title: value.title,
                                     description: value.description);
-                              }),
+                              },
+                          ),
                           needsMaterialWrapper: true,
                           fullScreen: true,
                         );
