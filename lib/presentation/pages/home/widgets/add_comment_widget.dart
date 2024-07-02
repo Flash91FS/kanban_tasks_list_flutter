@@ -41,6 +41,7 @@ class _AddCommentWidgetState extends State<AddCommentWidget> {
             children: [
               Expanded(
                 child: TextFormFieldWidget(
+                  key: Key('Key-AddCommentWidget-TextField-${widget.taskId}'),
                   controller: commentController,
                   maxLines: 1,
                   hintText: 'Post a Comment',
@@ -58,6 +59,7 @@ class _AddCommentWidgetState extends State<AddCommentWidget> {
                 width: 10,
               ),
               InkWell(
+                key: Key('Key-AddCommentWidget-SendButton-${widget.taskId}'),
                 onTap: () {
                   formKey.currentState!.validate();
                   if (isEnableBool) {

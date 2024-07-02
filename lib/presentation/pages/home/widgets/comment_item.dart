@@ -18,6 +18,7 @@ class CommentItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
+          key: Key('Key-CommentItem-Content-${comment.id}'),
           comment.content,
           style: const TextStyle(fontSize: 14),
           textAlign: TextAlign.left,
@@ -25,6 +26,7 @@ class CommentItem extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 2),
           child: Text(
+            key: Key('Key-CommentItem-PostedAt-${comment.id}'),
             comment.postedAt.format('dd MMM ' 'yy'),
             style: const TextStyle(fontSize: 10, color: kanbanCardSubtextColor),
           ),

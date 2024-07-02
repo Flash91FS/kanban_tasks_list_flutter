@@ -14,9 +14,13 @@ class CommentsView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
         children: [
-          AddCommentWidget(taskId: taskId),
+          AddCommentWidget(
+              key: Key('Key-AddCommentWidget-$taskId'),
+              taskId: taskId),
           const RowSpacer(),
-          CommentsList(taskId: taskId),
+          CommentsList(
+              key: Key('Key-CommentsList-$taskId'),
+              taskId: taskId),
         ],
       ),
     );

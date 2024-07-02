@@ -15,7 +15,7 @@ import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_bo
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_board/kanban_board_state.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/time_tracker_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/time_tracker_state.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/kanban_board.dart';
+import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/comments_view.dart';
 import 'package:kanban_tasks_list_flutter/repository/comments_repository.dart';
 import 'package:kanban_tasks_list_flutter/repository/firebase_repository.dart';
 import 'package:kanban_tasks_list_flutter/repository/projects_repository.dart';
@@ -28,7 +28,7 @@ import 'mock_data.dart';
 import 'mock_repos.dart';
 
 void main() {
-  group('Tests for KanbanBoard view ', () {
+  group('Tests for CommentsView ', () {
     late TasksCubit tasksCubit;
     late KanbanBoardCubit kanbanBoardCubit;
     late TimeTrackerCubit timeTrackerCubit;
@@ -96,7 +96,7 @@ void main() {
           allItems: [mockSectionToDo, mockSectionInProgress, mockSectionDone]));
     });
 
-    testWidgets('KanbanBoard test', (WidgetTester tester) async {
+    testWidgets('CommentsView test', (WidgetTester tester) async {
       await tester.pumpWidget(MultiRepositoryProvider(
         providers: [
           RepositoryProvider.value(value: tasksRepository),
@@ -129,31 +129,21 @@ void main() {
               value: environmentCubit,
             ),
             BlocProvider.value(
-              value: commentsCubit,
+              value: CommentsCubit(commentsRepository: commentsRepository),
             ),
           ],
-          child: const MaterialApp(home: Scaffold(body: KanbanBoard())),
+          child: MaterialApp(
+              home: Scaffold(
+                  body: CommentsView(
+            taskId: mockTaskId,
+          ))),
         ),
       ));
 
       await tester.pumpAndSettle();
 
-      expect(find.byKey(const Key('Key-AppFlowyBoard')), findsOneWidget);
-      expect(
-          find.byKey(Key('Key-GroupName-${mockGroupTodo.id}')), findsOneWidget);
-      expect(find.byKey(Key('Key-GroupName-${mockGroupInProgress.id}')),
-          findsOneWidget);
-      expect(
-          find.byKey(Key('Key-GroupName-${mockGroupDone.id}')), findsOneWidget);
-      expect(find.byKey(Key('Key-KanbanTaskItemView-${mockTask.id}')),
-          findsOneWidget);
-      expect(
-          find.byKey(Key('Key-KanbanTaskItemView-Title-${mockTask.content}')),
-          findsOneWidget);
-      expect(
-          find.byKey(Key(
-              'Key-KanbanTaskItemView-Description-${mockTask.description}')),
-          findsOneWidget);
+      expect(find.byKey(Key('Key-AddCommentWidget-$mockTaskId')), findsOneWidget);
+      expect(find.byKey(Key('Key-CommentsList-$mockTaskId')), findsOneWidget);
     });
   });
 }

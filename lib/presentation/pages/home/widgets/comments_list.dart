@@ -39,11 +39,14 @@ class _CommentsListState extends State<CommentsList> {
                 state.status == PageStateStatus.updated) &&
             state.comments != null) {
           return ListView.builder(
+              key: Key('Key-Comments-ListView-${widget.taskId}'),
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: state.comments!.length,
               itemBuilder: (context, index) {
-                return CommentItem(comment: state.comments![index]);
+                return CommentItem(
+                    key: Key('Key-CommentItem-${state.comments![index].id}'),
+                    comment: state.comments![index]);
               });
         }
         if (state.status == PageStateStatus.failedToLoad) {

@@ -15,8 +15,6 @@ import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_bo
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_board/kanban_board_state.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/time_tracker_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/time_tracker_state.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/kanban_page.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/kanban_board.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/kanban_task_details_view.dart';
 import 'package:kanban_tasks_list_flutter/repository/comments_repository.dart';
 import 'package:kanban_tasks_list_flutter/repository/firebase_repository.dart';
@@ -30,7 +28,7 @@ import 'mock_data.dart';
 import 'mock_repos.dart';
 
 void main() {
-  group('All Presentation Views ', () {
+  group('Tests for KanbanTaskDetailsView ', () {
     late TasksCubit tasksCubit;
     late KanbanBoardCubit kanbanBoardCubit;
     late TimeTrackerCubit timeTrackerCubit;
