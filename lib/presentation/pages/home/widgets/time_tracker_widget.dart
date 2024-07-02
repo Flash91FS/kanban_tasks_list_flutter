@@ -28,7 +28,6 @@ class TimeTrackerWidget extends StatelessWidget {
                 Text('Total Time Spent: ${state.timeDurationToDisplay}')
               else
                 const Text('Total Time Spent: 0s'),
-              const RowSpacer(),
               if ((taskItem.groupId ==
                       BlocProvider.of<EnvironmentCubit>(context)
                           .state

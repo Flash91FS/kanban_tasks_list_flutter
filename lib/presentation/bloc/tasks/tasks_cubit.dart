@@ -72,19 +72,19 @@ class TasksCubit extends Cubit<TasksState> {
             status: PageStateStatus.updated, tasks: newTaskList));
       }, failure: (_) {
         emit(state.copyWith(
-          status: PageStateStatus.failedToLoad,
-          errorMessage: 'Failed to load Tasks.',
+          status: PageStateStatus.failedToUpdate,
+          errorMessage: 'Failed to update Tasks.',
         ));
       });
     } on Error {
       emit(state.copyWith(
-        status: PageStateStatus.failedToLoad,
-        errorMessage: 'Failed to load Tasks.',
+        status: PageStateStatus.failedToUpdate,
+        errorMessage: 'Failed to update Tasks.',
       ));
     } on Exception {
       emit(state.copyWith(
-        status: PageStateStatus.failedToLoad,
-        errorMessage: 'Failed to load Tasks.',
+        status: PageStateStatus.failedToUpdate,
+        errorMessage: 'Failed to update Tasks.',
       ));
     }
   }
@@ -109,19 +109,19 @@ class TasksCubit extends Cubit<TasksState> {
             status: PageStateStatus.updated, tasks: newTaskList));
       }, failure: (_) {
         emit(state.copyWith(
-          status: PageStateStatus.failedToLoad,
-          errorMessage: 'Failed to load Tasks.',
+          status: PageStateStatus.failedToUpdate,
+          errorMessage: 'Failed to update Tasks.',
         ));
       });
     } on Error {
       emit(state.copyWith(
-        status: PageStateStatus.failedToLoad,
-        errorMessage: 'Failed to load Tasks.',
+        status: PageStateStatus.failedToUpdate,
+        errorMessage: 'Failed to update Tasks.',
       ));
     } on Exception {
       emit(state.copyWith(
-        status: PageStateStatus.failedToLoad,
-        errorMessage: 'Failed to load Tasks.',
+        status: PageStateStatus.failedToUpdate,
+        errorMessage: 'Failed to update Tasks.',
       ));
     }
   }

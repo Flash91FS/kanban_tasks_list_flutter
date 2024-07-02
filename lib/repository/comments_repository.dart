@@ -32,4 +32,26 @@ class CommentsRepository with ApiErrorHandler implements ICommentsRepository {
               .toList());
     });
   }
+
+  @override
+  Future<Result<Comment>> addComment(
+      {required String taskId, required String content}) {
+    return captureApiErrorsAsResultFailure(() async {
+      var model = await _commentsApi.apiPostAddComment(
+          taskId: taskId, content: content);
+      if (model != null) {
+        return Result.success(
+            data: Comment(
+          id: model.id,
+          content: model.content,
+          postedAt: model.postedAt,
+          projectId: model.projectId,
+          taskId: model.taskId,
+          attachment: model.attachment,
+        ));
+      } else {
+        return Result.failure(error: Exception('Could not post comment'));
+      }
+    });
+  }
 }

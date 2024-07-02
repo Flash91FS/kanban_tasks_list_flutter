@@ -51,6 +51,7 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
             title: item.content,
             description: item.description,
             startDate: item.createdAt,
+            commentCount: item.commentCount,
           ));
         } else if (item.sectionId ==
             environmentCubit.state.sectionIdInProgress) {
@@ -60,6 +61,7 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
             title: item.content,
             description: item.description,
             startDate: item.createdAt,
+            commentCount: item.commentCount,
           ));
         } else if (item.sectionId == environmentCubit.state.sectionIdDone) {
           groupItemsDone.add(KanbanItemDataModel(
@@ -68,6 +70,7 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
             title: item.content,
             description: item.description,
             startDate: item.createdAt,
+            commentCount: item.commentCount,
           ));
         }
       }

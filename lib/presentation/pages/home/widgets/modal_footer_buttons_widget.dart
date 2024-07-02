@@ -3,7 +3,6 @@ import 'package:kanban_tasks_list_flutter/presentation/button_styles.dart';
 
 
 class ModalFooterButtonsWidget extends StatelessWidget {
-  final bool isValidNext;
   final String nxtBtnName;
   final VoidCallback nextTap;
   final String cancelBtnName;
@@ -11,7 +10,6 @@ class ModalFooterButtonsWidget extends StatelessWidget {
 
   const ModalFooterButtonsWidget({
     super.key,
-    required this.isValidNext,
     required this.nxtBtnName,
     required this.nextTap,
     required this.cancelBtnName,

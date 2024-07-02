@@ -4,12 +4,10 @@ import 'package:kanban_tasks_list_flutter/presentation/pages/home/config/kanban_
 
 class ModalHeaderTextWidgets extends StatelessWidget {
   final String header;
-  final VoidCallback onBack;
 
   const ModalHeaderTextWidgets({
     super.key,
     required this.header,
-    required this.onBack,
   });
 
   @override

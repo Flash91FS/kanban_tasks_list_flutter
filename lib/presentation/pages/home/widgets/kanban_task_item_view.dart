@@ -65,22 +65,50 @@ class KanbanTaskItemView extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 3),
                         child: Row(
                           children: [
-                            Text(
-                              item.startDate.format('dd MMM' 'yy'),
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: kanbanCardSubtextColor,
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Text(
+                                    item.startDate.format('dd MMM ' 'yy'),
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: kanbanCardSubtextColor,
+                                    ),
+                                  ),
+                                  if (item.endDate != null)
+                                    Text(
+                                      '- ${item.endDate.format('dd MMM ' 'yy')}',
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: kanbanCardSubtextColor,
+                                      ),
+                                    )
+                                ],
                               ),
                             ),
-                            if (item.endDate != null)
-                              Text(
-                                '- ${item.endDate.format('dd MMM' 'yy')}',
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: kanbanCardSubtextColor,
-                                ),
+                            if (item.commentCount != null &&
+                                item.commentCount! > 0)
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    '${item.commentCount}',
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: kanbanCardSubtextColor,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  const Icon(
+                                    Icons.messenger_outline,
+                                    size: 14,
+                                  ),
+                                  const SizedBox(width: 10),
+                                ],
                               )
                           ],
                         ),
@@ -185,7 +213,8 @@ class KanbanTaskItemView extends StatelessWidget {
               groupId: groupId,
               itemId: item.itemId,
               title: item.title,
-              description: item.description),
+              description: item.description,
+              commentCount: item.commentCount),
           onTapCallBack: (value) {
             context.read<TasksCubit>().updateTask(
                 taskId: value.itemId,

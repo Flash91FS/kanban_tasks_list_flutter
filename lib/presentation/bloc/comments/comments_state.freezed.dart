@@ -16,49 +16,12 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CommentsState {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(List<Comment> allItems) loaded,
-    required TResult Function() loading,
-    required TResult Function() failedToLoad,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Comment> allItems)? loaded,
-    TResult? Function()? loading,
-    TResult? Function()? failedToLoad,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Comment> allItems)? loaded,
-    TResult Function()? loading,
-    TResult Function()? failedToLoad,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Data value) loaded,
-    required TResult Function(Loading value) loading,
-    required TResult Function(FailedToLoad value) failedToLoad,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Data value)? loaded,
-    TResult? Function(Loading value)? loading,
-    TResult? Function(FailedToLoad value)? failedToLoad,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Data value)? loaded,
-    TResult Function(Loading value)? loading,
-    TResult Function(FailedToLoad value)? failedToLoad,
-    required TResult orElse(),
-  }) =>
+  List<Comment>? get comments => throw _privateConstructorUsedError;
+  PageStateStatus get status => throw _privateConstructorUsedError;
+  String? get errorMessage => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CommentsStateCopyWith<CommentsState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -67,6 +30,9 @@ abstract class $CommentsStateCopyWith<$Res> {
   factory $CommentsStateCopyWith(
           CommentsState value, $Res Function(CommentsState) then) =
       _$CommentsStateCopyWithImpl<$Res, CommentsState>;
+  @useResult
+  $Res call(
+      {List<Comment>? comments, PageStateStatus status, String? errorMessage});
 }
 
 /// @nodoc
@@ -78,365 +44,138 @@ class _$CommentsStateCopyWithImpl<$Res, $Val extends CommentsState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? comments = freezed,
+    Object? status = null,
+    Object? errorMessage = freezed,
+  }) {
+    return _then(_value.copyWith(
+      comments: freezed == comments
+          ? _value.comments
+          : comments // ignore: cast_nullable_to_non_nullable
+              as List<Comment>?,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as PageStateStatus,
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$DataImplCopyWith<$Res> {
-  factory _$$DataImplCopyWith(
-          _$DataImpl value, $Res Function(_$DataImpl) then) =
-      __$$DataImplCopyWithImpl<$Res>;
+abstract class _$$CommentsStateImplCopyWith<$Res>
+    implements $CommentsStateCopyWith<$Res> {
+  factory _$$CommentsStateImplCopyWith(
+          _$CommentsStateImpl value, $Res Function(_$CommentsStateImpl) then) =
+      __$$CommentsStateImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({List<Comment> allItems});
+  $Res call(
+      {List<Comment>? comments, PageStateStatus status, String? errorMessage});
 }
 
 /// @nodoc
-class __$$DataImplCopyWithImpl<$Res>
-    extends _$CommentsStateCopyWithImpl<$Res, _$DataImpl>
-    implements _$$DataImplCopyWith<$Res> {
-  __$$DataImplCopyWithImpl(_$DataImpl _value, $Res Function(_$DataImpl) _then)
+class __$$CommentsStateImplCopyWithImpl<$Res>
+    extends _$CommentsStateCopyWithImpl<$Res, _$CommentsStateImpl>
+    implements _$$CommentsStateImplCopyWith<$Res> {
+  __$$CommentsStateImplCopyWithImpl(
+      _$CommentsStateImpl _value, $Res Function(_$CommentsStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? allItems = null,
+    Object? comments = freezed,
+    Object? status = null,
+    Object? errorMessage = freezed,
   }) {
-    return _then(_$DataImpl(
-      allItems: null == allItems
-          ? _value._allItems
-          : allItems // ignore: cast_nullable_to_non_nullable
-              as List<Comment>,
+    return _then(_$CommentsStateImpl(
+      comments: freezed == comments
+          ? _value._comments
+          : comments // ignore: cast_nullable_to_non_nullable
+              as List<Comment>?,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as PageStateStatus,
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$DataImpl implements Data {
-  const _$DataImpl({required final List<Comment> allItems})
-      : _allItems = allItems;
+class _$CommentsStateImpl implements _CommentsState {
+  const _$CommentsStateImpl(
+      {final List<Comment>? comments, required this.status, this.errorMessage})
+      : _comments = comments;
 
-  final List<Comment> _allItems;
+  final List<Comment>? _comments;
   @override
-  List<Comment> get allItems {
-    if (_allItems is EqualUnmodifiableListView) return _allItems;
+  List<Comment>? get comments {
+    final value = _comments;
+    if (value == null) return null;
+    if (_comments is EqualUnmodifiableListView) return _comments;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_allItems);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
+  final PageStateStatus status;
+  @override
+  final String? errorMessage;
+
+  @override
   String toString() {
-    return 'CommentsState.loaded(allItems: $allItems)';
+    return 'CommentsState(comments: $comments, status: $status, errorMessage: $errorMessage)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DataImpl &&
-            const DeepCollectionEquality().equals(other._allItems, _allItems));
+            other is _$CommentsStateImpl &&
+            const DeepCollectionEquality().equals(other._comments, _comments) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_allItems));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_comments), status, errorMessage);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$DataImplCopyWith<_$DataImpl> get copyWith =>
-      __$$DataImplCopyWithImpl<_$DataImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(List<Comment> allItems) loaded,
-    required TResult Function() loading,
-    required TResult Function() failedToLoad,
-  }) {
-    return loaded(allItems);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Comment> allItems)? loaded,
-    TResult? Function()? loading,
-    TResult? Function()? failedToLoad,
-  }) {
-    return loaded?.call(allItems);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Comment> allItems)? loaded,
-    TResult Function()? loading,
-    TResult Function()? failedToLoad,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(allItems);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Data value) loaded,
-    required TResult Function(Loading value) loading,
-    required TResult Function(FailedToLoad value) failedToLoad,
-  }) {
-    return loaded(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Data value)? loaded,
-    TResult? Function(Loading value)? loading,
-    TResult? Function(FailedToLoad value)? failedToLoad,
-  }) {
-    return loaded?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Data value)? loaded,
-    TResult Function(Loading value)? loading,
-    TResult Function(FailedToLoad value)? failedToLoad,
-    required TResult orElse(),
-  }) {
-    if (loaded != null) {
-      return loaded(this);
-    }
-    return orElse();
-  }
+  _$$CommentsStateImplCopyWith<_$CommentsStateImpl> get copyWith =>
+      __$$CommentsStateImplCopyWithImpl<_$CommentsStateImpl>(this, _$identity);
 }
 
-abstract class Data implements CommentsState {
-  const factory Data({required final List<Comment> allItems}) = _$DataImpl;
+abstract class _CommentsState implements CommentsState {
+  const factory _CommentsState(
+      {final List<Comment>? comments,
+      required final PageStateStatus status,
+      final String? errorMessage}) = _$CommentsStateImpl;
 
-  List<Comment> get allItems;
+  @override
+  List<Comment>? get comments;
+  @override
+  PageStateStatus get status;
+  @override
+  String? get errorMessage;
+  @override
   @JsonKey(ignore: true)
-  _$$DataImplCopyWith<_$DataImpl> get copyWith =>
+  _$$CommentsStateImplCopyWith<_$CommentsStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$LoadingImplCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(
-          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
-      __$$LoadingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$CommentsStateCopyWithImpl<$Res, _$LoadingImpl>
-    implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$LoadingImpl implements Loading {
-  const _$LoadingImpl();
-
-  @override
-  String toString() {
-    return 'CommentsState.loading()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(List<Comment> allItems) loaded,
-    required TResult Function() loading,
-    required TResult Function() failedToLoad,
-  }) {
-    return loading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Comment> allItems)? loaded,
-    TResult? Function()? loading,
-    TResult? Function()? failedToLoad,
-  }) {
-    return loading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Comment> allItems)? loaded,
-    TResult Function()? loading,
-    TResult Function()? failedToLoad,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Data value) loaded,
-    required TResult Function(Loading value) loading,
-    required TResult Function(FailedToLoad value) failedToLoad,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Data value)? loaded,
-    TResult? Function(Loading value)? loading,
-    TResult? Function(FailedToLoad value)? failedToLoad,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Data value)? loaded,
-    TResult Function(Loading value)? loading,
-    TResult Function(FailedToLoad value)? failedToLoad,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class Loading implements CommentsState {
-  const factory Loading() = _$LoadingImpl;
-}
-
-/// @nodoc
-abstract class _$$FailedToLoadImplCopyWith<$Res> {
-  factory _$$FailedToLoadImplCopyWith(
-          _$FailedToLoadImpl value, $Res Function(_$FailedToLoadImpl) then) =
-      __$$FailedToLoadImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$FailedToLoadImplCopyWithImpl<$Res>
-    extends _$CommentsStateCopyWithImpl<$Res, _$FailedToLoadImpl>
-    implements _$$FailedToLoadImplCopyWith<$Res> {
-  __$$FailedToLoadImplCopyWithImpl(
-      _$FailedToLoadImpl _value, $Res Function(_$FailedToLoadImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$FailedToLoadImpl implements FailedToLoad {
-  const _$FailedToLoadImpl();
-
-  @override
-  String toString() {
-    return 'CommentsState.failedToLoad()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$FailedToLoadImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(List<Comment> allItems) loaded,
-    required TResult Function() loading,
-    required TResult Function() failedToLoad,
-  }) {
-    return failedToLoad();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Comment> allItems)? loaded,
-    TResult? Function()? loading,
-    TResult? Function()? failedToLoad,
-  }) {
-    return failedToLoad?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Comment> allItems)? loaded,
-    TResult Function()? loading,
-    TResult Function()? failedToLoad,
-    required TResult orElse(),
-  }) {
-    if (failedToLoad != null) {
-      return failedToLoad();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Data value) loaded,
-    required TResult Function(Loading value) loading,
-    required TResult Function(FailedToLoad value) failedToLoad,
-  }) {
-    return failedToLoad(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Data value)? loaded,
-    TResult? Function(Loading value)? loading,
-    TResult? Function(FailedToLoad value)? failedToLoad,
-  }) {
-    return failedToLoad?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Data value)? loaded,
-    TResult Function(Loading value)? loading,
-    TResult Function(FailedToLoad value)? failedToLoad,
-    required TResult orElse(),
-  }) {
-    if (failedToLoad != null) {
-      return failedToLoad(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class FailedToLoad implements CommentsState {
-  const factory FailedToLoad() = _$FailedToLoadImpl;
 }

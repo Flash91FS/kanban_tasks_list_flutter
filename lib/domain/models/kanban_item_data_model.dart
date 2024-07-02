@@ -9,6 +9,7 @@ class KanbanItemDataModel extends AppFlowyGroupItem {
   final DateTime? endDate;
   final DateTime? createdDate;
   final DateTime? updatedDate;
+  final int? commentCount;
 
   KanbanItemDataModel({
     required this.itemId,
@@ -19,6 +20,7 @@ class KanbanItemDataModel extends AppFlowyGroupItem {
     this.endDate,
     this.createdDate,
     this.updatedDate,
+    required this.commentCount,
   });
 
   @override

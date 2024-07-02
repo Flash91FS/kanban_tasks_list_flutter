@@ -26,4 +26,17 @@ extension ValidationExtension on String {
       return null;
     }
   }
+
+  ///Description
+  String? validComment({required BuildContext context, bool ignoreEmpty = false}) {
+    if (isEmpty && ignoreEmpty) {
+      return null;
+    } else if (isEmpty) {
+      return 'Please enter comment';
+    } else if (trim().length < 3) {
+      return 'Comment must have at-least 3 characters';
+    } else {
+      return null;
+    }
+  }
 }

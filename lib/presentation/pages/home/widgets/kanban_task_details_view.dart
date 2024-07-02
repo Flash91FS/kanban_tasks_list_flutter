@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kanban_tasks_list_flutter/domain/models/kanban_item_data_model.dart';
 import 'package:kanban_tasks_list_flutter/extensions/validation_extension.dart';
+import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/comments_view.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/modal_footer_buttons_widget.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/modal_header_text_widgets.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/text_form_field_widget.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/time_tracker_widget.dart';
+import 'package:kanban_tasks_list_flutter/presentation/widgets/row_spacer/row_spacer.dart';
 
 class KanbanTaskDetailsView extends StatefulWidget {
   final bool isAdd;
@@ -74,95 +76,95 @@ class _KanbanTaskDetailsViewState extends State<KanbanTaskDetailsView> {
           padding: const EdgeInsets.all(8.0),
           child: Form(
             key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ///Header and Close Button
-                ModalHeaderTextWidgets(
-                  header: widget.isDetailOnly
-                      ? widget.data?.itemId ?? ''
-                      : (widget.isAdd ? 'Add Task' : 'Edit/Update Task'),
-                  onBack: () {},
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ///Title
-                    TextFormFieldWidget(
-                      isEnabled: !widget.isDetailOnly,
-                      controller: titleController,
-                      hintText: 'Title',
-                      mandatory: true,
-                      mandatoryText: '*',
-                      onChange: (value) {
-                        enable();
-                      },
-                      validate: (value) {
-                        return value
-                            .toString()
-                            .validTitle(context: context, ignoreEmpty: false);
-                      },
-                    ),
-                    const SizedBox(height: 12),
-
-                    ///Description
-                    TextFormFieldWidget(
-                      isEnabled: !widget.isDetailOnly,
-                      controller: descriptionController,
-                      maxLines: 4,
-                      hintText: 'Description',
-                      onChange: (value) {
-                        enable();
-                      },
-                      validate: (value) {
-                        return value
-                            .toString()
-                            .validDescription(context: context);
-                      },
-                    ),
-                    const SizedBox(height: 12),
-                  ],
-                ),
-                if (!widget.isDetailOnly)
-                  ModalFooterButtonsWidget(
-                    isValidNext: isEnableBool,
-                    cancelBtnName: 'Cancel',
-                    nxtBtnName: widget.isAdd ? 'Add Task' : 'Update Task',
-                    nextTap: () async {
-                      formKey.currentState!.validate();
-                      if (isEnableBool) {
-                        final kanbanItemDataModel = KanbanItemDataModel(
-                          groupId: widget.sectionId,
-                          itemId: widget.data?.itemId ?? '',
-                          title: titleController.text,
-                          description: descriptionController.text,
-                          createdDate: widget.isAdd
-                              ? DateTime.now()
-                              : widget.data?.createdDate,
-                          updatedDate: !widget.isAdd
-                              ? DateTime.now()
-                              : widget.data?.updatedDate,
-                          startDate: startDate,
-                          endDate: endDate,
-                        );
-                        widget.onTapCallBack(kanbanItemDataModel);
-                        Navigator.of(context).pop();
-                      }
-                    },
-                    cancelTap: () {
-                      Navigator.of(context).pop();
-                    },
+            child: SingleChildScrollView(
+              physics: const ScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ///Header and Close Button
+                  ModalHeaderTextWidgets(
+                    header: widget.isDetailOnly
+                        ? (widget.data != null
+                            ? 'Task ID: ${widget.data?.itemId}'
+                            : '')
+                        : (widget.isAdd ? 'Add Task' : 'Edit/Update Task'),
                   ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ///Title
+                      TextFormFieldWidget(
+                        isEnabled: !widget.isDetailOnly,
+                        controller: titleController,
+                        hintText: 'Title',
+                        mandatory: true,
+                        mandatoryText: '*',
+                        onChange: (value) {
+                          enable();
+                        },
+                        validate: (value) {
+                          return value
+                              .toString()
+                              .validTitle(context: context, ignoreEmpty: false);
+                        },
+                      ),
+                      const SizedBox(height: 12),
 
-                if (widget.isDetailOnly && widget.data != null)
-                  TimeTrackerWidget(taskItem: widget.data!),
+                      ///Description
+                      TextFormFieldWidget(
+                        isEnabled: !widget.isDetailOnly,
+                        controller: descriptionController,
+                        maxLines: 4,
+                        hintText: 'Description',
+                        onChange: (value) {
+                          enable();
+                        },
+                        validate: (value) {
+                          return value
+                              .toString()
+                              .validDescription(context: context);
+                        },
+                      ),
+                      const SizedBox(height: 12),
+                    ],
+                  ),
+                  if (!widget.isDetailOnly)
+                    ModalFooterButtonsWidget(
+                      cancelBtnName: 'Cancel',
+                      nxtBtnName: widget.isAdd ? 'Add Task' : 'Update Task',
+                      nextTap: () async {
+                        formKey.currentState!.validate();
+                        if (isEnableBool) {
+                          final kanbanItemDataModel = KanbanItemDataModel(
+                              groupId: widget.sectionId,
+                              itemId: widget.data?.itemId ?? '',
+                              title: titleController.text,
+                              description: descriptionController.text,
+                              createdDate: widget.isAdd
+                                  ? DateTime.now()
+                                  : widget.data?.createdDate,
+                              updatedDate: !widget.isAdd
+                                  ? DateTime.now()
+                                  : widget.data?.updatedDate,
+                              startDate: startDate,
+                              endDate: endDate,
+                              commentCount: widget.data?.commentCount);
+                          widget.onTapCallBack(kanbanItemDataModel);
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      cancelTap: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
 
-                SizedBox(
-                  height: MediaQuery.paddingOf(context).bottom +
-                      MediaQuery.viewInsetsOf(context).bottom +
-                      10,
-                ),
-              ],
+                  if (widget.isDetailOnly && widget.data != null) ...[
+                    TimeTrackerWidget(taskItem: widget.data!),
+                    const RowSpacer(),
+                    CommentsView(taskId: widget.data!.itemId),
+                  ],
+                ],
+              ),
             ),
           ),
         );

@@ -36,8 +36,9 @@ For Further Help with Setup process, feel free to contact me on my [Linkedin](ht
 1. **Kanban Board**:
    
     - A kanban board for tasks, where you can Add, Edit, Delete, and Move tasks between different columns (sections) i.e. "To Do", "In Progress", "Done".
-    - All these Task features (Add, Edit, Delete, and Move) and synced with Todoist console, so these changes will be reflected over there in runtime on every successful API call.
-    - Task Details page is added to show deatils of each task, that you can access by clicking on any task.
+    - Task Details page is added to show details of each task, that you can access by clicking on any task.
+    - Post a comment for a Task, and get the list of all Comments for each task in its Task-Details-View
+    - All these Task features, i.e. Add, Edit, Delete, and Move as well post Comments, are synced with Todoist console, so these changes will be reflected over there in runtime on every successful API call.
    
 3. **TimeTracking Function**: 
 
