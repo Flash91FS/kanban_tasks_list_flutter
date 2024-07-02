@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_tasks_list_flutter/api_client/api_client.dart';
@@ -8,10 +9,12 @@ import 'package:kanban_tasks_list_flutter/presentation/bloc/projects/projects_cu
 import 'package:kanban_tasks_list_flutter/presentation/bloc/sections/sections_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_board/kanban_board_cubit.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/kanban_task_cubit.dart';
+import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/time_tracker_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/kanban_page.dart';
 import 'package:kanban_tasks_list_flutter/repository/comments_repository.dart';
+import 'package:kanban_tasks_list_flutter/repository/firebase_repository.dart';
 import 'package:kanban_tasks_list_flutter/repository/i_comments_repository.dart';
+import 'package:kanban_tasks_list_flutter/repository/i_firebase_repository.dart';
 import 'package:kanban_tasks_list_flutter/repository/i_projects_repository.dart';
 import 'package:kanban_tasks_list_flutter/repository/i_sections_repository.dart';
 import 'package:kanban_tasks_list_flutter/repository/i_tasks_repository.dart';
@@ -23,8 +26,9 @@ class App extends StatelessWidget {
   final ApiClient apiClient;
   final String pageTitle;
   final EnvironmentSettings environmentSettings;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  const App({
+  App({
     Key? key,
     required this.apiClient,
     required this.pageTitle,
@@ -43,6 +47,9 @@ class App extends StatelessWidget {
               create: (context) => (SectionsRepository(apiClient: apiClient))),
           RepositoryProvider<ICommentsRepository>(
               create: (context) => (CommentsRepository(apiClient: apiClient))),
+          RepositoryProvider<IFirebaseRepository>(
+              create: (context) =>
+                  (FirebaseRepository(firestoreInstance: _firestore))),
         ],
         child: MultiBlocProvider(
           providers: [
@@ -60,17 +67,24 @@ class App extends StatelessWidget {
               create: (context) => TasksCubit(
                 tasksRepository:
                     RepositoryProvider.of<ITasksRepository>(context),
+                firebaseRepository:
+                    RepositoryProvider.of<IFirebaseRepository>(context),
                 environmentCubit: BlocProvider.of<EnvironmentCubit>(context),
               )..loadSyncState(),
             ),
             BlocProvider(
               create: (context) => KanbanBoardCubit(
                 tasksCubit: BlocProvider.of<TasksCubit>(context),
+                firebaseRepository:
+                    RepositoryProvider.of<IFirebaseRepository>(context),
                 environmentCubit: BlocProvider.of<EnvironmentCubit>(context),
               ),
             ),
             BlocProvider(
-              create: (context) => KanbanTaskCubit(),
+              create: (context) => TimeTrackerCubit(
+                firebaseRepository:
+                    RepositoryProvider.of<IFirebaseRepository>(context),
+              ),
             ),
             BlocProvider(
               create: (context) => ProjectsCubit(

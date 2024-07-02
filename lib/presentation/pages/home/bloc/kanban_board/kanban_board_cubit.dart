@@ -5,15 +5,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_tasks_list_flutter/core/page_state_status.dart';
 import 'package:kanban_tasks_list_flutter/domain/models/kanban_item_data_model.dart';
 import 'package:kanban_tasks_list_flutter/domain/models/task.dart';
-import 'package:kanban_tasks_list_flutter/firebase/firebase_methods.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/environment/environment_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_state.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_board/kanban_board_state.dart';
+import 'package:kanban_tasks_list_flutter/repository/i_firebase_repository.dart';
 
 class KanbanBoardCubit extends Cubit<KanbanBoardState> {
   KanbanBoardCubit({
     required this.tasksCubit,
+    required this.firebaseRepository,
     required this.environmentCubit,
   }) : super(const KanbanBoardState(groups: [])) {
     _tasksSubscription = tasksCubit.stream.listen(_handleTasksStateChange);
@@ -21,6 +22,7 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
   }
 
   final TasksCubit tasksCubit;
+  final IFirebaseRepository firebaseRepository;
   final EnvironmentCubit environmentCubit;
   late StreamSubscription<TasksState> _tasksSubscription;
 
@@ -107,10 +109,8 @@ class KanbanBoardCubit extends Cubit<KanbanBoardState> {
 
       tasksCubit.moveTaskToSection(taskId: task.id, toSectionId: toGroup.id);
 
-      //Todo make a call to repository/api instead of directly calling FireStore Methods
       if (fromGroupId == environmentCubit.state.sectionIdInProgress) {
-        await FireStoreMethods()
-            .stopTimeTrackingWithoutDetails(taskId: task.id);
+        await firebaseRepository.stopTimeTrackingWithoutDetails(taskId: task.id);
       }
     }
   }

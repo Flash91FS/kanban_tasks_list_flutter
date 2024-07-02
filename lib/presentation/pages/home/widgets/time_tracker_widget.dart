@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_tasks_list_flutter/core/page_state_status.dart';
 import 'package:kanban_tasks_list_flutter/domain/models/kanban_item_data_model.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/environment/environment_cubit.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/kanban_task_cubit.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/kanban_task_state.dart';
+import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/time_tracker_cubit.dart';
+import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/time_tracker_state.dart';
 import 'package:kanban_tasks_list_flutter/presentation/widgets/row_spacer/row_spacer.dart';
+import 'package:kanban_tasks_list_flutter/repository/i_firebase_repository.dart';
 
 class TimeTrackerWidget extends StatelessWidget {
   final KanbanItemDataModel taskItem;
@@ -17,9 +18,11 @@ class TimeTrackerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<KanbanTaskCubit>(
-      create: (context) => KanbanTaskCubit()..loadData(taskItem.itemId),
-      child: BlocBuilder<KanbanTaskCubit, KanbanTaskState>(
+    return BlocProvider<TimeTrackerCubit>(
+      create: (context) => TimeTrackerCubit(
+        firebaseRepository: RepositoryProvider.of<IFirebaseRepository>(context),
+      )..loadData(taskItem.itemId),
+      child: BlocBuilder<TimeTrackerCubit, TimeTrackerState>(
         builder: (context, state) {
           return Column(
             children: [
@@ -49,11 +52,11 @@ class TimeTrackerWidget extends StatelessWidget {
                   onPressed: () {
                     if (!state.timeTrackingStarted) {
                       context
-                          .read<KanbanTaskCubit>()
+                          .read<TimeTrackerCubit>()
                           .startTimeTracking(taskId: taskItem.itemId);
                     } else {
                       context
-                          .read<KanbanTaskCubit>()
+                          .read<TimeTrackerCubit>()
                           .stopTimeTracking(taskId: taskItem.itemId);
                     }
                   },

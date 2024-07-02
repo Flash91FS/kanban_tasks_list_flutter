@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'kanban_task_state.dart';
+part of 'time_tracker_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$KanbanTaskState {
+mixin _$TimeTrackerState {
   PageStateStatus get status => throw _privateConstructorUsedError;
   String? get taskId => throw _privateConstructorUsedError;
   String? get timeDurationToDisplay => throw _privateConstructorUsedError;
@@ -26,15 +26,15 @@ mixin _$KanbanTaskState {
   bool get timeTrackingStarted => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $KanbanTaskStateCopyWith<KanbanTaskState> get copyWith =>
+  $TimeTrackerStateCopyWith<TimeTrackerState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $KanbanTaskStateCopyWith<$Res> {
-  factory $KanbanTaskStateCopyWith(
-          KanbanTaskState value, $Res Function(KanbanTaskState) then) =
-      _$KanbanTaskStateCopyWithImpl<$Res, KanbanTaskState>;
+abstract class $TimeTrackerStateCopyWith<$Res> {
+  factory $TimeTrackerStateCopyWith(
+          TimeTrackerState value, $Res Function(TimeTrackerState) then) =
+      _$TimeTrackerStateCopyWithImpl<$Res, TimeTrackerState>;
   @useResult
   $Res call(
       {PageStateStatus status,
@@ -48,9 +48,9 @@ abstract class $KanbanTaskStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$KanbanTaskStateCopyWithImpl<$Res, $Val extends KanbanTaskState>
-    implements $KanbanTaskStateCopyWith<$Res> {
-  _$KanbanTaskStateCopyWithImpl(this._value, this._then);
+class _$TimeTrackerStateCopyWithImpl<$Res, $Val extends TimeTrackerState>
+    implements $TimeTrackerStateCopyWith<$Res> {
+  _$TimeTrackerStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -107,11 +107,11 @@ class _$KanbanTaskStateCopyWithImpl<$Res, $Val extends KanbanTaskState>
 }
 
 /// @nodoc
-abstract class _$$KanbanTaskStateImplCopyWith<$Res>
-    implements $KanbanTaskStateCopyWith<$Res> {
-  factory _$$KanbanTaskStateImplCopyWith(_$KanbanTaskStateImpl value,
-          $Res Function(_$KanbanTaskStateImpl) then) =
-      __$$KanbanTaskStateImplCopyWithImpl<$Res>;
+abstract class _$$TimeTrackerStateImplCopyWith<$Res>
+    implements $TimeTrackerStateCopyWith<$Res> {
+  factory _$$TimeTrackerStateImplCopyWith(_$TimeTrackerStateImpl value,
+          $Res Function(_$TimeTrackerStateImpl) then) =
+      __$$TimeTrackerStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -126,11 +126,11 @@ abstract class _$$KanbanTaskStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$KanbanTaskStateImplCopyWithImpl<$Res>
-    extends _$KanbanTaskStateCopyWithImpl<$Res, _$KanbanTaskStateImpl>
-    implements _$$KanbanTaskStateImplCopyWith<$Res> {
-  __$$KanbanTaskStateImplCopyWithImpl(
-      _$KanbanTaskStateImpl _value, $Res Function(_$KanbanTaskStateImpl) _then)
+class __$$TimeTrackerStateImplCopyWithImpl<$Res>
+    extends _$TimeTrackerStateCopyWithImpl<$Res, _$TimeTrackerStateImpl>
+    implements _$$TimeTrackerStateImplCopyWith<$Res> {
+  __$$TimeTrackerStateImplCopyWithImpl(_$TimeTrackerStateImpl _value,
+      $Res Function(_$TimeTrackerStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -145,7 +145,7 @@ class __$$KanbanTaskStateImplCopyWithImpl<$Res>
     Object? updatedAt = freezed,
     Object? timeTrackingStarted = null,
   }) {
-    return _then(_$KanbanTaskStateImpl(
+    return _then(_$TimeTrackerStateImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -184,8 +184,8 @@ class __$$KanbanTaskStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$KanbanTaskStateImpl implements _KanbanTaskState {
-  const _$KanbanTaskStateImpl(
+class _$TimeTrackerStateImpl implements _TimeTrackerState {
+  const _$TimeTrackerStateImpl(
       {required this.status,
       this.taskId,
       this.timeDurationToDisplay,
@@ -218,14 +218,14 @@ class _$KanbanTaskStateImpl implements _KanbanTaskState {
 
   @override
   String toString() {
-    return 'KanbanTaskState(status: $status, taskId: $taskId, timeDurationToDisplay: $timeDurationToDisplay, timeSpentMs: $timeSpentMs, startTimeMs: $startTimeMs, endTimeMs: $endTimeMs, updatedAt: $updatedAt, timeTrackingStarted: $timeTrackingStarted)';
+    return 'TimeTrackerState(status: $status, taskId: $taskId, timeDurationToDisplay: $timeDurationToDisplay, timeSpentMs: $timeSpentMs, startTimeMs: $startTimeMs, endTimeMs: $endTimeMs, updatedAt: $updatedAt, timeTrackingStarted: $timeTrackingStarted)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$KanbanTaskStateImpl &&
+            other is _$TimeTrackerStateImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.taskId, taskId) || other.taskId == taskId) &&
             (identical(other.timeDurationToDisplay, timeDurationToDisplay) ||
@@ -257,13 +257,13 @@ class _$KanbanTaskStateImpl implements _KanbanTaskState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$KanbanTaskStateImplCopyWith<_$KanbanTaskStateImpl> get copyWith =>
-      __$$KanbanTaskStateImplCopyWithImpl<_$KanbanTaskStateImpl>(
+  _$$TimeTrackerStateImplCopyWith<_$TimeTrackerStateImpl> get copyWith =>
+      __$$TimeTrackerStateImplCopyWithImpl<_$TimeTrackerStateImpl>(
           this, _$identity);
 }
 
-abstract class _KanbanTaskState implements KanbanTaskState {
-  const factory _KanbanTaskState(
+abstract class _TimeTrackerState implements TimeTrackerState {
+  const factory _TimeTrackerState(
       {required final PageStateStatus status,
       final String? taskId,
       final String? timeDurationToDisplay,
@@ -271,7 +271,7 @@ abstract class _KanbanTaskState implements KanbanTaskState {
       final int startTimeMs,
       final int endTimeMs,
       final DateTime? updatedAt,
-      final bool timeTrackingStarted}) = _$KanbanTaskStateImpl;
+      final bool timeTrackingStarted}) = _$TimeTrackerStateImpl;
 
   @override
   PageStateStatus get status;
@@ -291,6 +291,6 @@ abstract class _KanbanTaskState implements KanbanTaskState {
   bool get timeTrackingStarted;
   @override
   @JsonKey(ignore: true)
-  _$$KanbanTaskStateImplCopyWith<_$KanbanTaskStateImpl> get copyWith =>
+  _$$TimeTrackerStateImplCopyWith<_$TimeTrackerStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

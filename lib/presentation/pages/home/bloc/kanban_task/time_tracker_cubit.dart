@@ -2,53 +2,63 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kanban_tasks_list_flutter/core/models/result.dart';
 import 'package:kanban_tasks_list_flutter/core/page_state_status.dart';
-import 'package:kanban_tasks_list_flutter/firebase/firebase_methods.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/kanban_task_state.dart';
+import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/time_tracker_state.dart';
+import 'package:kanban_tasks_list_flutter/repository/i_firebase_repository.dart';
 import 'package:kanban_tasks_list_flutter/utils.dart';
 
-class KanbanTaskCubit extends Cubit<KanbanTaskState> {
-  KanbanTaskCubit()
-      : super(const KanbanTaskState(status: PageStateStatus.initial));
+class TimeTrackerCubit extends Cubit<TimeTrackerState> {
+  final IFirebaseRepository firebaseRepository;
+
+  TimeTrackerCubit({required this.firebaseRepository})
+      : super(const TimeTrackerState(status: PageStateStatus.initial));
 
   Future<void> loadData(String itemId) async {
     try {
-      //Todo make a call to repository/api instead of directly calling FireStore Methods
-      final userSnap = await FirebaseFirestore.instance
-          .collection('tasks')
-          .doc(itemId)
-          .get();
-      final data = userSnap.data();
-      if (data != null) {
-        final taskId = data['taskId'];
-        final timeSpentMs = data['timeSpentMs'];
-        final startTimeMs = data['startTimeMs'];
-        final endTimeMs = data['endTimeMs'];
-        final DateTime updatedAt = (data['updatedAt'] as Timestamp).toDate();
-        final timeTrackingStarted = data['timeTrackingStarted'];
+      Result<Map<String, dynamic>?> result =
+          await firebaseRepository.getTimeTrackingData(taskId: itemId);
+      result.when(success: (Map<String, dynamic>? data) async {
+        if (data != null) {
+          final taskId = data['taskId'];
+          final timeSpentMs = data['timeSpentMs'];
+          final startTimeMs = data['startTimeMs'];
+          final endTimeMs = data['endTimeMs'];
+          final DateTime updatedAt = (data['updatedAt'] as Timestamp).toDate();
+          final timeTrackingStarted = data['timeTrackingStarted'];
 
-        final endTimeForCalculation = timeTrackingStarted
-            ? DateTime.now().millisecondsSinceEpoch
-            : endTimeMs;
-        final totalTimeSpentMs =
-            timeSpentMs + (endTimeForCalculation - startTimeMs);
+          final endTimeForCalculation = timeTrackingStarted
+              ? DateTime.now().millisecondsSinceEpoch
+              : endTimeMs;
+          final totalTimeSpentMs =
+              timeSpentMs + (endTimeForCalculation - startTimeMs);
 
-        String timeDurationToDisplay =
-            durationToString(Duration(milliseconds: totalTimeSpentMs));
+          String timeDurationToDisplay =
+              durationToString(Duration(milliseconds: totalTimeSpentMs));
 
-        emit(KanbanTaskState(
-          status: PageStateStatus.loaded,
-          taskId: taskId,
-          timeSpentMs: timeSpentMs,
-          startTimeMs: startTimeMs,
-          endTimeMs: endTimeMs,
-          updatedAt: updatedAt,
-          timeTrackingStarted: timeTrackingStarted,
-          timeDurationToDisplay: timeDurationToDisplay,
+          emit(TimeTrackerState(
+            status: PageStateStatus.loaded,
+            taskId: taskId,
+            timeSpentMs: timeSpentMs,
+            startTimeMs: startTimeMs,
+            endTimeMs: endTimeMs,
+            updatedAt: updatedAt,
+            timeTrackingStarted: timeTrackingStarted,
+            timeDurationToDisplay: timeDurationToDisplay,
+          ));
+        } else {
+          emit(const TimeTrackerState(
+            status: PageStateStatus.failedToLoad,
+          ));
+        }
+      }, failure: (_) {
+        emit(const TimeTrackerState(
+          status: PageStateStatus.failedToLoad,
         ));
-      }
+      });
     } catch (ex) {
-      logData(TAG_KANBAN_TASK_CUBIT, 'loadData(): Exception = ${ex.toString()}');
+      logData(
+          TAG_KANBAN_TASK_CUBIT, 'loadData(): Exception = ${ex.toString()}');
     }
   }
 
@@ -56,8 +66,7 @@ class KanbanTaskCubit extends Cubit<KanbanTaskState> {
     const bool timeTrackingStarted = true;
     final int timeAlreadySpent = state.timeSpentMs;
     final startTimeMs = DateTime.now().millisecondsSinceEpoch;
-    //Todo make a call to repository/api instead of directly calling FireStore Methods
-    await FireStoreMethods().postTask(
+    await firebaseRepository.postTimeTrackingDataForTask(
       taskId: taskId,
       timeTrackingStarted: timeTrackingStarted,
       startTimeMs: startTimeMs,
@@ -82,8 +91,7 @@ class KanbanTaskCubit extends Cubit<KanbanTaskState> {
     final endTimeMs = DateTime.now().millisecondsSinceEpoch;
 
     final totalTimeSpentMs = timeAlreadySpent + (endTimeMs - startTimeMs);
-    //Todo make a call to repository/api instead of directly calling FireStore Methods
-    await FireStoreMethods().postTask(
+    await firebaseRepository.postTimeTrackingDataForTask(
       taskId: taskId,
       timeTrackingStarted: timeTrackingStarted,
       startTimeMs: 0,
@@ -125,10 +133,6 @@ class KanbanTaskCubit extends Cubit<KanbanTaskState> {
     var centiseconds = (duration.inMilliseconds % 1000) ~/ 10;
     if (components.isEmpty || seconds != 0 || centiseconds != 0) {
       components.add('$seconds');
-      // if (centiseconds != 0) {
-      //   components.add('.');
-      //   components.add(centiseconds.toString().padLeft(2, '0'));
-      // }
       components.add('s');
     }
     return components.join();

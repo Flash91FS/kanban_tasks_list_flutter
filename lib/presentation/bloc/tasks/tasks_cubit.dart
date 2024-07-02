@@ -2,19 +2,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_tasks_list_flutter/core/models/result.dart';
 import 'package:kanban_tasks_list_flutter/core/page_state_status.dart';
 import 'package:kanban_tasks_list_flutter/domain/models/task.dart';
-import 'package:kanban_tasks_list_flutter/firebase/firebase_methods.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/environment/environment_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_state.dart';
+import 'package:kanban_tasks_list_flutter/repository/i_firebase_repository.dart';
 import 'package:kanban_tasks_list_flutter/repository/i_tasks_repository.dart';
 import 'package:kanban_tasks_list_flutter/utils.dart';
 import 'package:uuid/uuid.dart';
 
 class TasksCubit extends Cubit<TasksState> {
   final ITasksRepository tasksRepository;
+  final IFirebaseRepository firebaseRepository;
   final EnvironmentCubit environmentCubit;
 
-  TasksCubit({required this.tasksRepository, required this.environmentCubit})
-      : super(const TasksState(status: PageStateStatus.loading));
+  TasksCubit({
+    required this.tasksRepository,
+    required this.firebaseRepository,
+    required this.environmentCubit,
+  }) : super(const TasksState(status: PageStateStatus.loading));
 
   Future<void> loadResults() async {
     try {
@@ -64,9 +68,8 @@ class TasksCubit extends Cubit<TasksState> {
       result.when(success: (Task item) async {
         final newTaskList = List<Task>.from(state.tasks!)..add(item);
 
-        ///Add a new task in FB
-        //Todo make a call to repository/api instead of directly calling FireStore Methods
-        await FireStoreMethods().postTask(taskId: item.id);
+        ///Add a new task in FB-DB
+        await firebaseRepository.postTimeTrackingDataForTask(taskId: item.id);
 
         emit(state.copyWith(
             status: PageStateStatus.updated, tasks: newTaskList));
