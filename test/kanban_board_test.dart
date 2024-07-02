@@ -139,21 +139,12 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byKey(const Key('Key-AppFlowyBoard')), findsOneWidget);
-      expect(
-          find.byKey(Key('Key-GroupName-${mockGroupTodo.id}')), findsOneWidget);
-      expect(find.byKey(Key('Key-GroupName-${mockGroupInProgress.id}')),
-          findsOneWidget);
-      expect(
-          find.byKey(Key('Key-GroupName-${mockGroupDone.id}')), findsOneWidget);
-      expect(find.byKey(Key('Key-KanbanTaskItemView-${mockTask.id}')),
-          findsOneWidget);
-      expect(
-          find.byKey(Key('Key-KanbanTaskItemView-Title-${mockTask.content}')),
-          findsOneWidget);
-      expect(
-          find.byKey(Key(
-              'Key-KanbanTaskItemView-Description-${mockTask.description}')),
-          findsOneWidget);
+      expect(find.byKey(Key('Key-GroupName-${mockGroupTodo.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-GroupName-${mockGroupInProgress.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-GroupName-${mockGroupDone.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-KanbanTaskItemView-${mockTask.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-KanbanTaskItemView-Title-${mockTask.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-KanbanTaskItemView-Description-${mockTask.id}')), findsOneWidget);
     });
   });
 }

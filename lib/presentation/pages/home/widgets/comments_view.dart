@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/add_comment_widget.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/comments_list.dart';
-import 'package:kanban_tasks_list_flutter/presentation/widgets/row_spacer/row_spacer.dart';
+import 'package:kanban_tasks_list_flutter/presentation/util_widgets/row_spacer.dart';
 
 class CommentsView extends StatelessWidget {
   final String taskId;

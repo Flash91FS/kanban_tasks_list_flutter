@@ -10,7 +10,7 @@ import 'package:kanban_tasks_list_flutter/presentation/pages/home/config/kanban_
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/kanban_task_details_view.dart';
 import 'package:kanban_tasks_list_flutter/presentation/popup_dialog.dart';
 import 'package:kanban_tasks_list_flutter/presentation/responsive_dialog.dart';
-import 'package:kanban_tasks_list_flutter/presentation/widgets/row_spacer/row_spacer.dart';
+import 'package:kanban_tasks_list_flutter/presentation/util_widgets/row_spacer.dart';
 
 class KanbanTaskItemView extends StatelessWidget {
   final String projectId;

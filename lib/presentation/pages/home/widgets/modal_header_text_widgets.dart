@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/config/kanban_config.dart';
 
-
 class ModalHeaderTextWidgets extends StatelessWidget {
   final String header;
 
@@ -20,6 +19,7 @@ class ModalHeaderTextWidgets extends StatelessWidget {
           child: Row(
             children: [
               Text(
+                key: const Key('Key-ModalHeaderTextWidgets-Header'),
                 header,
                 style: const TextStyle(
                   fontSize: 16,
@@ -28,6 +28,7 @@ class ModalHeaderTextWidgets extends StatelessWidget {
               ),
               const Spacer(),
               GestureDetector(
+                key: const Key('Key-ModalHeaderTextWidgets-CloseIcon'),
                 onTap: () {
                   Navigator.of(context).pop();
                 },

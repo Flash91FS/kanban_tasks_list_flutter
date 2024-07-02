@@ -4,9 +4,9 @@ import 'package:kanban_tasks_list_flutter/extensions/validation_extension.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/comments_view.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/modal_footer_buttons_widget.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/modal_header_text_widgets.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/text_form_field_widget.dart';
+import 'package:kanban_tasks_list_flutter/presentation/util_widgets/text_form_field_widget.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/time_tracker_widget.dart';
-import 'package:kanban_tasks_list_flutter/presentation/widgets/row_spacer/row_spacer.dart';
+import 'package:kanban_tasks_list_flutter/presentation/util_widgets/row_spacer.dart';
 
 class KanbanTaskDetailsView extends StatefulWidget {
   final bool isAdd;

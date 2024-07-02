@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kanban_tasks_list_flutter/presentation/button_styles.dart';
-import 'package:kanban_tasks_list_flutter/presentation/widgets/row_spacer/row_spacer.dart';
+import 'package:kanban_tasks_list_flutter/presentation/util_widgets/row_spacer.dart';
 
 class PopupDialog {
   static showPopupDialog(
