@@ -1,6 +1,6 @@
-# kanban_tasks_list_flutter
+# Kanban App
 
-A Kanban board App that gives the functionality to create Tasks and manage them in different phases as well as track their progress time.
+This is a Kanban board App, build with Flutter, that gives the functionality to create Tasks and manage them in different phases as well as track their progress time.
 
 ### Setup and Installation
 
@@ -45,6 +45,7 @@ For Further Help with Setup process, feel free to contact me on my [Linkedin](ht
     - Time Tracking feature is added to track time and progress for tasks that are in "In Progress" section.
     - To start Time Tracking, you have to click on the "Start Time Tracking" button in Task Details page. Note that the task has to be present in "In Progress" section for this, to make it close to real life example, when Time Tracking for tasks that are in progress
     - To stop Time Tracking, you can either click on the "Start Time Tracking" button in Task Details page, or moving the Task out of "In Progress" section to any other section will also pause/stop the Task's Time Tracking.
+    - Time Tracking feature in this Kanban App requires proper Firebase Setup for the platform on which the App is being run, and without Firebase setup Time-Tracking button will not show.
 
 
 ### Screenshots: 
