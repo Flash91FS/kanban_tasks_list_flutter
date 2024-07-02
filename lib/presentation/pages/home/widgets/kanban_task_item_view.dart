@@ -48,7 +48,7 @@ class KanbanTaskItemView extends StatelessWidget {
                   children: [
                     Text(
                       item.title,
-                      key: Key('Key-KanbanTaskItemView-Title-${item.title}'),
+                      key: Key('Key-KanbanTaskItemView-Title-${item.id}'),
                       style: const TextStyle(fontSize: 14),
                       textAlign: TextAlign.left,
                     ),
@@ -57,7 +57,7 @@ class KanbanTaskItemView extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 2),
                         child: Text(
                           item.description,
-                          key: Key('Key-KanbanTaskItemView-Description-${item.description}'),
+                          key: Key('Key-KanbanTaskItemView-Description-${item.id}'),
                           style: const TextStyle(
                               fontSize: 12, color: kanbanCardSubtextColor),
                         ),
@@ -71,6 +71,7 @@ class KanbanTaskItemView extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Text(
+                                    key: Key('Key-KanbanTaskItemView-StartDate-${item.id}'),
                                     item.startDate.format('dd MMM ' 'yy'),
                                     style: const TextStyle(
                                       fontSize: 12,
@@ -125,6 +126,7 @@ class KanbanTaskItemView extends StatelessWidget {
                 Column(
                   children: [
                     GestureDetector(
+                      key: Key('Key-KanbanTaskItemView-EditOption-${item.id}'),
                       behavior: HitTestBehavior.translucent,
                       onTap: () {
                         HapticFeedback.mediumImpact();
@@ -141,6 +143,7 @@ class KanbanTaskItemView extends StatelessWidget {
                     ),
                     const RowSpacer(),
                     GestureDetector(
+                      key: Key('Key-KanbanTaskItemView-DeleteOption-${item.id}'),
                       behavior: HitTestBehavior.translucent,
                       onTap: () {
                         HapticFeedback.mediumImpact();
