@@ -8,7 +8,7 @@ import 'package:kanban_tasks_list_flutter/presentation/bloc/time_tracker/time_tr
 import 'package:kanban_tasks_list_flutter/repository/i_firebase_repository.dart';
 import 'package:kanban_tasks_list_flutter/utils.dart';
 
-class TimeTrackerCubit extends Cubit<TimeTrackerState> {
+class TimeTrackerCubit extends Cubit<TimeTrackerState> { //testing a minor change
   final IFirebaseRepository firebaseRepository;
 
   TimeTrackerCubit({required this.firebaseRepository})
