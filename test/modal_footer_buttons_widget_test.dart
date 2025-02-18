@@ -33,5 +33,155 @@ void main() {
     });
 
 
+    testWidgets('ModalFooterButtonsWidget test', (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(MaterialApp(
+          home: Scaffold(
+            body: ModalFooterButtonsWidget(
+              cancelBtnName: 'Cancel',
+              nxtBtnName: 'Add Task',
+              nextTap: () {
+              },
+              cancelTap: () {
+              },
+            ),
+          ),
+        ));
+
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(const Key('Key-ModalFooterButton-Cancel')), findsOneWidget);
+        expect(find.byKey(const Key('Key-ModalFooterButton-Next')), findsOneWidget);
+        expect(find.text('Cancel'), findsOneWidget);
+        expect(find.text('Add Task'), findsOneWidget);
+      });
+    });
+
+
+    testWidgets('ModalFooterButtonsWidget test', (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(MaterialApp(
+          home: Scaffold(
+            body: ModalFooterButtonsWidget(
+              cancelBtnName: 'Cancel',
+              nxtBtnName: 'Add Task',
+              nextTap: () {
+              },
+              cancelTap: () {
+              },
+            ),
+          ),
+        ));
+
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(const Key('Key-ModalFooterButton-Cancel')), findsOneWidget);
+        expect(find.byKey(const Key('Key-ModalFooterButton-Next')), findsOneWidget);
+        expect(find.text('Cancel'), findsOneWidget);
+        expect(find.text('Add Task'), findsOneWidget);
+      });
+    });
+
+
+    testWidgets('ModalFooterButtonsWidget test', (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(MaterialApp(
+          home: Scaffold(
+            body: ModalFooterButtonsWidget(
+              cancelBtnName: 'Cancel',
+              nxtBtnName: 'Add Task',
+              nextTap: () {
+              },
+              cancelTap: () {
+              },
+            ),
+          ),
+        ));
+
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(const Key('Key-ModalFooterButton-Cancel')), findsOneWidget);
+        expect(find.byKey(const Key('Key-ModalFooterButton-Next')), findsOneWidget);
+        expect(find.text('Cancel'), findsOneWidget);
+        expect(find.text('Add Task'), findsOneWidget);
+      });
+    });
+
+
+    testWidgets('ModalFooterButtonsWidget test', (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(MaterialApp(
+          home: Scaffold(
+            body: ModalFooterButtonsWidget(
+              cancelBtnName: 'Cancel',
+              nxtBtnName: 'Add Task',
+              nextTap: () {
+              },
+              cancelTap: () {
+              },
+            ),
+          ),
+        ));
+
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(const Key('Key-ModalFooterButton-Cancel')), findsOneWidget);
+        expect(find.byKey(const Key('Key-ModalFooterButton-Next')), findsOneWidget);
+        expect(find.text('Cancel'), findsOneWidget);
+        expect(find.text('Add Task'), findsOneWidget);
+      });
+    });
+
+
+    testWidgets('ModalFooterButtonsWidget test', (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(MaterialApp(
+          home: Scaffold(
+            body: ModalFooterButtonsWidget(
+              cancelBtnName: 'Cancel',
+              nxtBtnName: 'Add Task',
+              nextTap: () {
+              },
+              cancelTap: () {
+              },
+            ),
+          ),
+        ));
+
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(const Key('Key-ModalFooterButton-Cancel')), findsOneWidget);
+        expect(find.byKey(const Key('Key-ModalFooterButton-Next')), findsOneWidget);
+        expect(find.text('Cancel'), findsOneWidget);
+        expect(find.text('Add Task'), findsOneWidget);
+      });
+    });
+
+
+    testWidgets('ModalFooterButtonsWidget test', (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(MaterialApp(
+          home: Scaffold(
+            body: ModalFooterButtonsWidget(
+              cancelBtnName: 'Cancel',
+              nxtBtnName: 'Add Task',
+              nextTap: () {
+              },
+              cancelTap: () {
+              },
+            ),
+          ),
+        ));
+
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(const Key('Key-ModalFooterButton-Cancel')), findsOneWidget);
+        expect(find.byKey(const Key('Key-ModalFooterButton-Next')), findsOneWidget);
+        expect(find.text('Cancel'), findsOneWidget);
+        expect(find.text('Add Task'), findsOneWidget);
+      });
+    });
+
+
   });
 }

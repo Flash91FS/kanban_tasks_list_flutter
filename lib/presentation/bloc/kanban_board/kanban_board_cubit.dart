@@ -8,7 +8,7 @@ import 'package:kanban_tasks_list_flutter/domain/models/task.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/environment/environment_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_state.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_board/kanban_board_state.dart';
+import 'package:kanban_tasks_list_flutter/presentation/bloc/kanban_board/kanban_board_state.dart';
 import 'package:kanban_tasks_list_flutter/repository/i_firebase_repository.dart';
 
 class KanbanBoardCubit extends Cubit<KanbanBoardState> {

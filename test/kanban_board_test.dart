@@ -11,10 +11,10 @@ import 'package:kanban_tasks_list_flutter/presentation/bloc/sections/sections_cu
 import 'package:kanban_tasks_list_flutter/presentation/bloc/sections/sections_state.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_state.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_board/kanban_board_cubit.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_board/kanban_board_state.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/time_tracker_cubit.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/time_tracker_state.dart';
+import 'package:kanban_tasks_list_flutter/presentation/bloc/kanban_board/kanban_board_cubit.dart';
+import 'package:kanban_tasks_list_flutter/presentation/bloc/kanban_board/kanban_board_state.dart';
+import 'package:kanban_tasks_list_flutter/presentation/bloc/time_tracker/time_tracker_cubit.dart';
+import 'package:kanban_tasks_list_flutter/presentation/bloc/time_tracker/time_tracker_state.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/kanban_board.dart';
 import 'package:kanban_tasks_list_flutter/repository/comments_repository.dart';
 import 'package:kanban_tasks_list_flutter/repository/firebase_repository.dart';
@@ -96,6 +96,156 @@ void main() {
           allItems: [mockSectionToDo, mockSectionInProgress, mockSectionDone]));
     });
 
+    testWidgets('KanbanBoard test', (WidgetTester tester) async {
+      await tester.pumpWidget(MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider.value(value: tasksRepository),
+          RepositoryProvider.value(value: projectsRepository),
+          RepositoryProvider.value(value: sectionsRepository),
+          RepositoryProvider.value(value: commentsRepository),
+          RepositoryProvider.value(value: firebaseRepository),
+        ],
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider.value(
+              value: TasksCubit(
+                  tasksRepository: tasksRepository,
+                  firebaseRepository: firebaseRepository,
+                  environmentCubit: environmentCubit),
+            ),
+            BlocProvider.value(
+              value: kanbanBoardCubit,
+            ),
+            BlocProvider.value(
+              value: timeTrackerCubit,
+            ),
+            BlocProvider.value(
+              value: projectsCubit,
+            ),
+            BlocProvider.value(
+              value: sectionsCubit,
+            ),
+            BlocProvider.value(
+              value: environmentCubit,
+            ),
+            BlocProvider.value(
+              value: commentsCubit,
+            ),
+          ],
+          child: const MaterialApp(home: Scaffold(body: KanbanBoard())),
+        ),
+      ));
+
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const Key('Key-AppFlowyBoard')), findsOneWidget);
+      expect(find.byKey(Key('Key-GroupName-${mockGroupTodo.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-GroupName-${mockGroupInProgress.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-GroupName-${mockGroupDone.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-KanbanTaskItemView-${mockTask.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-KanbanTaskItemView-Title-${mockTask.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-KanbanTaskItemView-Description-${mockTask.id}')), findsOneWidget);
+    });
+    testWidgets('KanbanBoard test', (WidgetTester tester) async {
+      await tester.pumpWidget(MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider.value(value: tasksRepository),
+          RepositoryProvider.value(value: projectsRepository),
+          RepositoryProvider.value(value: sectionsRepository),
+          RepositoryProvider.value(value: commentsRepository),
+          RepositoryProvider.value(value: firebaseRepository),
+        ],
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider.value(
+              value: TasksCubit(
+                  tasksRepository: tasksRepository,
+                  firebaseRepository: firebaseRepository,
+                  environmentCubit: environmentCubit),
+            ),
+            BlocProvider.value(
+              value: kanbanBoardCubit,
+            ),
+            BlocProvider.value(
+              value: timeTrackerCubit,
+            ),
+            BlocProvider.value(
+              value: projectsCubit,
+            ),
+            BlocProvider.value(
+              value: sectionsCubit,
+            ),
+            BlocProvider.value(
+              value: environmentCubit,
+            ),
+            BlocProvider.value(
+              value: commentsCubit,
+            ),
+          ],
+          child: const MaterialApp(home: Scaffold(body: KanbanBoard())),
+        ),
+      ));
+
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const Key('Key-AppFlowyBoard')), findsOneWidget);
+      expect(find.byKey(Key('Key-GroupName-${mockGroupTodo.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-GroupName-${mockGroupInProgress.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-GroupName-${mockGroupDone.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-KanbanTaskItemView-${mockTask.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-KanbanTaskItemView-Title-${mockTask.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-KanbanTaskItemView-Description-${mockTask.id}')), findsOneWidget);
+    });
+    testWidgets('KanbanBoard test', (WidgetTester tester) async {
+      await tester.pumpWidget(MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider.value(value: tasksRepository),
+          RepositoryProvider.value(value: projectsRepository),
+          RepositoryProvider.value(value: sectionsRepository),
+          RepositoryProvider.value(value: commentsRepository),
+          RepositoryProvider.value(value: firebaseRepository),
+        ],
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider.value(
+              value: TasksCubit(
+                  tasksRepository: tasksRepository,
+                  firebaseRepository: firebaseRepository,
+                  environmentCubit: environmentCubit),
+            ),
+            BlocProvider.value(
+              value: kanbanBoardCubit,
+            ),
+            BlocProvider.value(
+              value: timeTrackerCubit,
+            ),
+            BlocProvider.value(
+              value: projectsCubit,
+            ),
+            BlocProvider.value(
+              value: sectionsCubit,
+            ),
+            BlocProvider.value(
+              value: environmentCubit,
+            ),
+            BlocProvider.value(
+              value: commentsCubit,
+            ),
+          ],
+          child: const MaterialApp(home: Scaffold(body: KanbanBoard())),
+        ),
+      ));
+
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const Key('Key-AppFlowyBoard')), findsOneWidget);
+      expect(find.byKey(Key('Key-GroupName-${mockGroupTodo.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-GroupName-${mockGroupInProgress.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-GroupName-${mockGroupDone.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-KanbanTaskItemView-${mockTask.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-KanbanTaskItemView-Title-${mockTask.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-KanbanTaskItemView-Description-${mockTask.id}')), findsOneWidget);
+    });
     testWidgets('KanbanBoard test', (WidgetTester tester) async {
       await tester.pumpWidget(MultiRepositoryProvider(
         providers: [

@@ -11,10 +11,10 @@ import 'package:kanban_tasks_list_flutter/presentation/bloc/sections/sections_cu
 import 'package:kanban_tasks_list_flutter/presentation/bloc/sections/sections_state.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_state.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_board/kanban_board_cubit.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_board/kanban_board_state.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/time_tracker_cubit.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/time_tracker_state.dart';
+import 'package:kanban_tasks_list_flutter/presentation/bloc/kanban_board/kanban_board_cubit.dart';
+import 'package:kanban_tasks_list_flutter/presentation/bloc/kanban_board/kanban_board_state.dart';
+import 'package:kanban_tasks_list_flutter/presentation/bloc/time_tracker/time_tracker_cubit.dart';
+import 'package:kanban_tasks_list_flutter/presentation/bloc/time_tracker/time_tracker_state.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/add_comment_widget.dart';
 import 'package:kanban_tasks_list_flutter/repository/comments_repository.dart';
 import 'package:kanban_tasks_list_flutter/repository/firebase_repository.dart';

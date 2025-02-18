@@ -11,10 +11,10 @@ import 'package:kanban_tasks_list_flutter/presentation/bloc/sections/sections_cu
 import 'package:kanban_tasks_list_flutter/presentation/bloc/sections/sections_state.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_state.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_board/kanban_board_cubit.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_board/kanban_board_state.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/time_tracker_cubit.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/bloc/kanban_task/time_tracker_state.dart';
+import 'package:kanban_tasks_list_flutter/presentation/bloc/kanban_board/kanban_board_cubit.dart';
+import 'package:kanban_tasks_list_flutter/presentation/bloc/kanban_board/kanban_board_state.dart';
+import 'package:kanban_tasks_list_flutter/presentation/bloc/time_tracker/time_tracker_cubit.dart';
+import 'package:kanban_tasks_list_flutter/presentation/bloc/time_tracker/time_tracker_state.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/comment_item.dart';
 import 'package:kanban_tasks_list_flutter/repository/comments_repository.dart';
 import 'package:kanban_tasks_list_flutter/repository/firebase_repository.dart';
@@ -96,6 +96,55 @@ void main() {
           allItems: [mockSectionToDo, mockSectionInProgress, mockSectionDone]));
     });
 
+    testWidgets('CommentItem test', (WidgetTester tester) async {
+      await tester.pumpWidget(MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider.value(value: tasksRepository),
+          RepositoryProvider.value(value: projectsRepository),
+          RepositoryProvider.value(value: sectionsRepository),
+          RepositoryProvider.value(value: commentsRepository),
+          RepositoryProvider.value(value: firebaseRepository),
+        ],
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider.value(
+              value: TasksCubit(
+                  tasksRepository: tasksRepository,
+                  firebaseRepository: firebaseRepository,
+                  environmentCubit: environmentCubit),
+            ),
+            BlocProvider.value(
+              value: kanbanBoardCubit,
+            ),
+            BlocProvider.value(
+              value: timeTrackerCubit,
+            ),
+            BlocProvider.value(
+              value: projectsCubit,
+            ),
+            BlocProvider.value(
+              value: sectionsCubit,
+            ),
+            BlocProvider.value(
+              value: environmentCubit,
+            ),
+            BlocProvider.value(
+              value: CommentsCubit(commentsRepository: commentsRepository),
+            ),
+          ],
+          child: MaterialApp(
+              home: Scaffold(
+                  body: CommentItem(
+            comment: mockComment,
+          ))),
+        ),
+      ));
+
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(Key('Key-CommentItem-Content-${mockComment.id}')), findsOneWidget);
+      expect(find.byKey(Key('Key-CommentItem-PostedAt-${mockComment.id}')), findsOneWidget);
+    });
     testWidgets('CommentItem test', (WidgetTester tester) async {
       await tester.pumpWidget(MultiRepositoryProvider(
         providers: [

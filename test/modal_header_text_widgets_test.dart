@@ -26,6 +26,168 @@ void main() {
       });
     });
 
+    testWidgets('ModalHeaderTextWidget test', (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(const MaterialApp(
+          home: Scaffold(
+            body: ModalHeaderTextWidgets(
+              header: 'Add Task',
+            ),
+          ),
+        ));
+
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(const Key('Key-ModalHeaderTextWidgets-Header')), findsOneWidget);
+        expect(find.byKey(const Key('Key-ModalHeaderTextWidgets-CloseIcon')), findsOneWidget);
+        expect(find.text('Add Task'), findsOneWidget);
+      });
+    });
+
+    testWidgets('ModalHeaderTextWidget test', (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(const MaterialApp(
+          home: Scaffold(
+            body: ModalHeaderTextWidgets(
+              header: 'Add Task',
+            ),
+          ),
+        ));
+
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(const Key('Key-ModalHeaderTextWidgets-Header')), findsOneWidget);
+        expect(find.byKey(const Key('Key-ModalHeaderTextWidgets-CloseIcon')), findsOneWidget);
+        expect(find.text('Add Task'), findsOneWidget);
+      });
+    });
+
+    testWidgets('ModalHeaderTextWidget test', (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(const MaterialApp(
+          home: Scaffold(
+            body: ModalHeaderTextWidgets(
+              header: 'Add Task',
+            ),
+          ),
+        ));
+
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(const Key('Key-ModalHeaderTextWidgets-Header')), findsOneWidget);
+        expect(find.byKey(const Key('Key-ModalHeaderTextWidgets-CloseIcon')), findsOneWidget);
+        expect(find.text('Add Task'), findsOneWidget);
+      });
+    });
+
+    testWidgets('ModalHeaderTextWidget test', (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(const MaterialApp(
+          home: Scaffold(
+            body: ModalHeaderTextWidgets(
+              header: 'Add Task',
+            ),
+          ),
+        ));
+
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(const Key('Key-ModalHeaderTextWidgets-Header')), findsOneWidget);
+        expect(find.byKey(const Key('Key-ModalHeaderTextWidgets-CloseIcon')), findsOneWidget);
+        expect(find.text('Add Task'), findsOneWidget);
+      });
+    });
+
+    testWidgets('ModalHeaderTextWidget test', (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(const MaterialApp(
+          home: Scaffold(
+            body: ModalHeaderTextWidgets(
+              header: 'Add Task',
+            ),
+          ),
+        ));
+
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(const Key('Key-ModalHeaderTextWidgets-Header')), findsOneWidget);
+        expect(find.byKey(const Key('Key-ModalHeaderTextWidgets-CloseIcon')), findsOneWidget);
+        expect(find.text('Add Task'), findsOneWidget);
+      });
+    });
+
+    testWidgets('ModalHeaderTextWidget test', (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(const MaterialApp(
+          home: Scaffold(
+            body: ModalHeaderTextWidgets(
+              header: 'Add Task',
+            ),
+          ),
+        ));
+
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(const Key('Key-ModalHeaderTextWidgets-Header')), findsOneWidget);
+        expect(find.byKey(const Key('Key-ModalHeaderTextWidgets-CloseIcon')), findsOneWidget);
+        expect(find.text('Add Task'), findsOneWidget);
+      });
+    });
+
+    testWidgets('ModalHeaderTextWidget test', (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(const MaterialApp(
+          home: Scaffold(
+            body: ModalHeaderTextWidgets(
+              header: 'Add Task',
+            ),
+          ),
+        ));
+
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(const Key('Key-ModalHeaderTextWidgets-Header')), findsOneWidget);
+        expect(find.byKey(const Key('Key-ModalHeaderTextWidgets-CloseIcon')), findsOneWidget);
+        expect(find.text('Add Task'), findsOneWidget);
+      });
+    });
+
+    testWidgets('ModalHeaderTextWidget test', (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(const MaterialApp(
+          home: Scaffold(
+            body: ModalHeaderTextWidgets(
+              header: 'Add Task',
+            ),
+          ),
+        ));
+
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(const Key('Key-ModalHeaderTextWidgets-Header')), findsOneWidget);
+        expect(find.byKey(const Key('Key-ModalHeaderTextWidgets-CloseIcon')), findsOneWidget);
+        expect(find.text('Add Task'), findsOneWidget);
+      });
+    });
+
+    testWidgets('ModalHeaderTextWidget test', (WidgetTester tester) async {
+      await tester.runAsync(() async {
+        await tester.pumpWidget(const MaterialApp(
+          home: Scaffold(
+            body: ModalHeaderTextWidgets(
+              header: 'Add Task',
+            ),
+          ),
+        ));
+
+        await tester.pumpAndSettle();
+
+        expect(find.byKey(const Key('Key-ModalHeaderTextWidgets-Header')), findsOneWidget);
+        expect(find.byKey(const Key('Key-ModalHeaderTextWidgets-CloseIcon')), findsOneWidget);
+        expect(find.text('Add Task'), findsOneWidget);
+      });
+    });
+
 
   });
 }
