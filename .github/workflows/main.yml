@@ -41,9 +41,6 @@ jobs:
       - name: Decode dev.env
         run: echo "${{ secrets.DEV_ENV }}" | base64 --decode > dev.env
 
-      - name: Load environment variables
-        run: source dev.env
-
       - name: Run tests
         run: flutter test
 
@@ -93,9 +90,6 @@ jobs:
 #
 #      - name: Verify file dev.env
 #        run: cat dev.env
-#
-#      - name: Load environment variables
-#        run: source dev.env
 #
 #      - name: Run tests
 #        run: flutter test
