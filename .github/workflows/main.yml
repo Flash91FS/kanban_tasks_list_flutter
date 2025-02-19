@@ -40,15 +40,15 @@ jobs:
           mkdir -p android/app/build/outputs/apk/release/
           cp build/app/outputs/flutter-apk/app-release.apk android/app/build/outputs/apk/release/
 
-      - name: Build iOS IPA
-        if: matrix.platform == 'ios'
-        env:
-          CI: true
-        run: |
-          flutter build ios --release --no-codesign
-          mkdir -p ios/build/ipa/
-          xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner archive -archivePath ios/build/Runner.xcarchive
-          xcodebuild -exportArchive -archivePath ios/build/Runner.xcarchive -exportPath ios/build/ipa/ -exportOptionsPlist ios/Runner/ExportOptions.plist
+#      - name: Build iOS IPA
+#        if: matrix.platform == 'ios'
+#        env:
+#          CI: true
+#        run: |
+#          flutter build ios --release --no-codesign
+#          mkdir -p ios/build/ipa/
+#          xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner archive -archivePath ios/build/Runner.xcarchive
+#          xcodebuild -exportArchive -archivePath ios/build/Runner.xcarchive -exportPath ios/build/ipa/ -exportOptionsPlist ios/Runner/ExportOptions.plist
 
 #  deploy:
 #    needs: build
