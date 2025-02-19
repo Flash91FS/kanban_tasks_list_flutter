@@ -28,12 +28,11 @@ jobs:
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          architecture: x64
-          flutter-version: '3.29.0'
+          flutter-version: '3.22.2'
 
       - name: Configure Git for Flutter
         run: |
-          git config --global --add safe.directory /opt/hostedtoolcache/flutter/${{ steps.flutter-action.outputs.CHANNEL }}-${{ steps.flutter-action.outputs.VERSION }}-${{ steps.flutter-action.outputs.ARCHITECTURE }}
+          git config --global --add safe.directory /opt/hostedtoolcache/flutter/stable-3.22.2-x64
           flutter --version
 
       - name: Install dependencies
@@ -55,11 +54,6 @@ jobs:
         run: |
           cat android/app/google-services.json
           cat lib/firebase/firebase_options.dart
-      #      - name: Add google-services.json
-      #        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > android/app/google-services.json
-      #
-      #      - name: Add FirebaseOptions.dart
-      #        run: echo "${{ secrets.FIREBASE_OPTIONS_DART }}" > lib/firebase/firebase_options.dart
 
       - name: Build Android APK
         if: matrix.platform == 'android'
@@ -73,11 +67,11 @@ jobs:
 #        env:
 #          CI: true
 #        run: |
-#          flutter build ios --release --no-codesign
+#          flutter build ios --release
 #          mkdir -p ios/build/ipa/
 #          xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner archive -archivePath ios/build/Runner.xcarchive
 #          xcodebuild -exportArchive -archivePath ios/build/Runner.xcarchive -exportPath ios/build/ipa/ -exportOptionsPlist ios/Runner/ExportOptions.plist
-
+#
 #  deploy:
 #    needs: build
 #    runs-on: ubuntu-latest
@@ -97,11 +91,16 @@ jobs:
 #          packageName: com.example.app
 #          releaseFile: android/app/build/outputs/apk/release/app-release.apk
 #
+#      - name: Set up fastlane
+#        if: matrix.platform == 'ios'
+#        uses: maierj/fastlane-action@v2.0.0
+#
 #      - name: Deploy to Apple App Store
 #        if: matrix.platform == 'ios'
-#        uses: appleboy/app-store-deploy-action@v1
-#        with:
-#          apiKey: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
-#          issuerId: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
-#          keyId: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-#          ipaPath: ios/build/ipa/Runner.ipa
+#        run: fastlane ios release
+#        env:
+#          APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+#          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+#          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+#          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+#          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.APP_STORE_CONNECT_PASSWORD }}
