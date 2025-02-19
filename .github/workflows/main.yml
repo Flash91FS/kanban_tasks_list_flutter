@@ -42,7 +42,6 @@ jobs:
       - name: Build Android APK
         if: matrix.platform == 'android'
         run: |
-          git config --global --add safe.directory /opt/hostedtoolcache/flutter/stable-3.22.2-x64
           flutter build apk --release -v
           mkdir -p android/app/build/outputs/apk/release/
           cp build/app/outputs/flutter-apk/app-release.apk android/app/build/outputs/apk/release/
