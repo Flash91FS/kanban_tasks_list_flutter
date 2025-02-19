@@ -44,6 +44,9 @@ jobs:
       - name: Load environment variables
         run: source dev.env
 
+      - name: Run tests
+        run: flutter test
+
       - name: Build Android APK
         run: |
           flutter build apk --release -v
@@ -93,6 +96,9 @@ jobs:
 #
 #      - name: Load environment variables
 #        run: source dev.env
+#
+#      - name: Run tests
+#        run: flutter test
 #
 #      - name: Build iOS IPA
 #        env:
