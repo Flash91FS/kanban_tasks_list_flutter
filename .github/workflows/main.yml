@@ -50,6 +50,13 @@ jobs:
           mkdir -p android/app/build/outputs/apk/release/
           cp build/app/outputs/flutter-apk/app-release.apk android/app/build/outputs/apk/release/
 
+      - name: Upload APK artifact
+        if: matrix.platform == 'android'
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-release-apk
+          path: android/app/build/outputs/apk/release/app-release.apk
+
 #  build-ios:
 #    runs-on: macos-latest
 #    steps:
