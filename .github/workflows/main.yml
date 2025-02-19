@@ -50,10 +50,17 @@ jobs:
       - name: Decode FirebaseOptions.dart
         run: echo "${{ secrets.FIREBASE_OPTIONS_DART }}" | base64 --decode > lib/firebase/firebase_options.dart
 
-      - name: Verify files
-        run: |
-          cat android/app/google-services.json
-          cat lib/firebase/firebase_options.dart
+      - name: Decode dev.env
+        run: echo "${{ secrets.DEV_ENV }}" | base64 --decode > dev.env
+
+      - name: Verify file google-services.json
+        run: cat android/app/google-services.json
+
+      - name: Verify file firebase_options.dart
+        run: cat lib/firebase/firebase_options.dart
+
+      - name: Verify file dev.env
+        run: cat dev.env
 
       - name: Build Android APK
         if: matrix.platform == 'android'
