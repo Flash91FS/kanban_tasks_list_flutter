@@ -9,12 +9,8 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: macos-latest
-    strategy:
-      matrix:
-        platform: [android, ios]
-
+  build-android:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -30,19 +26,11 @@ jobs:
         with:
           flutter-version: '3.22.2'
 
-      - name: Configure Git for Flutter
-        run: |
-          git config --global --add safe.directory /opt/hostedtoolcache/flutter/stable-3.22.2-x64
-          flutter --version
-
       - name: Install dependencies
         run: flutter pub get
 
       - name: Accept Android licenses
         run: yes | flutter doctor --android-licenses
-
-      - name: Display Flutter doctor
-        run: flutter doctor -v
 
       - name: Decode google-services.json
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > android/app/google-services.json
@@ -53,21 +41,142 @@ jobs:
       - name: Decode dev.env
         run: echo "${{ secrets.DEV_ENV }}" | base64 --decode > dev.env
 
-      - name: Verify file google-services.json
-        run: cat android/app/google-services.json
-
-      - name: Verify file firebase_options.dart
-        run: cat lib/firebase/firebase_options.dart
-
-      - name: Verify file dev.env
-        run: cat dev.env
+      - name: Load environment variables
+        run: source dev.env
 
       - name: Build Android APK
-        if: matrix.platform == 'android'
         run: |
           flutter build apk --release -v
           mkdir -p android/app/build/outputs/apk/release/
           cp build/app/outputs/flutter-apk/app-release.apk android/app/build/outputs/apk/release/
+
+#  build-ios:
+#    runs-on: macos-latest
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v2
+#
+#      - name: Set up JDK 17
+#        uses: actions/setup-java@v2
+#        with:
+#          distribution: 'zulu'
+#          java-version: 17
+#
+#      - name: Install Flutter
+#        uses: subosito/flutter-action@v2
+#        with:
+#          flutter-version: '3.22.2'
+#
+#      - name: Install dependencies
+#        run: flutter pub get
+#
+#      - name: Accept Android licenses
+#        run: yes | flutter doctor --android-licenses
+#
+#      - name: Decode google-services.json
+#        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > android/app/google-services.json
+#
+#      - name: Decode FirebaseOptions.dart
+#        run: echo "${{ secrets.FIREBASE_OPTIONS_DART }}" | base64 --decode > lib/firebase/firebase_options.dart
+#
+#      - name: Decode dev.env
+#        run: echo "${{ secrets.DEV_ENV }}" | base64 --decode > dev.env
+#
+#      - name: Verify file google-services.json
+#        run: cat android/app/google-services.json
+#
+#      - name: Verify file firebase_options.dart
+#        run: cat lib/firebase/firebase_options.dart
+#
+#      - name: Verify file dev.env
+#        run: cat dev.env
+#
+#      - name: Load environment variables
+#        run: source dev.env
+#
+#      - name: Build iOS IPA
+#        env:
+#          CI: true
+#        run: |
+#          flutter build ios --release
+#          mkdir -p ios/build/ipa/
+#          xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner archive -archivePath ios/build/Runner.xcarchive
+#          xcodebuild -exportArchive -archivePath ios/build/Runner.xcarchive -exportPath ios/build/ipa/ -exportOptionsPlist ios/Runner/ExportOptions.plist
+#
+#
+#
+#name: Flutter CI/CD
+#
+#on:
+#  push:
+#    branches:
+#      - main
+#  pull_request:
+#    branches:
+#      - main
+#
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#    strategy:
+#      matrix:
+#        platform: [android, ios]
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v2
+#
+#      - name: Set up JDK 17
+#        uses: actions/setup-java@v2
+#        with:
+#          distribution: 'zulu'
+#          java-version: 17
+#
+#      - name: Install Flutter
+#        uses: subosito/flutter-action@v2
+#        with:
+#          flutter-version: '3.22.2'
+#
+#      - name: Configure Git for Flutter
+#        run: |
+#          git config --global --add safe.directory /opt/hostedtoolcache/flutter/stable-3.22.2-x64
+#          flutter --version
+#
+#      - name: Install dependencies
+#        run: flutter pub get
+#
+#      - name: Accept Android licenses
+#        run: yes | flutter doctor --android-licenses
+#
+#      - name: Display Flutter doctor
+#        run: flutter doctor -v
+#
+#      - name: Decode google-services.json
+#        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > android/app/google-services.json
+#
+#      - name: Decode FirebaseOptions.dart
+#        run: echo "${{ secrets.FIREBASE_OPTIONS_DART }}" | base64 --decode > lib/firebase/firebase_options.dart
+#
+#      - name: Decode dev.env
+#        run: echo "${{ secrets.DEV_ENV }}" | base64 --decode > dev.env
+#
+#      - name: Verify file google-services.json
+#        run: cat android/app/google-services.json
+#
+#      - name: Verify file firebase_options.dart
+#        run: cat lib/firebase/firebase_options.dart
+#
+#      - name: Verify file dev.env
+#        run: cat dev.env
+#
+#      - name: Build Android APK
+#        if: matrix.platform == 'android'
+#        run: |
+#          flutter build apk --release -v
+#          mkdir -p android/app/build/outputs/apk/release/
+#          cp build/app/outputs/flutter-apk/app-release.apk android/app/build/outputs/apk/release/
+
+
 
 #      - name: Build iOS IPA
 #        if: matrix.platform == 'ios'
