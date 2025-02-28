@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kanban_tasks_list_flutter/domain/models/comment.dart';
-import 'package:kanban_tasks_list_flutter/extensions/nullable_date_formatting_extension.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/config/kanban_config.dart';
+import 'package:kanban_tasks_list_flutter/domain/entities/comment.dart';
+import 'package:kanban_tasks_list_flutter/core/extensions/nullable_date_formatting_extension.dart';
+import 'package:kanban_tasks_list_flutter/presentation/config/kanban_config.dart';
 import 'package:kanban_tasks_list_flutter/presentation/util_widgets/row_spacer.dart';
 
 class CommentItem extends StatelessWidget {

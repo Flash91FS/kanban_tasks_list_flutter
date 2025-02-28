@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:kanban_tasks_list_flutter/api_client/kanban_api_client.dart';
+import 'package:kanban_tasks_list_flutter/data/kanban_api_client.dart';
 import 'package:kanban_tasks_list_flutter/app.dart';
 import 'package:kanban_tasks_list_flutter/environment_settings.dart';
 import 'package:kanban_tasks_list_flutter/firebase/firebase_initializer.dart';

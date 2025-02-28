@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kanban_tasks_list_flutter/domain/models/kanban_item_data_model.dart';
-import 'package:kanban_tasks_list_flutter/extensions/validation_extension.dart';
+import 'package:kanban_tasks_list_flutter/domain/entities/kanban_item_data_model.dart';
+import 'package:kanban_tasks_list_flutter/core/extensions/validation_extension.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/comments_view.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/modal_footer_buttons_widget.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/widgets/modal_header_text_widgets.dart';

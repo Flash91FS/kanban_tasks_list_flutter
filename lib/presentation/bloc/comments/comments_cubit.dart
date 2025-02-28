@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_tasks_list_flutter/core/models/result.dart';
 import 'package:kanban_tasks_list_flutter/core/page_state_status.dart';
-import 'package:kanban_tasks_list_flutter/domain/models/comment.dart';
+import 'package:kanban_tasks_list_flutter/domain/entities/comment.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/comments/comments_state.dart';
-import 'package:kanban_tasks_list_flutter/repository/i_comments_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_comments_repository.dart';
 
 class CommentsCubit extends Cubit<CommentsState> {
   final ICommentsRepository commentsRepository;
@@ -50,17 +50,19 @@ class CommentsCubit extends Cubit<CommentsState> {
     try {
       Result<Comment> result =
           await commentsRepository.addComment(taskId: taskId, content: content);
-      result.when(success: (Comment item) {
-        final newCommentList = List<Comment>.from(state.comments!)..add(item);
-
-        emit(state.copyWith(
-            status: PageStateStatus.updated, comments: newCommentList));
-      }, failure: (_) {
-        emit(state.copyWith(
-          status: PageStateStatus.failedToLoad,
-          errorMessage: 'Failed to load Comments.',
-        ));
-      });
+      result.when(
+        success: (Comment item) {
+          final newCommentList = List<Comment>.from(state.comments!)..add(item);
+          emit(state.copyWith(
+              status: PageStateStatus.updated, comments: newCommentList));
+        },
+        failure: (_) {
+          emit(state.copyWith(
+            status: PageStateStatus.failedToLoad,
+            errorMessage: 'Failed to load Comments.',
+          ));
+        },
+      );
     } on Error {
       emit(state.copyWith(
         status: PageStateStatus.failedToLoad,

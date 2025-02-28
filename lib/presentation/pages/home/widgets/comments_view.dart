@@ -16,7 +16,8 @@ class CommentsView extends StatelessWidget {
         children: [
           AddCommentWidget(
               key: Key('Key-AddCommentWidget-$taskId'),
-              taskId: taskId),
+              taskId: taskId,
+          ),
           const RowSpacer(),
           CommentsList(
               key: Key('Key-CommentsList-$taskId'),

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_tasks_list_flutter/core/models/result.dart';
 import 'package:kanban_tasks_list_flutter/core/page_state_status.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/time_tracker/time_tracker_state.dart';
-import 'package:kanban_tasks_list_flutter/repository/i_firebase_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_firebase_repository.dart';
 import 'package:kanban_tasks_list_flutter/utils.dart';
 
 class TimeTrackerCubit extends Cubit<TimeTrackerState> { //testing a minor change

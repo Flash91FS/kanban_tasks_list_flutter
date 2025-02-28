@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:kanban_tasks_list_flutter/domain/models/section.dart';
+import 'package:kanban_tasks_list_flutter/domain/entities/section.dart';
 
 part 'sections_state.freezed.dart';
 

@@ -1,5 +1,5 @@
-import 'package:kanban_tasks_list_flutter/api_client/api_exception.dart';
-import 'package:kanban_tasks_list_flutter/api_client/api_network_exception.dart';
+import 'package:kanban_tasks_list_flutter/data/api_exception.dart';
+import 'package:kanban_tasks_list_flutter/data/api_network_exception.dart';
 import 'package:kanban_tasks_list_flutter/core/models/exceptions/data_load_exception.dart';
 import 'package:kanban_tasks_list_flutter/core/models/exceptions/network_exception.dart';
 import 'package:kanban_tasks_list_flutter/core/models/exceptions/unauthorized_exception.dart';

@@ -1,16 +1,18 @@
-import 'package:kanban_tasks_list_flutter/repository/comments_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/firebase_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/projects_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/sections_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/tasks_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_comments_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_firebase_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_projects_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_sections_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_tasks_repository.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockTasksRepository extends Mock implements TasksRepository {}
 
-class MockProjectsRepository extends Mock implements ProjectsRepository {}
+class MockProjectsRepository extends Mock implements IProjectsRepository {}
 
-class MockSectionsRepository extends Mock implements SectionsRepository {}
+class MockSectionsRepository extends Mock implements ISectionsRepository {}
 
-class MockCommentsRepository extends Mock implements CommentsRepository {}
+class MockCommentsRepository extends Mock implements ICommentsRepository {}
 
-class MockFirebaseRepository extends Mock implements FirebaseRepository {}
+
+class MockTasksRepository extends Mock implements ITasksRepository {}
+
+class MockFirebaseRepository extends Mock implements IFirebaseRepository {}

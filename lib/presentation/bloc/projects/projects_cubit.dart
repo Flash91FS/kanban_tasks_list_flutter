@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_tasks_list_flutter/core/models/result.dart';
-import 'package:kanban_tasks_list_flutter/domain/models/project.dart';
+import 'package:kanban_tasks_list_flutter/domain/entities/project.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/projects/projects_state.dart';
-import 'package:kanban_tasks_list_flutter/repository/i_projects_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_projects_repository.dart';
 
 class ProjectsCubit extends Cubit<ProjectsState> {
   final IProjectsRepository projectsRepository;

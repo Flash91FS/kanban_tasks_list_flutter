@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kanban_tasks_list_flutter/presentation/pages/home/config/kanban_config.dart';
+import 'package:kanban_tasks_list_flutter/presentation/config/kanban_config.dart';
 
 class ModalHeaderTextWidgets extends StatelessWidget {
   final String header;

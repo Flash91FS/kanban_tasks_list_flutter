@@ -1,26 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kanban_tasks_list_flutter/api_client/api_client.dart';
+import 'package:kanban_tasks_list_flutter/data/api_client.dart';
+import 'package:kanban_tasks_list_flutter/data/apis/apis.dart';
+import 'package:kanban_tasks_list_flutter/data/repositories/comments_repository.dart';
+import 'package:kanban_tasks_list_flutter/data/repositories/firebase_repository.dart';
+import 'package:kanban_tasks_list_flutter/data/repositories/projects_repository.dart';
+import 'package:kanban_tasks_list_flutter/data/repositories/sections_repository.dart';
+import 'package:kanban_tasks_list_flutter/data/repositories/tasks_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_comments_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_firebase_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_projects_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_sections_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_tasks_repository.dart';
 import 'package:kanban_tasks_list_flutter/environment_settings.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/comments/comments_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/environment/environment_cubit.dart';
+import 'package:kanban_tasks_list_flutter/presentation/bloc/kanban_board/kanban_board_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/projects/projects_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/sections/sections_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_cubit.dart';
-import 'package:kanban_tasks_list_flutter/presentation/bloc/kanban_board/kanban_board_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/time_tracker/time_tracker_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/kanban_page.dart';
-import 'package:kanban_tasks_list_flutter/repository/comments_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/firebase_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/i_comments_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/i_firebase_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/i_projects_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/i_sections_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/i_tasks_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/projects_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/sections_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/tasks_repository.dart';
 
 class App extends StatelessWidget {
   final ApiClient apiClient;
@@ -40,13 +41,13 @@ class App extends StatelessWidget {
     return MultiRepositoryProvider(
         providers: [
           RepositoryProvider<ITasksRepository>(
-              create: (context) => (TasksRepository(apiClient: apiClient))),
+              create: (context) => (TasksRepository(tasksApi: TasksApi(apiClient)))),
           RepositoryProvider<IProjectsRepository>(
-              create: (context) => (ProjectsRepository(apiClient: apiClient))),
+              create: (context) => (ProjectsRepository(projectsApi: ProjectsApi(apiClient)))),
           RepositoryProvider<ISectionsRepository>(
-              create: (context) => (SectionsRepository(apiClient: apiClient))),
+              create: (context) => (SectionsRepository(sectionsApi: SectionsApi(apiClient)))),
           RepositoryProvider<ICommentsRepository>(
-              create: (context) => (CommentsRepository(apiClient: apiClient))),
+              create: (context) => (CommentsRepository(commentsApi: CommentsApi(apiClient)))),
           RepositoryProvider<IFirebaseRepository>(
               create: (context) =>
                   (FirebaseRepository(firestoreInstance: _firestore))),

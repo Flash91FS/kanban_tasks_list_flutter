@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kanban_tasks_list_flutter/presentation/dimensions.dart';
+import 'package:kanban_tasks_list_flutter/presentation/config/dimensions.dart';
 
 class ResponsiveSnackBar {
   static showSnackBar(context, content,

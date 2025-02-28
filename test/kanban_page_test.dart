@@ -3,24 +3,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kanban_tasks_list_flutter/core/models/result.dart';
 import 'package:kanban_tasks_list_flutter/core/page_state_status.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_comments_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_firebase_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_projects_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_sections_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_tasks_repository.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/comments/comments_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/environment/environment_cubit.dart';
+import 'package:kanban_tasks_list_flutter/presentation/bloc/kanban_board/kanban_board_cubit.dart';
+import 'package:kanban_tasks_list_flutter/presentation/bloc/kanban_board/kanban_board_state.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/projects/projects_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/projects/projects_state.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/sections/sections_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/sections/sections_state.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_state.dart';
-import 'package:kanban_tasks_list_flutter/presentation/bloc/kanban_board/kanban_board_cubit.dart';
-import 'package:kanban_tasks_list_flutter/presentation/bloc/kanban_board/kanban_board_state.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/time_tracker/time_tracker_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/time_tracker/time_tracker_state.dart';
 import 'package:kanban_tasks_list_flutter/presentation/pages/home/kanban_page.dart';
-import 'package:kanban_tasks_list_flutter/repository/comments_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/firebase_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/projects_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/sections_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/tasks_repository.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'mock_cubits.dart';
@@ -36,11 +36,11 @@ void main() {
     late SectionsCubit sectionsCubit;
     late EnvironmentCubit environmentCubit;
     late CommentsCubit commentsCubit;
-    late TasksRepository tasksRepository;
-    late ProjectsRepository projectsRepository;
-    late SectionsRepository sectionsRepository;
-    late CommentsRepository commentsRepository;
-    late FirebaseRepository firebaseRepository;
+    late ITasksRepository tasksRepository;
+    late IProjectsRepository projectsRepository;
+    late ISectionsRepository sectionsRepository;
+    late ICommentsRepository commentsRepository;
+    late IFirebaseRepository firebaseRepository;
 
     setUp(() {
       tasksCubit = MockTasksCubit();

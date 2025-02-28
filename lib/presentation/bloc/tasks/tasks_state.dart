@@ -1,7 +1,7 @@
 import 'package:appflowy_board/appflowy_board.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kanban_tasks_list_flutter/core/page_state_status.dart';
-import 'package:kanban_tasks_list_flutter/domain/models/task.dart';
+import 'package:kanban_tasks_list_flutter/domain/entities/task.dart';
 
 part 'tasks_state.freezed.dart';
 

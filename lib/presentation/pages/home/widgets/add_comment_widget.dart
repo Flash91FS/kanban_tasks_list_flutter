@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kanban_tasks_list_flutter/extensions/validation_extension.dart';
+import 'package:kanban_tasks_list_flutter/core/extensions/validation_extension.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/comments/comments_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/util_widgets/text_form_field_widget.dart';
 

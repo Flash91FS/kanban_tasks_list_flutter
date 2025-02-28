@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bottom_dialogs.dart';
-import 'package:kanban_tasks_list_flutter/presentation/dimensions.dart';
+import 'package:kanban_tasks_list_flutter/presentation/config/dimensions.dart';
 import 'package:kanban_tasks_list_flutter/presentation/popup_dialog.dart';
 
 class ResponsiveDialog {

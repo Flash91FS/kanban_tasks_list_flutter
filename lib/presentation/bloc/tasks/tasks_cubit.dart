@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_tasks_list_flutter/core/models/result.dart';
 import 'package:kanban_tasks_list_flutter/core/page_state_status.dart';
-import 'package:kanban_tasks_list_flutter/domain/models/task.dart';
+import 'package:kanban_tasks_list_flutter/domain/entities/task.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/environment/environment_cubit.dart';
 import 'package:kanban_tasks_list_flutter/presentation/bloc/tasks/tasks_state.dart';
-import 'package:kanban_tasks_list_flutter/repository/i_firebase_repository.dart';
-import 'package:kanban_tasks_list_flutter/repository/i_tasks_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_firebase_repository.dart';
+import 'package:kanban_tasks_list_flutter/domain/irepositories/i_tasks_repository.dart';
 import 'package:kanban_tasks_list_flutter/utils.dart';
 import 'package:uuid/uuid.dart';
 
@@ -21,13 +21,19 @@ class TasksCubit extends Cubit<TasksState> {
   }) : super(const TasksState(status: PageStateStatus.loading));
 
   Future<void> loadResults() async {
+    logData(TAG_TASKS_CUBIT, 'loadResults(): ');
     try {
       Result<List<Task>> results = await tasksRepository.getTasksList();
+      logData(TAG_TASKS_CUBIT, 'loadResults(): results = ${results}');
       results.when(success: (List<Task> items) {
         final currentProjectTasks = items
             .where((element) =>
                 element.projectId == environmentCubit.state.projectId)
             .toList();
+        logData(TAG_TASKS_CUBIT,
+            'loadResults(): environmentCubit.state.projectId = ${environmentCubit.state.projectId}');
+        logData(TAG_TASKS_CUBIT,
+            'loadResults(): currentProjectTasks = ${currentProjectTasks}');
 
         emit(state.copyWith(
           status: PageStateStatus.loaded,
@@ -65,8 +71,15 @@ class TasksCubit extends Cubit<TasksState> {
         title: title,
         description: description,
       );
+      logData(TAG_TASKS_CUBIT, 'addNewTask(): result = ${result}');
+      logData(TAG_TASKS_CUBIT, 'addNewTask(): state = ${state}');
+      logData(TAG_TASKS_CUBIT, 'addNewTask(): state.tasks = ${state.tasks}');
       result.when(success: (Task item) async {
-        final newTaskList = List<Task>.from(state.tasks!)..add(item);
+        final newTaskList = List<Task>.from(state.tasks ?? [])..add(item);
+        // or the above line can be achieved in this way
+        // final newTaskList = state.tasks != null ? [...state.tasks!, item] : [item];
+
+        logData(TAG_TASKS_CUBIT, 'addNewTask(): newTaskList = ${newTaskList}');
 
         ///Add a new task in FB-DB
         await firebaseRepository.postTimeTrackingDataForTask(taskId: item.id);
@@ -139,13 +152,18 @@ class TasksCubit extends Cubit<TasksState> {
                 state.tasks!.indexWhere((element) => element.id == taskId);
             final newTaskList = List<Task>.from(state.tasks!)
               ..removeAt(indexOfTask);
-
+            logData(
+                TAG_TASKS_CUBIT, 'deleteTask(): newTaskList = ${newTaskList}');
             emit(state.copyWith(
                 status: PageStateStatus.updated, tasks: newTaskList));
           },
           failure: (_) {});
     } catch (ex) {
       logData(TAG_TASKS_CUBIT, 'deleteTask(): Exception = ${ex.toString()}');
+      emit(state.copyWith(
+        status: PageStateStatus.failedToUpdate,
+        errorMessage: 'Failed to delete task: ${ex.toString()}',
+      ));
     }
   }
 
@@ -161,6 +179,10 @@ class TasksCubit extends Cubit<TasksState> {
           failure: (Exception e) {});
     } catch (ex) {
       logData(TAG_TASKS_CUBIT, 'loadSyncState(): Exception = ${ex.toString()}');
+      emit(state.copyWith(
+        status: PageStateStatus.failedToUpdate,
+        errorMessage: 'Failed to load sync state: ${ex.toString()}',
+      ));
     }
   }
 
@@ -168,6 +190,9 @@ class TasksCubit extends Cubit<TasksState> {
     required String taskId,
     required String toSectionId,
   }) async {
+    logData(TAG_TASKS_CUBIT, 'moveTaskToSection():');
+    logData(TAG_TASKS_CUBIT, 'moveTaskToSection(): taskId = $taskId');
+    logData(TAG_TASKS_CUBIT, 'moveTaskToSection(): toSectionId = $toSectionId');
     if (state.syncToken != null) {
       try {
         Result<String> result = await tasksRepository.moveTaskToSection(
@@ -190,11 +215,25 @@ class TasksCubit extends Cubit<TasksState> {
                 tasks: newTaskList,
               ));
             },
-            failure: (Exception e) {});
+            failure: (Exception e) {
+              emit(state.copyWith(
+                status: PageStateStatus.failedToUpdate,
+                errorMessage: 'Failed to move task: ${e.toString()}',
+              ));
+            });
       } catch (ex) {
         logData(TAG_TASKS_CUBIT,
             'moveTaskToSection(): Exception = ${ex.toString()}');
+        emit(state.copyWith(
+          status: PageStateStatus.failedToUpdate,
+          errorMessage: 'Failed to move task: ${ex.toString()}',
+        ));
       }
+    } else {
+      emit(state.copyWith(
+        status: PageStateStatus.failedToUpdate,
+        errorMessage: 'Sync token is null.',
+      ));
     }
   }
 }
